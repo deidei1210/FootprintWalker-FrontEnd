@@ -6,7 +6,7 @@
             <div class="title text-h3 font-weight-bold">去旅行，去热爱!</div>
             <!-- <v-sheet width="300" class="mx-auto"> -->
             <v-form fast-fail @submit.prevent>
-                <v-icon :icon="`mdiSvg:${mdiAccount}`"></v-icon>
+                <v-icon icon="mdi-home" />
                 <!-- 用户姓名 -->
                 <v-text-field v-model="userName" label="First name" :rules="firstNameRules"></v-text-field>
                 <!-- 用户密码 -->
