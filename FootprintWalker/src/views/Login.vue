@@ -5,25 +5,30 @@
         <div class="login">
             <div class="title text-h3 font-weight-bold">去旅行，去热爱!</div>
             <v-card class="mx-auto px-6 py-8 login-card" max-width="400">
+                <!-- 使用了 @submit.prevent 监听表单的提交事件，并调用 onSubmit 方法进行处理。.prevent 修饰符阻止了表单的默认提交行为，从而可以使用自定义的提交方法进行处理。 -->
                 <v-form v-model="form" @submit.prevent="onSubmit">
-                    <v-text-field v-model="email" :readonly="loading" :rules="[required]" class="mb-2" clearable
+                    <!-- 输入账号 -->
+                    <v-text-field v-model="userAccount" :readonly="loading" :rules="[required]" class="mb-2" clearable
                         label="Account" prepend-icon="mdi-account"></v-text-field>
-
+                    <!-- 输入密码 -->
                     <v-text-field v-model="password" :readonly="loading" :rules="[required]" clearable label="Password"
-                        placeholder="Enter your password" prepend-icon="mdi-lock"></v-text-field>
+                        placeholder="Enter your password" prepend-icon="mdi-lock" type="password"></v-text-field>
 
                     <br>
                     <v-container>
                         <v-row justify="center">
-                            <v-btn :loading="loading" style=" margin-right: 20px;" color="#F4A9E0" size="large" type="submit" variant="elevated" width="130">
+                            <v-btn :loading="loading" style=" margin-right: 20px;" color="#F4A9E0" size="large"
+                                type="submit" variant="elevated" width="130">
                                 登 录
                             </v-btn>
-                            <v-btn :loading="loading" style="margin-left: 20px;" color="#E7F49A" size="large" type="submit" variant="elevated" width="130">
+                            <v-btn :loading="loading" style="margin-left: 20px;" color="#E7F49A" size="large" type="submit"
+                                variant="elevated" width="130">
                                 注 册
                             </v-btn>
                         </v-row>
                         <v-row justify="center">
-                            <v-btn :loading="loading" style="margin-top: 20px;" color="gray" size="small" type="submit" variant="text" width="130">
+                            <v-btn :loading="loading" style="margin-top: 20px;" color="gray" size="small" type="submit"
+                                variant="text" width="130">
                                 忘记密码？
                             </v-btn>
                         </v-row>
@@ -38,17 +43,30 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 import {
     mdiAccount,
-    mdiDelete,
-    mdiPencil,
-    mdiShareVariant,
 } from '@mdi/js'
 export default {
     data: () => ({
         mdiAccount,
-        mdiDelete,
-        mdiPencil,
-        mdiShareVariant,
+
+        form: false,
+        userAccount: null,
+        password: null,
+        loading: false,
     }),
+    methods: {
+        onSubmit() {
+            //表单不合法，不提交
+            if (!this.form) return
+
+            //否则提交表单内容，与后端交互，判断是否能够登录
+            this.loading = true
+
+            setTimeout(() => (this.loading = false), 2000)
+        },
+        required(v) {
+            return !!v || 'Field is required'
+        },
+    },
 }
 </script>
 
