@@ -4,40 +4,32 @@
     <div class="Screen">
         <div class="login">
             <div class="title text-h3 font-weight-bold">去旅行，去热爱!</div>
-            <!-- <v-sheet width="300" class="mx-auto"> -->
-            <v-form fast-fail @submit.prevent>
-                <v-icon icon="mdi-home" />
-                <!-- 用户姓名 -->
-                <v-text-field v-model="userName" label="First name" :rules="firstNameRules"></v-text-field>
-                <!-- 用户密码 -->
-                <v-text-field v-model="userCode" label="Last name" :rules="lastNameRules"></v-text-field>
-                <!-- 三个按钮 -->
-                <v-container>
-                    <!-- 登录按钮 -->
-                    <v-row justify="center" align="center">
-                        <v-col cols="auto">
-                            <v-btn type="submit" class="login-button" size="x-large" density="comfortable" color="#F4A9E0">
+            <v-card class="mx-auto px-6 py-8 login-card" max-width="400">
+                <v-form v-model="form" @submit.prevent="onSubmit">
+                    <v-text-field v-model="email" :readonly="loading" :rules="[required]" class="mb-2" clearable
+                        label="Account" prepend-icon="mdi-account"></v-text-field>
+
+                    <v-text-field v-model="password" :readonly="loading" :rules="[required]" clearable label="Password"
+                        placeholder="Enter your password" prepend-icon="mdi-lock"></v-text-field>
+
+                    <br>
+                    <v-container>
+                        <v-row justify="center">
+                            <v-btn :loading="loading" style=" margin-right: 20px;" color="#F4A9E0" size="large" type="submit" variant="elevated" width="130">
                                 登 录
                             </v-btn>
-                        </v-col>
-                        <!-- 注册按钮 -->
-                        <v-col cols="auto">
-                            <v-btn type="submit" class="register-button" size="x-large" density="comfortable"
-                                color="#E7F49A">
+                            <v-btn :loading="loading" style="margin-left: 20px;" color="#E7F49A" size="large" type="submit" variant="elevated" width="130">
                                 注 册
                             </v-btn>
-                        </v-col>
-                    </v-row>
-                    <!-- 忘记密码 -->
-                    <v-row justify="center" align="center">
-                        <v-btn type="submit" class="register-button" size="x-large" density="comfortable">
-                            注 册
-                        </v-btn>
-                    </v-row>
-                </v-container>
-
-            </v-form>
-            <!-- </v-sheet> -->
+                        </v-row>
+                        <v-row justify="center">
+                            <v-btn :loading="loading" style="margin-top: 20px;" color="gray" size="small" type="submit" variant="text" width="130">
+                                忘记密码？
+                            </v-btn>
+                        </v-row>
+                    </v-container>
+                </v-form>
+            </v-card>
         </div>
     </div>
 </template>
@@ -81,7 +73,7 @@ export default {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 350px;
+    width: 400px;
     margin: -190px 0 0 -175px;
     border-radius: 5px;
     overflow: hidden;
@@ -93,5 +85,9 @@ export default {
 
 .register-button {
     margin-left: 20px;
+}
+
+.login-card {
+    margin: 30px;
 }
 </style>
