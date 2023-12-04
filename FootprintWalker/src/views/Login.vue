@@ -18,17 +18,17 @@
                     <v-container>
                         <v-row justify="center">
                             <v-btn :loading="loading" style=" margin-right: 20px;" color="#F4A9E0" size="large"
-                                type="submit" variant="elevated" width="130">
+                                type="submit" variant="elevated" width="130" @click="loginHandler">
                                 登 录
                             </v-btn>
                             <v-btn :loading="loading" style="margin-left: 20px;" color="#E7F49A" size="large" type="submit"
-                                variant="elevated" width="130">
+                                variant="elevated" width="130" @click="registerHandler">
                                 注 册
                             </v-btn>
                         </v-row>
                         <v-row justify="center">
                             <v-btn :loading="loading" style="margin-top: 20px;" color="gray" size="small" type="submit"
-                                variant="text" width="130">
+                                variant="text" width="130" @click="forgotPasswordHandler">
                                 忘记密码？
                             </v-btn>
                         </v-row>
@@ -65,6 +65,32 @@ export default {
         },
         required(v) {
             return !!v || 'Field is required'
+        },
+        //处理登录逻辑
+        loginHandler() {
+            //检查表单是否有效，如果无效，则返回
+            if (!this.form) return
+
+            //执行登录逻辑，成功后重定向到主页
+            this.loading = true
+            console.log(this.userAccount)
+            console.log(this.password)
+            setTimeout(() => {
+                this.loading = false
+                //重定向到主页
+                this.$router.push('/')
+            }, 2000)
+        },
+        //处理注册逻辑
+        registerHandler() {
+            //执行注册逻辑，将用户重定向到注册页面
+            this.$router.push('/register')
+        },
+        //处理忘记密码逻辑
+        forgotPasswordHandler() {
+            //将用户重定向到重新设置密码的界面
+            this.$router.push('/set-code')
+
         },
     },
 }
