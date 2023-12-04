@@ -1,6 +1,13 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+// import Vue from 'vue'
+// import VueRouter from 'vue-router'
+// import Pinia from 'pinia'
 
+// Vue.use(VueRouter)
+// Vue.use(Pinia)
+
+//定义路由规则
 const routes = [
   {
     path: '/',
@@ -8,11 +15,11 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'Home',
+        name: 'Login',
         // route level code-splitting
         // this generates a separate chunk (Home-[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import('@/views/Home.vue'),
+        component: () => import('@/views/Login.vue'),
       },
     ],
   },
