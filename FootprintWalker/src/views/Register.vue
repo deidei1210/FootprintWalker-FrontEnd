@@ -21,15 +21,16 @@
         <div v-if="uniRegister" class="Register">
             <div class="title text-h3 font-weight-bold">校 内 注 册</div>
             <!-- 显示机票 -->
-            <div class="register-background">
+            <!-- <div class="register-background">
             
-            </div>
-
+            </div> -->
+            <v-img :width="2600" aspect-ratio="16/9" cover
+                src="../assets/Ticket.png" style="margin-top: 20px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);" ></v-img>
 
         </div>
         <!-- 校外注册 -->
         <div v-if="outUniRegister">
-        
+
         </div>
 
     </div>
@@ -39,20 +40,20 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 export default {
     data: () => ({
-        chooseRegister:1,        //当这个值为1的时候表示用户正在选择注册的方式
-        uniRegister:0,           //当这个值为1的时候表示用户选择在校注册
-        outUniRegister:0,       //当这个值为1的时候表示用户选择校外注册
+        chooseRegister: 1,        //当这个值为1的时候表示用户正在选择注册的方式
+        uniRegister: 0,           //当这个值为1的时候表示用户选择在校注册
+        outUniRegister: 0,       //当这个值为1的时候表示用户选择校外注册
     }),
     methods: {
         //处校内注册逻辑
         UniRegisterHandler() {
-            this.chooseRegister=0;
-            this.uniRegister=1;
+            this.chooseRegister = 0;
+            this.uniRegister = 1;
         },
         //处理校外注册逻辑
         OutUniRegisterHandler() {
-            this.chooseRegister=0;
-            this.outUniRegister=1;
+            this.chooseRegister = 0;
+            this.outUniRegister = 1;
         },
         //处理忘记密码逻辑
         forgotPasswordHandler() {
@@ -74,6 +75,7 @@ export default {
     background-image: url(../assets/loginBackgroundImage.png);
     background-size: 100%;
 }
+
 .title {
     width: 100%;
     line-height: 50px;
@@ -81,29 +83,25 @@ export default {
     font-size: 20px;
     color: #E7F49A;
 }
+
 .chooseRegisterWay {
     position: absolute;
     left: 50%;
     top: 50%;
-    
+
     margin: -190px 0 0 -175px;
     border-radius: 5px;
     overflow: hidden;
 }
-.Register{
+
+.Register {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 400px;
+    left: 22%;
+    top: 43%;
+    width: 1301px;
     margin: -190px 0 0 -175px;
     border-radius: 5px;
     overflow: hidden;
 }
-.register-background {
-    position: relative;
-    width: 1000px;
-    height: 1000px;
-    background-image: url(../assets/Ticket.png);
-    background-size: 100%;
-}
+
 </style>
