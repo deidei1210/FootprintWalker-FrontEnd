@@ -20,12 +20,21 @@
         <!-- 校内注册 -->
         <div v-if="uniRegister" class="Register">
             <div class="title text-h3 font-weight-bold">校 内 注 册</div>
-            <!-- 显示机票 -->
-            <!-- <div class="register-background">
-            
-            </div> -->
-            <v-img :width="2600" aspect-ratio="16/9" cover
-                src="../assets/Ticket.png" style="margin-top: 20px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);" ></v-img>
+            <!-- 显示机票背景图片 -->
+            <v-img :width="2600" aspect-ratio="16/9" cover src="../assets/Ticket.png"
+                style="margin-top: 20px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
+                <!-- 注册表单 -->
+                <v-form v-model="form" @submit.prevent="onSubmit">
+                    <!-- 左边那一块表单，包括校区，姓名，学号等 -->
+                    <v-container style="position:relative;left:157px;top:41px;">
+                        <v-row justify="start">
+                            <v-select style="max-width: 150px;" label="请选择校区" :items="['四平路校区', '嘉定校区', '彰武校区', '沪西校区']"
+                                variant="outlined" density="comfortable" color="#F65353"></v-select>
+                        </v-row>
+                    </v-container>
+
+                </v-form>
+            </v-img>
 
         </div>
         <!-- 校外注册 -->
@@ -103,5 +112,4 @@ export default {
     border-radius: 5px;
     overflow: hidden;
 }
-
 </style>
