@@ -2,7 +2,7 @@
     <!-- 注册界面 -->
     <div class="Screen">
         <!-- 选择注册方式 -->
-        <div class="chooseRegisterWay">
+        <div v-if="chooseRegister" class="chooseRegisterWay">
             <div class="title text-h3 font-weight-bold">注 册</div>
             <v-container style="margin:20px;">
                 <v-row justify="center">
@@ -18,11 +18,52 @@
             </v-container>
         </div>
         <!-- 校内注册 -->
+        <div v-if="uniRegister" class="Register">
+            <div class="title text-h3 font-weight-bold">校 内 注 册</div>
+            <!-- 显示机票 -->
+            <div class="register-background">
+            
+            </div>
+
+
+        </div>
+        <!-- 校外注册 -->
+        <div v-if="outUniRegister">
+        
+        </div>
+
     </div>
 </template>
   
-<script setup>
-import HelloWorld from '@/components/HelloWorld.vue'
+<script>
+// import HelloWorld from '@/components/HelloWorld.vue'
+export default {
+    data: () => ({
+        chooseRegister:1,        //当这个值为1的时候表示用户正在选择注册的方式
+        uniRegister:0,           //当这个值为1的时候表示用户选择在校注册
+        outUniRegister:0,       //当这个值为1的时候表示用户选择校外注册
+    }),
+    methods: {
+        //处校内注册逻辑
+        UniRegisterHandler() {
+            this.chooseRegister=0;
+            this.uniRegister=1;
+        },
+        //处理校外注册逻辑
+        OutUniRegisterHandler() {
+            this.chooseRegister=0;
+            this.outUniRegister=1;
+        },
+        //处理忘记密码逻辑
+        forgotPasswordHandler() {
+            //将用户重定向到重新设置密码的界面
+            this.$router.push('/set-code')
+
+        },
+    },
+}
+
+
 </script>
 
 <style>
@@ -44,9 +85,25 @@ import HelloWorld from '@/components/HelloWorld.vue'
     position: absolute;
     left: 50%;
     top: 50%;
+    
+    margin: -190px 0 0 -175px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.Register{
+    position: absolute;
+    left: 50%;
+    top: 50%;
     width: 400px;
     margin: -190px 0 0 -175px;
     border-radius: 5px;
     overflow: hidden;
+}
+.register-background {
+    position: relative;
+    width: 1000px;
+    height: 1000px;
+    background-image: url(../assets/Ticket.png);
+    background-size: 100%;
 }
 </style>
