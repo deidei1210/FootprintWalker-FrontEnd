@@ -1,5 +1,6 @@
 
 <template>
+    
     <!-- 登陆界面 -->
     <div class="Screen">
         <div class="login">
@@ -94,6 +95,7 @@ export default {
         },
     },
 }
+
 </script>
 
 <style>
