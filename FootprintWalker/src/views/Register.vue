@@ -48,11 +48,18 @@
                         </v-row>
                         <!-- 输入性别 -->
                         <v-row justify="start">
+                            <!-- <v-col style="padding:0px;"> -->
                             <span style="color:rgb(115,115,115);position:relative;top:2px;">性别：</span>
                             <v-radio-group inline density="compact">
                                 <v-radio label="男" value="one" color="red"></v-radio>
                                 <v-radio label="女" value="two" color="red"></v-radio>
                             </v-radio-group>
+                            <!-- </v-col> -->
+                            <!-- <v-col style="padding:0px;">
+                                <v-text-field v-model="studentNumber" style="max-width: 150px;" label="请输入学号"
+                                    prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
+                                    color="#F65353"></v-text-field>
+                            </v-col> -->
                         </v-row>
                         <!-- 输入电话号码，并获取验证码 -->
                         <v-row justify="start">
@@ -92,15 +99,18 @@
                     <v-container style="position:absolute;left:526px;top:168px;max-width: 180px;margin-left: 48px;">
                         <!-- 输入学院 -->
                         <v-row justify="start">
-                            <v-text-field v-model="college" style="max-width: 200px;" label="请输入学院"
+                            <v-select v-model="college" style="max-width: 200px;" label="请选择学院"
+                                :items="instituteList" variant="outlined" density="compact"
+                                color="#F65353" prepend-inner-icon="mdi-school"></v-select>
+                            <!-- <v-text-field v-model="college" style="max-width: 200px;" label="请输入学院"
                                 prepend-inner-icon="mdi-school" variant="outlined" density="compact" color="#F65353"
-                                clearable></v-text-field>
+                                clearable></v-text-field> -->
                         </v-row>
                         <!-- 输入年级 -->
                         <v-row justify="start">
-                            <v-text-field v-model="grade" style="max-width: 200px;" label="请输入年级"
-                                prepend-inner-icon="mdi-timer" variant="outlined" density="compact" color="#F65353"
-                                clearable></v-text-field>
+                            <v-select v-model="grade" style="max-width: 200px;" label="请选择年级"
+                            :items="gradeList" prepend-inner-icon="mdi-timer" variant="outlined" density="compact" color="#F65353"
+                                ></v-select>
                         </v-row>
                         <!-- 输入专业 -->
                         <v-row justify="start">
@@ -130,7 +140,7 @@
 
         </div>
         <!-- 校外注册 -->
-        <div v-if="outUniRegister"  class="Register">
+        <div v-if="outUniRegister" class="Register">
             <div class="title text-h3 font-weight-bold">校 外 注 册</div>
             <!-- 显示机票背景图片 -->
             <v-img :width="2600" aspect-ratio="16/9" cover src="../assets/Ticket.png"
@@ -269,6 +279,9 @@ export default {
         //获取当前时间和日期
         Time: "",                  //当前时间
         date: "",                  //当前日期
+        //学校所有的学院名称
+        instituteList:['机械与能源学院', '生命科学与技术学院', '铁道与城市轨道交通研究院', '物理科学与工程学院','建筑与城市规划学院','汽车学院','数学科学学院','土木工程学院','海洋与地球科学学院','设计创意学院','医学院','新生院','电子信息与工程学院','法学院','人文学院','外国语学院','环境科学与工程学院','体育教学部','艺术与传媒学院','经济与管理学院','马克思主义学院','政治与国际关系学院','中德工程学院','测绘与地理信息学院','航空航天与力学学院','软件学院','中德学院','材料科学与工程学院','化学科学与工程学院','交通运输工程学院','口腔医学院','上海国际知识产权学院','同济大学附属医院','校医院'],
+        gradeList:['大一','大二','大三','大四','大五','研一','研二','研三','博士生及以上']
     }),
     mounted() {
         const now = new Date();
