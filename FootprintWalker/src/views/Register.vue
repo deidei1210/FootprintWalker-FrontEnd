@@ -31,19 +31,19 @@
                         <v-row justify="start">
                             <v-select v-model="campus" style="max-width: 150px;" label="请选择校区"
                                 :items="['四平路校区', '嘉定校区', '彰武校区', '沪西校区']" variant="outlined" density="compact"
-                                color="#F65353"></v-select>
+                                color="#F65353" :rules="[required]"></v-select>
                         </v-row>
                         <!-- 输入姓名和学号 -->
                         <v-row justify="start">
                             <v-col style="padding:0px;">
                                 <v-text-field v-model="username" style="max-width: 150px;" label="请输入姓名"
                                     prepend-inner-icon="mdi-account" variant="outlined" density="compact"
-                                    color="#F65353"></v-text-field>
+                                    color="#F65353" :rules="[required]"></v-text-field>
                             </v-col>
                             <v-col style="padding:0px;">
                                 <v-text-field v-model="studentNumber" style="max-width: 150px;" label="请输入学号"
                                     prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
-                                    color="#F65353"></v-text-field>
+                                    color="#F65353" :rules="[required]"></v-text-field>
                             </v-col>
                         </v-row>
                         <!-- 输入性别 -->
@@ -65,9 +65,9 @@
                         <v-row justify="start">
                             <v-text-field v-model="telephone" style="max-width: 200px;" label="请输入电话号码"
                                 prepend-inner-icon="mdi-phone" variant="outlined" density="compact"
-                                color="#F65353"></v-text-field>
+                                color="#F65353" :rules="[required]"></v-text-field>
                             <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large" type="submit"
-                                variant="elevated" width="130" @click="getVerifyCode" density="compact">
+                                variant="elevated" width="130" @click="getVerifyCode" density="compact" :rules="[required]">
                                 获取验证码
                             </v-btn>
                         </v-row>
@@ -75,13 +75,13 @@
                         <v-row justify="start">
                             <v-text-field v-model="verifyCode" style="max-width: 200px;" label="请输入验证码"
                                 prepend-inner-icon="mdi-counter" variant="outlined" density="compact"
-                                color="#F65353"></v-text-field>
+                                color="#F65353" :rules="[required]"></v-text-field>
                         </v-row>
                         <!-- 设置密码 -->
                         <v-row justify="start">
                             <v-text-field v-model="password" style="max-width: 200px;" label="设置密码"
                                 prepend-inner-icon="mdi-lock" variant="outlined" density="compact" color="#F65353"
-                                type="password" clearable></v-text-field>
+                                type="password" clearable :rules="[required]"></v-text-field>
                             <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large" type="submit"
                                 variant="elevated" width="130" @click="getVerifyCode" density="compact">
                                 确 认
@@ -91,7 +91,7 @@
                         <v-row justify="start">
                             <v-text-field v-model="verifyPassword" style="max-width: 200px;" label="确认密码"
                                 prepend-inner-icon="mdi-check-decagram" variant="outlined" density="compact" color="#F65353"
-                                type="password" clearable></v-text-field>
+                                type="password" clearable :rules="[required]"></v-text-field>
                         </v-row>
                     </v-container>
 
@@ -101,7 +101,7 @@
                         <v-row justify="start">
                             <v-select v-model="college" style="max-width: 200px;" label="请选择学院"
                                 :items="instituteList" variant="outlined" density="compact"
-                                color="#F65353" prepend-inner-icon="mdi-school"></v-select>
+                                color="#F65353" prepend-inner-icon="mdi-school" :rules="[required]"></v-select>
                             <!-- <v-text-field v-model="college" style="max-width: 200px;" label="请输入学院"
                                 prepend-inner-icon="mdi-school" variant="outlined" density="compact" color="#F65353"
                                 clearable></v-text-field> -->
@@ -110,13 +110,13 @@
                         <v-row justify="start">
                             <v-select v-model="grade" style="max-width: 200px;" label="请选择年级"
                             :items="gradeList" prepend-inner-icon="mdi-timer" variant="outlined" density="compact" color="#F65353"
-                                ></v-select>
+                            :rules="[required]" ></v-select>
                         </v-row>
                         <!-- 输入专业 -->
                         <v-row justify="start">
                             <v-text-field v-model="major" style="max-width: 200px;" label="请输入专业"
                                 prepend-inner-icon="mdi-pen" variant="outlined" density="compact" color="#F65353"
-                                clearable></v-text-field>
+                                clearable :rules="[required]"></v-text-field>
                         </v-row>
                     </v-container>
                     <!-- 确认按钮 -->
@@ -153,19 +153,19 @@
                         <v-row justify="start">
                             <v-select v-model="campus" style="max-width: 150px;" label="请选择校区"
                                 :items="['四平路校区', '嘉定校区', '彰武校区', '沪西校区']" variant="outlined" density="compact"
-                                color="#F65353"></v-select>
+                                color="#F65353" :rules="[required]"></v-select>
                         </v-row>
                         <!-- 输入姓名和学号 -->
                         <v-row justify="start">
                             <v-col style="padding:0px;">
                                 <v-text-field v-model="username" style="max-width: 150px;" label="请输入姓名"
                                     prepend-inner-icon="mdi-account" variant="outlined" density="compact"
-                                    color="#F65353"></v-text-field>
+                                    color="#F65353" :rules="[required]"></v-text-field>
                             </v-col>
                             <v-col style="padding:0px;">
                                 <v-text-field v-model="studentNumber" style="max-width: 150px;" label="请输入学号"
                                     prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
-                                    color="#F65353"></v-text-field>
+                                    color="#F65353" :rules="[required]"></v-text-field>
                             </v-col>
                         </v-row>
                         <!-- 输入性别 -->
@@ -180,7 +180,7 @@
                         <v-row justify="start">
                             <v-text-field v-model="telephone" style="max-width: 200px;" label="请输入电话号码"
                                 prepend-inner-icon="mdi-phone" variant="outlined" density="compact"
-                                color="#F65353"></v-text-field>
+                                color="#F65353" :rules="[required]"></v-text-field>
                             <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large" type="submit"
                                 variant="elevated" width="130" @click="getVerifyCode" density="compact">
                                 获取验证码
@@ -190,13 +190,13 @@
                         <v-row justify="start">
                             <v-text-field v-model="verifyCode" style="max-width: 200px;" label="请输入验证码"
                                 prepend-inner-icon="mdi-counter" variant="outlined" density="compact"
-                                color="#F65353"></v-text-field>
+                                color="#F65353" :rules="[required]"></v-text-field>
                         </v-row>
                         <!-- 设置密码 -->
                         <v-row justify="start">
                             <v-text-field v-model="password" style="max-width: 200px;" label="设置密码"
                                 prepend-inner-icon="mdi-lock" variant="outlined" density="compact" color="#F65353"
-                                type="password" clearable></v-text-field>
+                                type="password" clearable :rules="[required]"></v-text-field>
                             <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large" type="submit"
                                 variant="elevated" width="130" @click="getVerifyCode" density="compact">
                                 确 认
@@ -206,7 +206,7 @@
                         <v-row justify="start">
                             <v-text-field v-model="verifyPassword" style="max-width: 200px;" label="确认密码"
                                 prepend-inner-icon="mdi-check-decagram" variant="outlined" density="compact" color="#F65353"
-                                type="password" clearable></v-text-field>
+                                type="password" clearable :rules="[required]"></v-text-field>
                         </v-row>
                     </v-container>
 
@@ -216,19 +216,19 @@
                         <v-row justify="start">
                             <v-text-field v-model="college" style="max-width: 200px;" label="请输入学院"
                                 prepend-inner-icon="mdi-school" variant="outlined" density="compact" color="#F65353"
-                                clearable></v-text-field>
+                                clearable :rules="[required]"></v-text-field>
                         </v-row>
                         <!-- 输入年级 -->
                         <v-row justify="start">
                             <v-text-field v-model="grade" style="max-width: 200px;" label="请输入年级"
                                 prepend-inner-icon="mdi-timer" variant="outlined" density="compact" color="#F65353"
-                                clearable></v-text-field>
+                                clearable :rules="[required]"></v-text-field>
                         </v-row>
                         <!-- 输入专业 -->
                         <v-row justify="start">
                             <v-text-field v-model="major" style="max-width: 200px;" label="请输入专业"
                                 prepend-inner-icon="mdi-pen" variant="outlined" density="compact" color="#F65353"
-                                clearable></v-text-field>
+                                clearable :rules="[required]"></v-text-field>
                         </v-row>
                     </v-container>
                     <!-- 确认按钮 -->
@@ -323,7 +323,10 @@ export default {
             this.$router.push('/')
             setTimeout(() => (this.registerLoading = false), 2000)
 
-        }
+        },
+        required(v) {
+            return !!v || 'Field is required'
+        },
     },
 }
 
