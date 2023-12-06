@@ -59,19 +59,39 @@
                             <v-text-field v-model="telephone" style="max-width: 200px;" label="请输入电话号码"
                                 prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
                                 color="#F65353"></v-text-field>
-                            <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large"
-                                type="submit" variant="elevated" width="130" @click="getVerifyCode" density="compact">
+                            <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large" type="submit"
+                                variant="elevated" width="130" @click="getVerifyCode" density="compact">
                                 获取验证码
                             </v-btn>
                         </v-row>
                         <!-- 输入验证码 -->
                         <v-row justify="start">
                             <v-text-field v-model="verifyCode" style="max-width: 200px;" label="请输入验证码"
-                                prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
+                                prepend-inner-icon="mdi-counter" variant="outlined" density="compact"
                                 color="#F65353"></v-text-field>
+                        </v-row>
+                        <!-- 设置密码 -->
+                        <v-row justify="start">
+                            <v-text-field v-model="password" style="max-width: 200px;" label="设置密码"
+                                prepend-inner-icon="mdi-lock" variant="outlined" density="compact" color="#F65353"
+                                type="password" clearable></v-text-field>
+                            <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large" type="submit"
+                                variant="elevated" width="130" @click="getVerifyCode" density="compact">
+                                确 认
+                            </v-btn>
+                        </v-row>
+                        <!-- 确认密码 -->
+                        <v-row justify="start">
+                            <v-text-field v-model="verifyPassword" style="max-width: 200px;" label="确认密码"
+                                prepend-inner-icon="mdi-check-decagram" variant="outlined" density="compact" color="#F65353"
+                                type="password" clearable></v-text-field>
                         </v-row>
                     </v-container>
 
+                    <!-- 右边那一坨 -->
+                    <v-container>
+                        
+                    </v-container>
                 </v-form>
             </v-img>
 
@@ -97,7 +117,9 @@ export default {
         username: "",            //用户姓名
         studentNumber: "",       //用户学号
         telephone: "",            //用户电话
-        verifyCode:"",           //验证码
+        verifyCode: "",           //验证码
+        password: "",             //用户的密码
+        verifyPassword: "",       //确认密码
     }),
     methods: {
         //处校内注册逻辑
@@ -118,7 +140,7 @@ export default {
         },
 
         //获取手机验证码
-        getVerifyCode(){
+        getVerifyCode() {
 
         }
     },
