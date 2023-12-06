@@ -30,23 +30,46 @@
                         <!-- 选择校区 -->
                         <v-row justify="start">
                             <v-select v-model="campus" style="max-width: 150px;" label="请选择校区"
-                                :items="['四平路校区', '嘉定校区', '彰武校区', '沪西校区']" variant="outlined" density="comfortable"
+                                :items="['四平路校区', '嘉定校区', '彰武校区', '沪西校区']" variant="outlined" density="compact"
                                 color="#F65353"></v-select>
                         </v-row>
                         <!-- 输入姓名和学号 -->
                         <v-row justify="start">
                             <v-col style="padding:0px;">
                                 <v-text-field v-model="username" style="max-width: 150px;" label="请输入姓名"
-                                    prepend-inner-icon="mdi-account" variant="outlined" density="comfortable"
+                                    prepend-inner-icon="mdi-account" variant="outlined" density="compact"
                                     color="#F65353"></v-text-field>
                             </v-col>
                             <v-col style="padding:0px;">
                                 <v-text-field v-model="studentNumber" style="max-width: 150px;" label="请输入学号"
-                                    prepend-inner-icon="mdi-numeric" variant="outlined" density="comfortable"
+                                    prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
                                     color="#F65353"></v-text-field>
                             </v-col>
                         </v-row>
-
+                        <!-- 输入性别 -->
+                        <v-row justify="start">
+                            <span style="color:rgb(115,115,115);position:relative;top:2px;">性别：</span>
+                            <v-radio-group inline density="compact">
+                                <v-radio label="男" value="one" color="red"></v-radio>
+                                <v-radio label="女" value="two" color="red"></v-radio>
+                            </v-radio-group>
+                        </v-row>
+                        <!-- 输入电话号码，并获取验证码 -->
+                        <v-row justify="start">
+                            <v-text-field v-model="telephone" style="max-width: 200px;" label="请输入电话号码"
+                                prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
+                                color="#F65353"></v-text-field>
+                            <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large"
+                                type="submit" variant="elevated" width="130" @click="getVerifyCode" density="compact">
+                                获取验证码
+                            </v-btn>
+                        </v-row>
+                        <!-- 输入验证码 -->
+                        <v-row justify="start">
+                            <v-text-field v-model="verifyCode" style="max-width: 200px;" label="请输入验证码"
+                                prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
+                                color="#F65353"></v-text-field>
+                        </v-row>
                     </v-container>
 
                 </v-form>
@@ -70,10 +93,11 @@ export default {
         uniRegister: 0,           //当这个值为1的时候表示用户选择在校注册
         outUniRegister: 0,       //当这个值为1的时候表示用户选择校外注册
         //用户填写的信息
-        campus: "",
-        username: "",
-        studentNumber:""
-
+        campus: "",              //用户校区
+        username: "",            //用户姓名
+        studentNumber: "",       //用户学号
+        telephone: "",            //用户电话
+        verifyCode:"",           //验证码
     }),
     methods: {
         //处校内注册逻辑
@@ -92,6 +116,11 @@ export default {
             this.$router.push('/set-code')
 
         },
+
+        //获取手机验证码
+        getVerifyCode(){
+
+        }
     },
 }
 
