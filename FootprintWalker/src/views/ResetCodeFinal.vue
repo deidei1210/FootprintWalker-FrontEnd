@@ -14,7 +14,7 @@
                     <!-- 输入手机号 -->
                     <v-col cols="12" md="12">
                         <v-text-field v-model="verifyNewPassword" :readonly="loading" :rules="[required]" label="请确认新密码"
-                            placeholder="请确认新密码" prepend-inner-icon="mdi-lock" variant="solo" type="password"></v-text-field>
+                            placeholder="请确认新密码" prepend-inner-icon="mdi-lock" variant="solo" type="password" clearable></v-text-field>
                     </v-col>
                 </v-row>
 
@@ -53,9 +53,9 @@ export default {
 
             setTimeout(() => (this.loading = false), 2000)
         },
-        required(v) {
-            return !!v || 'Field is required'
-        },
+        // required(v) {
+        //     return !!v || 'Field is required'
+        // },
         //处理登录逻辑
         submitHandler() {
             //检查表单是否有效，如果无效，则返回
