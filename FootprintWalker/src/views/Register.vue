@@ -109,6 +109,11 @@
                                 clearable></v-text-field>
                         </v-row>
                     </v-container>
+                    <!-- 确认按钮 -->
+                    <v-btn :loading="registerLoading" style="position:absolute;right:72px;bottom:100px;" color="#F65353"
+                        size="large" type="submit" variant="elevated" width="130" @click="submitRegisterForm">
+                        起 航
+                    </v-btn>
                 </v-form>
                 <!-- 显示输入内容，在机票的最右边 -->
                 <v-container style="position:absolute;right:37px;top:98px;max-width: 280px;margin-left: 48px;">
@@ -118,7 +123,7 @@
                         <span style="margin-left:101px;">{{ Time }}</span>
                     </div>
                     <div class="text-h4 font-weight-bold" style="color:#272626;margin-top: 48px;margin-left:100px;">
-                    {{ username }}
+                        {{ username }}
                     </div>
                 </v-container>
             </v-img>
@@ -140,6 +145,8 @@ export default {
         chooseRegister: 1,        //当这个值为1的时候表示用户正在选择注册的方式
         uniRegister: 0,           //当这个值为1的时候表示用户选择在校注册
         outUniRegister: 0,       //当这个值为1的时候表示用户选择校外注册
+        registerLoading: false,   //表示默认的提交表单的按钮状态不是正在加载中的
+        form: false,             //表单状态
         //用户填写的信息
         campus: "",              //用户校区
         username: "",            //用户姓名
@@ -180,6 +187,18 @@ export default {
 
         //获取手机验证码
         getVerifyCode() {
+
+        },
+        //用户填完所有的表单项目，进行注册提交
+        submitRegisterForm() {
+            //表单不合法，不提交
+            if (!this.form) return
+
+            //否则提交表单内容，与后端交互，判断是否注册成功
+            this.registerLoading = true
+             //将用户重定向到重新设置密码的界面
+            this.$router.push('/')
+            setTimeout(() => (this.registerLoading = false), 2000)
 
         }
     },
