@@ -110,6 +110,17 @@
                         </v-row>
                     </v-container>
                 </v-form>
+                <!-- 显示输入内容，在机票的最右边 -->
+                <v-container style="position:absolute;right:37px;top:98px;max-width: 280px;margin-left: 48px;">
+                    <div class="text-h7 font-weight-bold" style="color:#F65353;">{{ campus }}</div>
+                    <div class="text-h7 font-weight-bold" style="color:#F65353;margin-top: 48px;margin-left:27px;">
+                        <span>{{ date }}</span>
+                        <span style="margin-left:101px;">{{ Time }}</span>
+                    </div>
+                    <div class="text-h4 font-weight-bold" style="color:#272626;margin-top: 48px;margin-left:100px;">
+                    {{ username }}
+                    </div>
+                </v-container>
             </v-img>
 
         </div>
@@ -137,10 +148,18 @@ export default {
         verifyCode: "",           //验证码
         password: "",             //用户的密码
         verifyPassword: "",       //确认密码
-        college:"",               //学院
-        major:"",                 //专业
-        grade:"",                //年级
+        college: "",               //学院
+        major: "",                 //专业
+        grade: "",                //年级
+        //获取当前时间和日期
+        Time: "",                  //当前时间
+        date: "",                  //当前日期
     }),
+    mounted() {
+        const now = new Date();
+        this.Time = now.toLocaleTimeString();
+        this.date = now.toLocaleDateString();
+    },
     methods: {
         //处校内注册逻辑
         UniRegisterHandler() {
