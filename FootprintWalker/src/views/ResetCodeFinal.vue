@@ -8,13 +8,13 @@
                 <v-row>
                     <!-- 输入用户名 -->
                     <v-col cols="12" md="12">
-                        <v-text-field v-model="username" :readonly="loading" :rules="[required]" class="mb-2" clearable
-                            label="请输入新密码" prepend-inner-icon="mdi-lock" variant="solo"></v-text-field>
+                        <v-text-field v-model="newPassword" :readonly="loading" :rules="[required]" class="mb-2" clearable
+                            label="请输入新密码" prepend-inner-icon="mdi-lock" variant="solo" type="password"></v-text-field>
                     </v-col>
                     <!-- 输入手机号 -->
                     <v-col cols="12" md="12">
-                        <v-text-field v-model="phone" :readonly="loading" :rules="[required]" label="请确认新密码"
-                            placeholder="请确认新密码" prepend-inner-icon="mdi-lock" variant="solo"></v-text-field>
+                        <v-text-field v-model="verifyNewPassword" :readonly="loading" :rules="[required]" label="请确认新密码"
+                            placeholder="请确认新密码" prepend-inner-icon="mdi-lock" variant="solo" type="password"></v-text-field>
                     </v-col>
                 </v-row>
 
@@ -39,9 +39,8 @@
 export default {
     data: () => ({
         form: false,
-        username: null,
-        phone: "",
-        verifyCode: null,
+        newPassword:"",
+        verifyNewPassword:"",
         loading: false,
     }),
     methods: {
