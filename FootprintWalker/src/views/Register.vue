@@ -89,8 +89,25 @@
                     </v-container>
 
                     <!-- 右边那一坨 -->
-                    <v-container>
-                        
+                    <v-container style="position:absolute;left:526px;top:168px;max-width: 180px;margin-left: 48px;">
+                        <!-- 输入学院 -->
+                        <v-row justify="start">
+                            <v-text-field v-model="college" style="max-width: 200px;" label="请输入学院"
+                                prepend-inner-icon="mdi-school" variant="outlined" density="compact" color="#F65353"
+                                clearable></v-text-field>
+                        </v-row>
+                        <!-- 输入年级 -->
+                        <v-row justify="start">
+                            <v-text-field v-model="grade" style="max-width: 200px;" label="请输入年级"
+                                prepend-inner-icon="mdi-timer" variant="outlined" density="compact" color="#F65353"
+                                clearable></v-text-field>
+                        </v-row>
+                        <!-- 输入专业 -->
+                        <v-row justify="start">
+                            <v-text-field v-model="major" style="max-width: 200px;" label="请输入专业"
+                                prepend-inner-icon="mdi-pen" variant="outlined" density="compact" color="#F65353"
+                                clearable></v-text-field>
+                        </v-row>
                     </v-container>
                 </v-form>
             </v-img>
@@ -120,6 +137,9 @@ export default {
         verifyCode: "",           //验证码
         password: "",             //用户的密码
         verifyPassword: "",       //确认密码
+        college:"",               //学院
+        major:"",                 //专业
+        grade:"",                //年级
     }),
     methods: {
         //处校内注册逻辑
