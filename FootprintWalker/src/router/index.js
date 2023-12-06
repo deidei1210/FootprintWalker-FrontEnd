@@ -31,6 +31,11 @@ const routes = [
         name: 'SetCode',
         component: () => import('@/views/SetCode.vue'),
       },
+      {
+        path: '/reset-code',
+        name: 'ResetCodeFinal',
+        component: () => import('@/views/ResetCodeFinal.vue'),
+      },
     ],
   },
 ]

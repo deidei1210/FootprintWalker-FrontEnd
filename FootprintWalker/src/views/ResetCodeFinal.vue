@@ -9,23 +9,12 @@
                     <!-- 输入用户名 -->
                     <v-col cols="12" md="12">
                         <v-text-field v-model="username" :readonly="loading" :rules="[required]" class="mb-2" clearable
-                            label="输入用户名" prepend-inner-icon="mdi-account" variant="solo"></v-text-field>
+                            label="请输入新密码" prepend-inner-icon="mdi-lock" variant="solo"></v-text-field>
                     </v-col>
                     <!-- 输入手机号 -->
-                    <v-col cols="12" md="8">
-                        <v-text-field v-model="phone" :readonly="loading" :rules="[required]" label="输入手机号"
-                            placeholder="输入手机号" prepend-inner-icon="mdi-phone" variant="solo"></v-text-field>
-                    </v-col>
-                    <!-- 获取验证码按钮 -->
-                    <v-col cols="12" md="4" class="d-flex">
-                        <v-btn outlined dark color="#E7F49A" size="large" type="submit" width="130" @click="getVerifyCode">
-                            获取验证码
-                        </v-btn>
-                    </v-col>
-                    <!-- 输入验证码 -->
                     <v-col cols="12" md="12">
-                        <v-text-field v-model="verifyCode" :readonly="loading" :rules="[required]" label="输入验证码"
-                            placeholder="输入验证码" prepend-inner-icon="mdi-numeric" variant="solo"></v-text-field>
+                        <v-text-field v-model="phone" :readonly="loading" :rules="[required]" label="请确认新密码"
+                            placeholder="请确认新密码" prepend-inner-icon="mdi-lock" variant="solo"></v-text-field>
                     </v-col>
                 </v-row>
 
@@ -79,7 +68,7 @@ export default {
             setTimeout(() => {
                 this.loading = false
                 //重定向到主页
-                this.$router.push('/reset-code')
+                this.$router.push('/')
             }, 2000)
         },
         //获取验证码
