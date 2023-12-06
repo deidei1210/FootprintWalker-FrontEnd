@@ -57,7 +57,7 @@
                         <!-- 输入电话号码，并获取验证码 -->
                         <v-row justify="start">
                             <v-text-field v-model="telephone" style="max-width: 200px;" label="请输入电话号码"
-                                prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
+                                prepend-inner-icon="mdi-phone" variant="outlined" density="compact"
                                 color="#F65353"></v-text-field>
                             <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large" type="submit"
                                 variant="elevated" width="130" @click="getVerifyCode" density="compact">
@@ -169,7 +169,7 @@
                         <!-- 输入电话号码，并获取验证码 -->
                         <v-row justify="start">
                             <v-text-field v-model="telephone" style="max-width: 200px;" label="请输入电话号码"
-                                prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
+                                prepend-inner-icon="mdi-phone" variant="outlined" density="compact"
                                 color="#F65353"></v-text-field>
                             <v-btn style=" margin-left: 20px;" outlined dark color="#F65353" size="large" type="submit"
                                 variant="elevated" width="130" @click="getVerifyCode" density="compact">
