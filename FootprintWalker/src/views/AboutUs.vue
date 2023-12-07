@@ -1,7 +1,7 @@
 <template>
     <!-- 顶部的导航栏 -->
     <DefaultBar />
-    主页
+    关于我们
 </template>
   
 <script>

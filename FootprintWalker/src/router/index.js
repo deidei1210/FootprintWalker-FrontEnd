@@ -40,6 +40,21 @@ const routes = [
         path:'/home-page',
         name:'HomePage',
         component: () => import('@/views/HomePage.vue'),
+      },
+      {
+        path:'/about-us',
+        name:'AboutUs',
+        component: () => import('@/views/AboutUs.vue'),
+      },
+      {
+        path:'/assign-activity',
+        name:'AssignActivity',
+        component: () => import('@/views/AssignActivity.vue'),
+      },
+      {
+        path:'/feedback',
+        name:'Feedback',
+        component: () => import('@/views/Feedback.vue'),
       }
     ],
   },

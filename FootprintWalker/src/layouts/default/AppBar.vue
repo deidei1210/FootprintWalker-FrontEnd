@@ -1,46 +1,34 @@
 <template>
   <v-container>
-    <v-app-bar app color="#6A76AB" src="../../assets/barBackground.jpg" dark shrink-on-scroll height="60" fade-img-on-scroll
-      scroll-target="#scrolling-techniques-3">
+    <v-app-bar app color="#6A76AB" scroll-behavior="fade-image" image="https://picsum.photos/1920/1080?random" dark
+      shrink-on-scroll height="60" scroll-target="#scrolling-techniques-3">
       <template v-slot:img="{ props }">
         <v-img v-bind="props" gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
       </template>
+      <!-- 左上角的标题 -->
       <v-col class="text-center" cols="1">
-        <strong>TechWave</strong>
+        <strong>Footprint Walker</strong>
       </v-col>
+      <!-- 一个竖直的分割线 -->
       <v-divider class="mx-4" vertical dark></v-divider>
+      <!-- 页面选项 -->
       <v-tabs align-with-title>
-        <v-tab class="mx-2 white--text" to="/news">
+        <!-- 前往首页 -->
+        <v-tab class="mx-2 white--text" to="/home-page">
           <v-icon left dense> mdi-home </v-icon>
           首页资讯
         </v-tab>
-        <v-tab class="mx-2 white--text" to="/forum">
+        <v-tab class="mx-2 white--text" to="/about-us">
           <v-icon left dense> mdi-facebook-messenger </v-icon>
-          交流论坛
+          关于我们
         </v-tab>
-        <v-menu offset-y open-on-hover>
-          <template v-slot:activator="{ on, attrs }">
-            <v-tab class="mx-2 white--text" id="myTab" to="/message" v-bind="attrs" v-on="on">
-                <v-icon left dense> mdi-message </v-icon>
-                我的消息
-            </v-tab>
-          </template>
-          <v-list>
-            <v-list-item v-for="item in items" :key="item.title" :to="item.router" link>
-              <v-icon left small class="pl-1"> {{ item.icon }} </v-icon>
-              <v-list-item-content class="pt-0 pl-2">
-                <v-list-item-title>
-                  <v-badge color="red" :offset-x="-1" :offset-y="7" :content="item.count" :value="item.count">
-                    {{ item.title }}
-                  </v-badge>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-        <v-tab class="mx-2 white--text" to="/account">
+        <v-tab class="mx-2 white--text" to="/assign-activity">
+          <v-icon left dense> mdi-message </v-icon>
+          活动报名
+        </v-tab>
+        <v-tab class="mx-2 white--text" to="/feedback">
           <v-icon left dense> mdi-account </v-icon>
-          个人中心
+          反馈中心
         </v-tab>
       </v-tabs>
     </v-app-bar>
