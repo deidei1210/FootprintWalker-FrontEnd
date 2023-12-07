@@ -23,60 +23,48 @@
           关于我们
         </v-tab>
         <v-tab class="mx-2 white--text" to="/assign-activity">
-          <v-icon left dense> mdi-message </v-icon>
+          <v-icon left dense> mdi-party-popper </v-icon>
           活动报名
         </v-tab>
         <v-tab class="mx-2 white--text" to="/feedback">
-          <v-icon left dense> mdi-account </v-icon>
+          <v-icon left dense> mdi-pen </v-icon>
           反馈中心
         </v-tab>
       </v-tabs>
+
+      <v-spacer></v-spacer> <!-- 这个会占据剩余的空间，将按钮推到最右边 -->
+      <!-- 转换到个人中心 -->
+      <v-btn icon  to="/personal-center">
+        <v-icon>mdi-account</v-icon>
+        <v-tooltip activator="parent" location="bottom">个人中心</v-tooltip>
+      </v-btn>
+      <!-- 退出登录 -->
+      <v-btn icon to="/">
+        <v-icon>mdi-location-exit</v-icon>
+        <v-tooltip activator="parent" location="bottom">退出登录</v-tooltip>
+      </v-btn>
     </v-app-bar>
     <router-view />
   </v-container>
 </template>
 <script>
 export default {
-  name: "HeaderBar",
-  computed: {
-    items() {
-      return [
-        {
-          title: "我的消息",
-          icon: "mdi-message",
-          router: "/message/my-message",
-          count: this.$store.getters.listCount,
-          type: "message"
-        },
-        {
-          title: "系统通知",
-          icon: "mdi-bell",
-          router: "/message/system-notification",
-          count: this.$store.getters.notificationCount,
-          type: "system"
-        },
-        {
-          title: "收到的赞",
-          icon: "mdi-thumb-up",
-          router: "/message/received-like",
-          count: this.$store.getters.likeCount,
-          type: "like"
-        },
-        {
-          title: "回复我的",
-          icon: "mdi-reply",
-          router: "/message/reply-me",
-          count: this.$store.getters.replyCount,
-          type: "reply"
-        },
-      ];
-    },
-  },
+  data() {
+    return {
+      showInfo: false
+    };
+  }
 }
 
 </script>
 <style scoped>
 .v-tab {
   width: 155px !important;
+}
+
+.hovered {
+  /* 自定义悬浮样式 */
+  background-color: #ffcc00;
+  color: #ffffff;
 }
 </style>
