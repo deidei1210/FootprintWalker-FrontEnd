@@ -18,6 +18,12 @@ export default {
         password: null,
         loading: false,
     }),
+    mounted() {
+        const scripts = document.querySelectorAll('script[src="./src/snow.js"]')
+        scripts.forEach(script => {
+            script.parentNode.removeChild(script)
+        })
+    },
     methods: {
 
     },

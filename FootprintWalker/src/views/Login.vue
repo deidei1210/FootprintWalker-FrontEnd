@@ -59,12 +59,6 @@ export default {
         script.src = './src/snow.js'
         document.body.appendChild(script)
     },
-    beforeDestroy() {
-        const scripts = document.querySelectorAll('script[src="./src/snow.js"]')
-        scripts.forEach(script => {
-            script.parentNode.removeChild(script)
-        })
-    },
     methods: {
         onSubmit() {
             //表单不合法，不提交

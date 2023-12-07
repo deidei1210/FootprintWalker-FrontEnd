@@ -287,6 +287,9 @@ export default {
         const now = new Date();
         this.Time = now.toLocaleTimeString();
         this.date = now.toLocaleDateString();
+        const script = document.createElement('script')
+        script.src = './src/snow.js'
+        document.body.appendChild(script)
     },
     methods: {
         //处校内注册逻辑
