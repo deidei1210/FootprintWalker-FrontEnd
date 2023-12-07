@@ -36,6 +36,11 @@ const routes = [
         name: 'ResetCodeFinal',
         component: () => import('@/views/ResetCodeFinal.vue'),
       },
+      {
+        path:'/home-page',
+        name:'HomePage',
+        component: () => import('@/views/HomePage.vue'),
+      }
     ],
   },
 ]
@@ -44,5 +49,15 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 })
+router.beforeEach((to, from, next) => {
+  removeScript() // 移除之前加载的脚本
+  next()
+})
 
+function removeScript() {
+  const scripts = document.querySelectorAll('script[src="./src/snow.js"]')
+  scripts.forEach(script => {
+    script.parentNode.removeChild(script)
+  })
+}
 export default router

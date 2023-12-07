@@ -1,6 +1,6 @@
 
 <template>
-    
+    <!-- <script src="./src/snow.js"></script> -->
     <!-- 登陆界面 -->
     <div class="Screen">
         <div class="login">
@@ -54,6 +54,17 @@ export default {
         password: null,
         loading: false,
     }),
+    mounted() {
+        const script = document.createElement('script')
+        script.src = './src/snow.js'
+        document.body.appendChild(script)
+    },
+    beforeDestroy() {
+        const scripts = document.querySelectorAll('script[src="./src/snow.js"]')
+        scripts.forEach(script => {
+            script.parentNode.removeChild(script)
+        })
+    },
     methods: {
         onSubmit() {
             //表单不合法，不提交
@@ -79,7 +90,7 @@ export default {
             setTimeout(() => {
                 this.loading = false
                 //重定向到主页
-                this.$router.push('/')
+                this.$router.push('/home-page')
             }, 2000)
         },
         //处理注册逻辑
