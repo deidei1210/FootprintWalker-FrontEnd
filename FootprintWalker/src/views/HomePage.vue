@@ -1,7 +1,16 @@
 <template>
     <!-- 顶部的导航栏 -->
     <DefaultBar />
-    主页
+    <v-img src="../assets/HomeTitle.png" style="position:relative;top:-60px;"></v-img>
+    <div style="position:relative;top:-245px;"><v-img src="../assets/往期回顾.png"></v-img></div>
+    <v-row style="position:relative;top:-210px;">
+        <v-col style="padding:50px;">
+            <v-img src="../assets/活动报名.png"></v-img>
+        </v-col>
+        <v-col style="padding:50px;">
+            <v-img src="../assets/最近新闻.png"></v-img>
+        </v-col>
+    </v-row>
 </template>
   
 <script>
@@ -28,8 +37,5 @@ export default {
 
     },
 }
-
-
-
 </script>
-  
+

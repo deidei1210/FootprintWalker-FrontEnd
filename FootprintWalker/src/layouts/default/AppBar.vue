@@ -1,7 +1,7 @@
 <template>
-  <v-container>
-    <v-app-bar app color="#6A76AB" scroll-behavior="fade-image" image="https://picsum.photos/1920/1080?random" dark
-      shrink-on-scroll height="60" scroll-target="#scrolling-techniques-3">
+  <!-- <v-container> -->
+    <v-app-bar app color="rgba(61, 61, 61, 0.68)" scroll-behavior="fade-image" dark
+    shrink-on-scroll height="60" style="position:fixed;color:aliceblue;">
       <template v-slot:img="{ props }">
         <v-img v-bind="props" gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
       </template>
@@ -44,8 +44,8 @@
         <v-tooltip activator="parent" location="bottom">退出登录</v-tooltip>
       </v-btn>
     </v-app-bar>
-    <router-view />
-  </v-container>
+    <!-- <router-view /> -->
+  <!-- </v-container> -->
 </template>
 <script>
 export default {
@@ -55,8 +55,8 @@ export default {
     };
   }
 }
-
 </script>
+
 <style scoped>
 .v-tab {
   width: 155px !important;
