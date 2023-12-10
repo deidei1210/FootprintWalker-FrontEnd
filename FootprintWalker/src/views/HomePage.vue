@@ -12,16 +12,18 @@
         </v-col>
     </v-row>
     <div style="position:relative;top:2px;"><v-img src="../assets/关于我们.png"></v-img></div>
-
+    <Footer></Footer>
 </template>
   
 <script>
 import DefaultBar from '@/layouts/default/AppBar.vue'
+import Footer from '@/layouts/default/Foot.vue'
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
     //导出组件
     components: {
-        DefaultBar
+        DefaultBar,
+        Footer
     },
     data: () => ({
         form: false,
