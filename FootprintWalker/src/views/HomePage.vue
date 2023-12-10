@@ -11,6 +11,8 @@
             <v-img src="../assets/最近新闻.png"></v-img>
         </v-col>
     </v-row>
+    <div style="position:relative;top:2px;"><v-img src="../assets/关于我们.png"></v-img></div>
+
 </template>
   
 <script>
