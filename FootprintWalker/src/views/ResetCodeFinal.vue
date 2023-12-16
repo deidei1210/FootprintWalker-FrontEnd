@@ -43,11 +43,6 @@ export default {
         verifyNewPassword:"",
         loading: false,
     }),
-    mounted() {
-        const script = document.createElement('script')
-        script.src = './src/snow.js'
-        document.body.appendChild(script)
-    },
     methods: {
         onSubmit() {
             //表单不合法，不提交
