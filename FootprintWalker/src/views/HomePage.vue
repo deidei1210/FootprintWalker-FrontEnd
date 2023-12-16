@@ -10,7 +10,9 @@
             <div id="Lookback">
                 <v-icon icon="mdi-map-marker" color="red" style="display:inline-block;position:relative;top:-10px;"
                     size="x-large" />
-                <div class="text-h3 text-white" style="display:inline-block;">皖南之行</div>
+                <div class="text-h3 text-white" style="display:inline-block;" color="white">皖南之行</div>
+                <!-- <v-divider class="border-opacity-75"></v-divider> -->
+
                 <div class="text-container">
                     <p class="text-left text-body-1 text-white">
                         在浓墨重彩的中国画卷中，皖南以其独特的徽派文化和醉人的自然风光绽放着无尽的魅力，它坚韧地在时间的长河中保存着那些美丽而深邃的故事。在刚过去的国庆假期，我们——同济大学的足迹行者们，怀揣着探索的好奇与敬仰的向往，踏上了这片灿烂的土地，寻找那些尘封的古韵，体验那些如诗如画的景致。
@@ -19,16 +21,42 @@
                     </p>
                 </div>
                 <a href="">更多>></a>
-                <v-carousel cycle height="330"  hide-delimiter-background show-arrows="hover" :interval="4000" style="margin-top:25px;border-radius: 5px;">
+                <v-carousel cycle height="330" hide-delimiter-background show-arrows="hover" :interval="4000"
+                    style="margin-top:25px;border-radius: 5px;">
                     <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src" cover></v-carousel-item>
                 </v-carousel>
             </div>
         </v-img>
     </div>
+    <!-- 活动报名和最近新闻 -->
     <v-row style="position:relative;top:-210px;">
+        <!-- 活动报名 -->
         <v-col style="padding:50px;">
-            <v-img src="../assets/活动报名.png"></v-img>
+            <v-img src="../assets/活动报名.png">
+                <div class="content"><v-icon icon="mdi-fire" color="red"
+                        style="display:inline-block;position:relative;top:-10px;" size="x-large" />
+                    <div class="text-h3" style="display:inline-block;">千岛湖</div>
+                    <div class="text-caption">截止时间：2023年11月25日（星期六） 23:59</div>
+                    <v-divider class="border-opacity-75"></v-divider>
+                    <div class="text-left text-body-1"><span class="text-red">【活动时间】</span>2023年12月2—3日（第12周周末）</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动人数】</span>25人左右</div>
+                    <div class="text-left text-body-1"><span class="text-red">【报名费用】</span>625元/人</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动校区】</span>不限。上车地点包括四平路、嘉定校区。</div>
+                    <div class="text-container" style="margin-top: 10px;">
+                        <p class="text-left text-body-1">
+                            刚考完期中想放松一下？没有social机会浑身不自在？想让身心沉浸在自然风景之中？别催啦别催啦！！！大家等待已久的千岛湖活动这不就来！了！吗！在浙江淳安县有这么一处胜景，崇山峻岭淹入湖中，乃成为大小翠岛。从淳安县城乘当地百姓的水上巴士，溯新安江而上，或登上天屿山，一览碧水呈奇，千岛百姿，这里自然风光旖旎，生态环境佳绝，我们不保证能走废你的腿，但保证满足你想旅行的眼睛。别墅坐落于千岛湖畔，环境优美，内部条件良好，房间简约典雅，提供麻将机，KTV,Switch，烧烤等吃喝玩乐设施，是轰趴的不二之选，营造放松身心的完美环境，带你远离ddl的压力与烦恼。
+                        </p>
+                    </div>
+                    <a href="">更多>></a>
+
+                    <v-img src="../assets/activity/anhui1.JPG" max-width="50%"></v-img>
+
+
+                </div>
+
+            </v-img>
         </v-col>
+        <!-- 最近新闻 -->
         <v-col style="padding:50px;">
             <v-img src="../assets/最近新闻.png"></v-img>
         </v-col>
@@ -118,19 +146,25 @@ export default {
     height: 530px;
     width: 42%;
 }
+
 .text-container {
-  position: relative;
-  max-height: 6em; /* 设置最大高度为6行 */
-  overflow: hidden;
+    position: relative;
+    max-height: 6em;
+    /* 设置最大高度为6行 */
+    overflow: hidden;
 }
 
 .text-container::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  /* height: 1.2em; 添加一个遮罩层，以便显示省略号 */
-  /* background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)); */
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    /* height: 1.2em; 添加一个遮罩层，以便显示省略号 */
+    /* background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)); */
+}
+
+.content {
+    margin: 123px 30px 3px 30px;
 }
 </style>
