@@ -33,8 +33,9 @@
         <!-- 活动报名 -->
         <v-col style="padding:50px;">
             <v-img src="../assets/活动报名.png">
-                <div class="content"><v-icon icon="mdi-fire" color="red"
-                        style="display:inline-block;position:relative;top:-10px;" size="x-large" />
+                <div class="content">
+                    <v-icon icon="mdi-fire" color="red" style="display:inline-block;position:relative;top:-10px;"
+                        size="x-large" />
                     <div class="text-h3" style="display:inline-block;">千岛湖</div>
                     <div class="text-caption">截止时间：2023年11月25日（星期六） 23:59</div>
                     <v-divider class="border-opacity-75"></v-divider>
@@ -51,14 +52,88 @@
 
                     <v-img src="../assets/activity/anhui1.JPG" max-width="50%"></v-img>
 
-
                 </div>
-
             </v-img>
         </v-col>
         <!-- 最近新闻 -->
         <v-col style="padding:50px;">
-            <v-img src="../assets/最近新闻.png"></v-img>
+            <v-img src="../assets/最近新闻.png">
+                <div class="content">
+                    <!-- 顶上的显示图片的部分新闻 -->
+                    <v-row>
+                        <v-col>
+                            <router-link to="https://chat1.aichatos.com/#/chat/1700226220387">
+                                <v-img src="../assets/activity/anhui1.JPG" height="160px" cover></v-img>
+                            </router-link>
+                        </v-col>
+                        <v-col>
+                            <router-link to="https://chat1.aichatos.com/#/chat/1700226220387">
+                                <v-img src="../assets/activity/anhui1.JPG" height="160px" cover></v-img>
+                            </router-link>
+                        </v-col>
+                        <v-col>
+                            <router-link to="https://chat1.aichatos.com/#/chat/1700226220387">
+                                <v-img src="../assets/activity/anhui1.JPG" height="160px" cover></v-img>
+                            </router-link>
+                        </v-col>
+                    </v-row>
+                    <div style="margin:12px 3px 3px 3px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <v-btn to="/other-page" variant="text" prepend-icon="mdi-circle">
+                                    千岛之湖 | 周末轰趴+出游一站式解决方案
+                                </v-btn>
+                            </div>
+                            <div>
+                                <span style="font-size: 15px;">2023-12-16</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <v-btn to="/other-page" variant="text" prepend-icon="mdi-circle">
+                                    活动回顾 | 徽韵山水，足迹行者的诗画旅程
+                                </v-btn>
+                            </div>
+                            <div>
+                                <span style="font-size: 15px;">2023-12-16</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <v-btn to="/other-page" variant="text" prepend-icon="mdi-circle">
+                                    足迹行者干事招新 | 去旅行，去热爱！
+                                </v-btn>
+                            </div>
+                            <div>
+                                <span style="font-size: 15px;">2023-12-16</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <v-btn to="/other-page" variant="text" prepend-icon="mdi-circle">
+                                    松江之旅 | 走进自然，一起打个盹！
+                                </v-btn>
+                            </div>
+                            <div>
+                                <span style="font-size: 15px;">2023-12-16</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <v-btn to="/other-page" variant="text" prepend-icon="mdi-circle">
+                                    2022秋招 | 期待与你一起再出发
+                                </v-btn>
+                            </div>
+                            <div>
+                                <span style="font-size: 15px;">2023-12-16</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </v-img>
         </v-col>
     </v-row>
     <div style="position:relative;top:2px;"><v-img src="../assets/关于我们.png"></v-img></div>
