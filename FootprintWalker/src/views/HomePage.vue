@@ -136,7 +136,26 @@
             </v-img>
         </v-col>
     </v-row>
-    <div style="position:relative;top:2px;"><v-img src="../assets/关于我们.png"></v-img></div>
+    <!-- 社团简介 -->
+
+    <div style="position:relative;top:2px;">
+        <v-img src="../assets/关于我们.png">
+            <v-row style="width:60%;position:relative;left:400px;top:270px;">
+                <v-col cols="5"> <!-- 修改这里的列数来调整图片所占的宽度 -->
+                    <v-img src="../assets/Poster.jpg" height="400px" max-width="280px"></v-img>
+                </v-col>
+                <v-col cols="7"> <!-- 修改这里的列数来调整文字所占的宽度 -->
+                    <div style="position:relative;width:100%;">
+                        足迹行者是同济大学的学生社团，致力于组织学生外出旅游和郊游活动。
+                        我们提供丰富多样的旅行目的地和活动选择，让同学们能够亲近自然、放松身心，增进友谊和团队合作意识。
+                        我们注重安全和组织管理，确保每次活动都能顺利进行。通过参与足迹行者，同学们可以拓宽视野、丰富知识，同时也能享受到旅行的乐趣和美好回忆。
+                        欢迎加入我们，一起探索未知的旅程！
+                    </div>
+                </v-col>
+            </v-row>
+        </v-img>
+    </div>
+
     <Footer></Footer>
 </template>
   
