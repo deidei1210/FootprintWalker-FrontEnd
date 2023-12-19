@@ -29,7 +29,9 @@ export default {
         var map = new BMapGL.Map("allmap");    // 创建Map实例
         map.centerAndZoom(new BMapGL.Point(119.404, 30.915), 7);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-
+        map.setMapStyleV2({
+            styleId: '3edf2b18e4530ff02701506c58ab7df8'
+        });
         var points = [
             new BMapGL.Point(121.434, 31.225),  //愚园路
             new BMapGL.Point(117.944, 29.931),  //皖南之行
