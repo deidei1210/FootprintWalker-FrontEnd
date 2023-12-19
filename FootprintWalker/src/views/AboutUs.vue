@@ -3,9 +3,30 @@
     <DefaultBar />
     <!-- 左边是地图 -->
     <div id="allmap">
-        <h1>12333131</h1>
-        <v-img src="../assets/AboutUsPeaple_decoration.png" width="150px"  style="position:absolute;right:10px;bottom:10px;"></v-img>
+        <v-img src="../assets/AboutUsPeaple_decoration.png" width="150px"
+            style="position:absolute;right:10px;bottom:10px;"></v-img>
     </div>
+    <v-img src="../assets/AboutUsGoing.png" style="position:relative;top:-72px;">
+        <v-carousel cycle height="400" hide-delimiter-background show-arrows="hover" :interval="4000"
+            style="position: absolute;border-radius: 5px;width:50%;left:25%;top:15%;">
+            <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src" cover></v-carousel-item>
+        </v-carousel>
+    </v-img>
+    <v-img src="../assets/WhoAreWe_background.png" style="position:relative;top:-350px;">
+        <v-row style="width:60%;position:relative;left:20%;top:43%;">
+                <v-col cols="5"> <!-- 修改这里的列数来调整图片所占的宽度 -->
+                    <v-img src="../assets/Poster.jpg" height="400px" max-width="280px"></v-img>
+                </v-col>
+                <v-col cols="7"> <!-- 修改这里的列数来调整文字所占的宽度 -->
+                    <div style="position:relative;width:100%;">
+                        足迹行者是同济大学的学生社团，致力于组织学生外出旅游和郊游活动。
+                        我们提供丰富多样的旅行目的地和活动选择，让同学们能够亲近自然、放松身心，增进友谊和团队合作意识。
+                        我们注重安全和组织管理，确保每次活动都能顺利进行。通过参与足迹行者，同学们可以拓宽视野、丰富知识，同时也能享受到旅行的乐趣和美好回忆。
+                        欢迎加入我们，一起探索未知的旅程！
+                    </div>
+                </v-col>
+            </v-row>
+    </v-img>
 </template>
   
 <script>
@@ -21,6 +42,17 @@ export default {
         userAccount: null,
         password: null,
         loading: false,
+        items: [
+            {
+                src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+            },
+            {
+                src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+            },
+            {
+                src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+            },
+        ],
     }),
     mounted() {
         const scripts = document.querySelectorAll('script[src="./src/snow.js"]')
@@ -64,7 +96,8 @@ export default {
 #allmap {
     display: inline-block;
     position: relative;
-    height: 530px;
+    top: -60px;
+    height: 600px;
     width: 100%;
     border-radius: 6px;
 }
