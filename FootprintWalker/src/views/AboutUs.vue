@@ -2,7 +2,7 @@
     <!-- 顶部的导航栏 -->
     <DefaultBar />
     <!-- 左边是地图 -->
-    <div id="allmap">
+    <div id="allmap1">
         <v-img src="../assets/AboutUsPeaple_decoration.png" width="150px"
             style="position:absolute;right:10px;bottom:10px;"></v-img>
     </div>
@@ -27,15 +27,19 @@
                 </v-col>
             </v-row>
     </v-img>
+
+    <Footer></Footer>
 </template>
   
 <script>
 import DefaultBar from '@/layouts/default/AppBar.vue'
+import Footer from '@/layouts/default/Foot.vue'
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
     //导出组件
     components: {
-        DefaultBar
+        DefaultBar,
+        Footer
     },
     data: () => ({
         form: false,
@@ -61,7 +65,7 @@ export default {
         })
         // GL版命名空间为BMapGL
         // 按住鼠标右键，修改倾斜角和角度
-        var map = new BMapGL.Map("allmap");    // 创建Map实例
+        var map = new BMapGL.Map("allmap1");    // 创建Map实例
         map.centerAndZoom(new BMapGL.Point(119.404, 30.915), 7);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
         map.setMapStyleV2({
@@ -93,7 +97,7 @@ export default {
 
 </script>
 <style>
-#allmap {
+#allmap1 {
     display: inline-block;
     position: relative;
     top: -60px;
