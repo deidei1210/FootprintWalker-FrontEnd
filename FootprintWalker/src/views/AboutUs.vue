@@ -2,7 +2,10 @@
     <!-- 顶部的导航栏 -->
     <DefaultBar />
     <!-- 左边是地图 -->
-    <div id="allmap"></div>
+    <div id="allmap">
+        <h1>12333131</h1>
+        <v-img src="../assets/AboutUsPeaple_decoration.png" width="150px"  style="position:absolute;right:10px;bottom:10px;"></v-img>
+    </div>
 </template>
   
 <script>
