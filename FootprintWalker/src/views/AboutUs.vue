@@ -66,7 +66,7 @@ export default {
         // GL版命名空间为BMapGL
         // 按住鼠标右键，修改倾斜角和角度
         var map = new BMapGL.Map("allmap1");    // 创建Map实例
-        map.centerAndZoom(new BMapGL.Point(119.404, 30.915), 7);  // 初始化地图,设置中心点坐标和地图级别
+        map.centerAndZoom(new BMapGL.Point(119.404, 30.915), 9);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
         map.setMapStyleV2({
             styleId: '3edf2b18e4530ff02701506c58ab7df8'
@@ -101,7 +101,7 @@ export default {
     display: inline-block;
     position: relative;
     top: -60px;
-    height: 600px;
+    height: 800px;
     width: 100%;
     border-radius: 6px;
 }
