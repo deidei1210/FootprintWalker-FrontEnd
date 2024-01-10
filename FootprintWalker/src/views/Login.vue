@@ -39,12 +39,13 @@
         </div>
     </div>
 </template>
-  
+
 <script>
 // import HelloWorld from '@/components/HelloWorld.vue'
 import {
     mdiAccount,
-} from '@mdi/js'
+} from '@mdi/js';
+import axios from 'axios';
 export default {
     data: () => ({
         mdiAccount,
@@ -74,18 +75,40 @@ export default {
         },
         //处理登录逻辑
         loginHandler() {
-            //检查表单是否有效，如果无效，则返回
-            if (!this.form) return
+          if (!this.form) return;
 
-            //执行登录逻辑，成功后重定向到主页
-            this.loading = true
-            console.log(this.userAccount)
-            console.log(this.password)
-            setTimeout(() => {
-                this.loading = false
-                //重定向到主页
-                this.$router.push('/home-page')
-            }, 2000)
+          this.loading = true;
+
+          // const params = {
+          //   id: this.userAccount,
+          //   password: this.password,
+          // };
+          // // 构建查询参数
+          // const params = new URLSearchParams();
+          // params.append('id', this.userAccount);
+          // params.append('password', this.password);
+
+          // console.log("params",params);
+          // axios.post('/api/human_management/members/login',null, {
+          //   params: {
+          //     id: this.userAccount,
+          //     password: this.password,
+          //   }
+          // })
+          axios.post("api/human_managament/members/login?id=7&password=7")
+            .then(response => {
+              console.log('Login successful', response);
+              // 登录成功后的操作，例如重定向
+              this.$router.push('/home-page');
+            })
+            .catch(error => {
+              console.error('Login failed', error);
+              // 登录失败后的操作
+            })
+            .finally(() => {
+              this.loading = false;
+            });
+
         },
         //处理注册逻辑
         registerHandler() {

@@ -9,6 +9,20 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 3000,
+    proxy: {
+      '/target': {
+        target: 'http://localhost:8090/api',
+        changeOrigin: true,
+        // pathRewrite: {
+        //   '^/api': '/api'
+        // }
+
+        rewrite: (path) => path.replace(/^\/target/, "")
+      }
+    }
+  },
   plugins: [
     vue({
       template: { transformAssetUrls }
@@ -44,7 +58,6 @@ export default defineConfig({
       '.vue',
     ],
   },
-  server: {
-    port: 3000,
-  },
+
+
 })
