@@ -29,7 +29,7 @@ app.config.globalProperties.$http = axios;
 axios.defaults.baseURL = "http://localhost:8090";
 
 const axiosForActivity = axios.create({
-    baseURL: 'http://localhost:9091/api'
+    baseURL: 'http://localhost:9091'
 });
 
 // axios.defaults.baseURL = "/target"

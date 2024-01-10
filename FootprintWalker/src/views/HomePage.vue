@@ -191,7 +191,7 @@ export default {
 
     getActivityData() {
 
-        axiosForActivity.get('/activity/activities/latest').then(response => {
+        axiosForActivity.get('/api/activity/activities/latest').then(response => {
             console.log('Response from Service B:', response.data);
 
             this.activityData = response.data;
