@@ -9,7 +9,8 @@
             <!-- 右边是往期回顾的文字介绍 -->
             <!-- 往期回顾 -->
             <div id="Lookback">
-                <v-icon icon="mdi-map-marker" color="red" style="display:inline-block;position:relative;top:-10px;" size="x-large" />
+                <v-icon icon="mdi-map-marker" color="red" style="display:inline-block;position:relative;top:-10px;"
+                    size="x-large" />
                 <div class="text-h3 text-white" style="display:inline-block;" color="white">{{ lookback.title }}</div>
                 <div class="text-container">
                     <p class="text-left text-body-1 text-white">{{ lookback.activityInfo }}</p>
@@ -28,15 +29,20 @@
         <v-col style="padding:50px;">
             <v-img src="../assets/活动报名.png">
                 <div class="content">
-                    <v-icon icon="mdi-fire" color="red" style="display:inline-block;position:relative;top:-10px;" size="x-large" />
+                    <v-icon icon="mdi-fire" color="red" style="display:inline-block;position:relative;top:-10px;"
+                        size="x-large" />
                     <div class="text-h3" style="display:inline-block;">{{ activityData.title }}</div>
                     <div class="text-caption">截止时间：{{ formatDateTime(activityData.registrationEndTime) }}</div>
                     <v-divider class="border-opacity-75"></v-divider>
-                    <div class="text-left text-body-1"><span class="text-red">【活动简介】</span>{{ activityData.activityInfo }}</div>
-                    <div class="text-left text-body-1"><span class="text-red">【活动时间】</span>{{ formatDateTime(activityData.startTime) }}</div>
-                    <div class="text-left text-body-1"><span class="text-red">【活动人数】</span>{{ activityData.currentParticipants }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动时间】</span>{{
+                        formatDateTime(activityData.startTime) }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动人数】</span>{{
+                        activityData.currentParticipants }}</div>
                     <div class="text-left text-body-1"><span class="text-red">【报名费用】</span>{{ activityData.cost }}</div>
-                    <div class="text-left text-body-1"><span class="text-red">【活动校区】</span>{{ joinCampuses(activityData.campus) }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动校区】</span>{{
+                        joinCampuses(activityData.campus) }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动简介】</span>{{ truncatedContent }}
+                    </div>
                     <div class="text-container" style="margin-top: 10px;">
                         <p class="text-left text-body-1">{{ activityData.description }}</p>
                     </div>
@@ -62,7 +68,8 @@
                     </v-row>
                     <!-- 只显示后五条公告的标题 -->
                     <div style="margin:12px 3px 3px 3px;">
-                        <div v-for="(announcement, index) in announcements.slice(3, 8)" :key="index" style="display: flex; justify-content: space-between;">
+                        <div v-for="(announcement, index) in announcements.slice(3, 8)" :key="index"
+                            style="display: flex; justify-content: space-between;">
                             <div>
                                 <v-btn :to="announcement.link" variant="text" prepend-icon="mdi-circle">
                                     {{ announcement.title }}
@@ -123,29 +130,40 @@ export default {
         announcements: [],
         lookback: {},
         eventInfo: {},
-        activityData:{
+        activityData: {
             id: null,
-            title:'',
-            startTime: null, 
-            endTime: null,   
-            registrationStartTime: null, 
+            title: '',
+            startTime: null,
+            endTime: null,
+            registrationStartTime: null,
             registrationEndTime: null,
-            campus:['',''],
+            campus: ['', ''],
             cost: 0.0,
             location: '',
             activityInfo: '',
             currentParticipants: 0,
             estimatedLimit: 0,
-            activityStatus: '', 
-            leaderIds: [],     
-            adImages: [],     
-            feedbackImages: [], 
-            feedbacks: [],      
+            activityStatus: '',
+            leaderIds: [],
+            adImages: [],
+            feedbackImages: [],
+            feedbacks: [],
             organizeDetails: '',
-            participantIds: []  
+            participantIds: []
         },
-        
+        // truncatedContent:"",
+
     }),
+    computed: {
+        //截取显示在往期活动的内容
+        truncatedContent() {
+            // 截取活动内容的前50个字符
+            const maxLength = 100;
+            return this.activityData.activityInfo.length > maxLength
+                ? this.activityData.activityInfo.substring(0, maxLength) + '...'
+                : this.activityData.activityInfo;
+        },
+    },
     mounted() {
         const scripts = document.querySelectorAll('script[src="./src/snow.js"]')
         this.getLookbackData();
@@ -190,25 +208,66 @@ export default {
 
     },
 
-    getActivityData() {
+        getActivityData() {
+            axiosForActivity.get('/api/activity/activities/latest').then(response => {
+                console.log('Response from Service B:', response.data);
+                this.activityData = response.data;
+            });
 
-        axiosForActivity.get('/api/activity/activities/latest').then(response => {
-            console.log('Response from Service B:', response.data);
-            this.activityData = response.data;
-            
-        });
-
-        // this.eventInfo = 
-        // {
-        //     title: "千岛湖",
-        //     deadline: "2023年11月25日（星期六） 23:59",
-        //     date: "2023年12月2—3日（第12周周末）",
-        //     participantCount: "25人左右",
-        //     cost: "625元/人",
-        //     campuses: "不限。上车地点包括四平路、嘉定校区。",
-        //     description: "刚考完期中想放松一下？没有social机会浑身不自在？想让身心沉浸在自然风景之中？别催啦别催啦！！！大家等待已久的千岛湖活动这不就来！了！吗！...",
-        //     imageUrl: "/src/assets/activity/anhui1.JPG"
-        // };
+            // this.activityData.activityInfo=truncatedContent();
+        },
+        getAnnouncementsData() {
+            this.announcements = [
+                {
+                    title: "千岛之湖 | 周末轰趴+出游一站式解决方案",
+                    imageUrl: "/src/assets/activity/anhui1.JPG",
+                    link: "https://chat1.aichatos.com/#/chat/1700226220387",
+                    // ...其他属性
+                },
+                {
+                    title: "活动回顾 | 徽韵山水，足迹行者的诗画旅程",
+                    imageUrl: "/src/assets/activity/anhui2.JPG",
+                    link: "https://chat1.aichatos.com/#/chat/1700226220388",
+                    // ...其他属性
+                },
+                {
+                    title: "足迹行者干事招新 | 去旅行，去热爱！",
+                    imageUrl: "/src/assets/activity/anhui2.JPG",
+                    link: "https://chat1.aichatos.com/#/chat/1700226220389",
+                    // ...其他属性
+                },
+                {
+                    title: "松江之旅 | 走进自然，一起打个盹！",
+                    imageUrl: "/src/assets/activity/anhui2.JPG",
+                    link: "https://chat1.aichatos.com/#/chat/1700226220390",
+                    // ...其他属性
+                },
+                {
+                    title: "2022秋招 | 期待与你一起再出发",
+                    imageUrl: "/src/assets/activity/anhui2.JPG",
+                    link: "https://chat1.aichatos.com/#/chat/1700226220391",
+                    // ...其他属性
+                },
+                {
+                    title: "同济大学 | 探索未知的旅程",
+                    imageUrl: "/src/assets/activity/anhui2.JPG",
+                    link: "https://chat1.aichatos.com/#/chat/1700226220392",
+                    // ...其他属性
+                },
+                {
+                    title: "国庆特别活动 | 美丽的中国风景",
+                    imageUrl: "/src/assets/activity/anhui2.JPG",
+                    link: "https://chat1.aichatos.com/#/chat/1700226220393",
+                    // ...其他属性
+                },
+                {
+                    title: "户外探险 | 趣味山林之旅",
+                    imageUrl: "/src/assets/activity/anhui2.JPG",
+                    link: "https://chat1.aichatos.com/#/chat/1700226220394",
+                    // ...其他属性
+                }
+            ]
+        },
 
     },
     getAnnouncementsData() {
@@ -269,7 +328,6 @@ export default {
         // ]
     },
     // 其他获取数据的方法...
-    },
 
 }
 </script>
