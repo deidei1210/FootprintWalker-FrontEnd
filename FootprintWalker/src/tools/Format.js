@@ -9,3 +9,14 @@ export function formatDateTime(dateString) {
     second: '2-digit'
   });
 }
+
+export function joinCampuses(campuses) {
+  const campusNames = {
+    'SIPING': '四平路校区',
+    'JIADING': '嘉定校区',
+    'HUXI': '沪西校区',
+    'HUBEI': '沪北校区',
+    // 添加其他校区的映射
+  };
+  return campuses.map(campus => campusNames[campus] || campus).join(', ');
+}

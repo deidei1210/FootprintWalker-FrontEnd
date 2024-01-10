@@ -30,13 +30,13 @@
                 <div class="content">
                     <v-icon icon="mdi-fire" color="red" style="display:inline-block;position:relative;top:-10px;" size="x-large" />
                     <div class="text-h3" style="display:inline-block;">{{ activityData.title }}</div>
-                    <div class="text-caption">截止时间：{{ activityData.registrationEndTime }}</div>
+                    <div class="text-caption">截止时间：{{ formatDateTime(activityData.registrationEndTime) }}</div>
                     <v-divider class="border-opacity-75"></v-divider>
                     <div class="text-left text-body-1"><span class="text-red">【活动简介】</span>{{ activityData.activityInfo }}</div>
-                    <div class="text-left text-body-1"><span class="text-red">【活动时间】</span>{{ activityData.startTime }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动时间】</span>{{ formatDateTime(activityData.startTime) }}</div>
                     <div class="text-left text-body-1"><span class="text-red">【活动人数】</span>{{ activityData.currentParticipants }}</div>
                     <div class="text-left text-body-1"><span class="text-red">【报名费用】</span>{{ activityData.cost }}</div>
-                    <div class="text-left text-body-1"><span class="text-red">【活动校区】</span>{{ activityData.campus }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动校区】</span>{{ joinCampuses(activityData.campus) }}</div>
                     <div class="text-container" style="margin-top: 10px;">
                         <p class="text-left text-body-1">{{ activityData.description }}</p>
                     </div>
@@ -106,7 +106,7 @@
 import DefaultBar from '@/layouts/default/AppBar.vue'
 import Footer from '@/layouts/default/Foot.vue'
 import { BaiduMap } from 'vue-baidu-map-3x'
-
+import{ formatDateTime , joinCampuses} from '@/tools/Format.js'
 import { axiosForActivity} from '../main.js';
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
@@ -130,7 +130,7 @@ export default {
             endTime: null,   
             registrationStartTime: null, 
             registrationEndTime: null,
-            campus:'',
+            campus:['',''],
             cost: 0.0,
             location: '',
             activityInfo: '',
@@ -179,6 +179,8 @@ export default {
 
     },
     methods: {
+    formatDateTime,
+    joinCampuses,
     getLookbackData() {
         this.lookback = {
             title: "皖南之行",
@@ -193,9 +195,8 @@ export default {
 
         axiosForActivity.get('/api/activity/activities/latest').then(response => {
             console.log('Response from Service B:', response.data);
-
             this.activityData = response.data;
-  
+            
         });
 
         // this.eventInfo = 
