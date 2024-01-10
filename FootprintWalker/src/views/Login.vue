@@ -79,23 +79,13 @@ export default {
 
           this.loading = true;
 
-          // const params = {
-          //   id: this.userAccount,
-          //   password: this.password,
-          // };
-          // // 构建查询参数
-          // const params = new URLSearchParams();
-          // params.append('id', this.userAccount);
-          // params.append('password', this.password);
+          const params = {
+            phoneNumber: this.userAccount,
+            password: this.password,
+          };
 
-          // console.log("params",params);
-          // axios.post('/api/human_management/members/login',null, {
-          //   params: {
-          //     id: this.userAccount,
-          //     password: this.password,
-          //   }
-          // })
-          axios.post("api/human_managament/members/login?id=7&password=7")
+          console.log("params",params);
+          axios.get('api/human_management/members/login', {params})
             .then(response => {
               console.log('Login successful', response);
               // 登录成功后的操作，例如重定向
