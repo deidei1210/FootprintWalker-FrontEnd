@@ -1,10 +1,9 @@
 <template>
-    <div>
+    <div style="position:relative;">
         <!-- 顶部的导航栏 -->
         <DefaultBar />
-        <v-img src="../assets/活动报名天空背景.png" style="position:relative;top:-60px;"></v-img>
-        <!-- 活动卡片 -->
-        <v-container style="position:relative;top:-690px;">
+        <v-img src="../assets/活动报名天空背景.png" style="width: 100%; height: 100%;">
+            <v-container style="position:absolute;top:230px;left:13%;">
             <v-row>
                 <v-col v-for="(activity, index) in paginatedActivities" :key="activity.id" :cols="12 / cardsPerRow">
                     <assign-card :activity="activity" />
@@ -12,19 +11,21 @@
             </v-row>
             <v-pagination v-model="currentPage" :length="totalPages" @input="loadPage" />
         </v-container>
-
-        <!-- 分页导航 -->
+        </v-img>
+        <Footer></Footer>
     </div>
 </template>
 <script>
 import DefaultBar from '@/layouts/default/AppBar.vue'
 import AssignCard from '@/components/AssignCard.vue'
+import Footer from '@/layouts/default/Foot.vue'
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
     //导出组件
     components: {
         DefaultBar,
-        AssignCard
+        AssignCard,
+        Footer,
     },
     data: () => ({
         form: false,
@@ -175,7 +176,9 @@ export default {
         },
     },
 }
-
-
 </script>
+<style>
+    
+</style>
+
   

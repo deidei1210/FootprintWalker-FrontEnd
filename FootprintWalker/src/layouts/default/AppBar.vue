@@ -1,6 +1,6 @@
 <template>
   <!-- <v-container> -->
-    <v-app-bar app color="rgba(61, 61, 61, 0.68)" scroll-behavior="fade-image" dark
+    <v-app-bar app color="rgba(61, 61, 61)" scroll-behavior="fade-image" dark
     shrink-on-scroll height="60" style="position:fixed;color:aliceblue;">
       <template v-slot:img="{ props }">
         <v-img v-bind="props" gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
