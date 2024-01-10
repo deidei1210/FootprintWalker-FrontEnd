@@ -29,23 +29,19 @@
     </v-img>
     <v-img src="../assets/我们的印记背景.png" style="position:relative;top:-350px;">
         <!-- 文章展示 -->
-        <div style="position:relative;top:150px;" >
+        <div style="position:relative;top:150px;">
             <article-preview v-for="article in paginatedArticles" :key="article.id" :article="article" />
             <!-- 分页导航组件 -->
             <v-pagination v-model="currentPage" :length="totalPages" @input="loadPage"></v-pagination>
         </div>
     </v-img>
-    <v-img src="../assets/干事招新背景.png">
-        <div class="container">
-            <v-card class="custom-card">
-                <v-card-title class="card-title">干事招新</v-card-title>
-                <v-card-subtitle class="card-subtitle">足迹行者</v-card-subtitle>
-                <v-card-text class="card-text">{{ content }}</v-card-text>
-                <v-btn class="custom-btn">我要报名</v-btn>
-            </v-card>
-        </div>
-    </v-img>
-    <Footer></Footer>
+        <v-img src="../assets/干事招新背景.png" class="background-image" style="position:relative;top:-350px;" cover>
+            <v-img src="../assets/干事招新卡片.png" width="1000" style="left:20%;">
+            <div style="width:700px;position:absolute;left:20%;top:15%;">{{ content }}</div>
+            <v-btn style="position:absolute;left:45%;bottom:20%;" size="x-large" color="#BAB9C5">我要报名</v-btn>
+            </v-img>
+        </v-img>
+    <Footer style="position:relative;top:-350px;"></Footer>
 </template>
   
 <script>
@@ -161,44 +157,22 @@ export default {
     border-radius: 6px;
 }
 
-.container {
-    position: relative;
-    top: 150px;
+/* .image-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 100vh; 使容器占据整个视口高度 */
+} */
+
+.background-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.custom-card {
-    background-color: #fefdfd;
-    /* 卡片的背景颜色 */
-    width: 60%;
-    /* 自定义卡片宽度 */
-    text-align: center;
-    /* 文字居中 */
+.inner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100%; 使内部容器充满整个背景图片 */
 }
-
-.card-title {
-    background-color: #2c2f31;
-    /* 标题的背景颜色 */
-    color: white;
-    /* 标题文字颜色 */
-    text-align: center;
-    /* 文字居中 */
-}
-
-.card-subtitle {
-    text-align: center;
-    /* 文字居中 */
-}
-
-.custom-btn {
-    background-color: #f27162;
-    /* 按钮的背景颜色 */
-    color: white;
-    /* 按钮文字颜色 */
-    margin: auto;
-    /* 垂直水平居中 */
-    margin-bottom: 10px;
-}</style>
+</style>
