@@ -49,7 +49,19 @@
                     <v-window-item value="three">
                         <!-- 我的反馈内容 -->
                         <v-container class="feedback-container">
-
+                            <v-row>
+                                <v-col v-for="activity in paginatedActivities" :key="activity.id" :cols="12 / cardsPerRow">
+                                    <v-card>
+                                        <v-card-title>{{ activity.name }}</v-card-title>
+                                        <v-card-subtitle>{{ activity.date }}</v-card-subtitle>
+                                        <!-- 其他活动信息显示 -->
+                                        <v-card-actions>
+                                            <v-btn @click="showFeedbackDialog(activity)">查看反馈</v-btn>
+                                            <v-btn @click="showFeedbackForm(activity)">我要反馈</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-col>
+                            </v-row>
                         </v-container>
                     </v-window-item>
                 </v-window>
@@ -149,6 +161,44 @@ export default {
         totalPages: 0,
 
         feedback: "",
+
+        myFeedback:[
+            {
+              id:"1",
+              content:"",
+              status:"",
+              date:"",
+              reply:"",  
+            },
+            {
+              id:"1",
+              content:"",
+              status:"",
+              date:"",
+              reply:"", 
+            },
+            {
+              id:"1",
+              content:"",
+              status:"",
+              date:"",
+              reply:"", 
+            },
+            {
+              id:"1",
+              content:"",
+              status:"",
+              date:"",
+              reply:"", 
+            },
+            {
+              id:"1",
+              content:"",
+              status:"",
+              date:"",
+              reply:"", 
+            }
+        ]
     }),
 
     //   computed: {
@@ -185,7 +235,7 @@ export default {
         submitFeedback() {
             // 在这里处理提交逻辑，例如打印 feedback 中的内容
             console.log('用户反馈内容：', this.feedback);
-            this.feedback="";
+            this.feedback = "";
         },
     }
 };
