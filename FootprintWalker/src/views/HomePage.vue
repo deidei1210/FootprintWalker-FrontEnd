@@ -29,19 +29,20 @@
             <v-img src="../assets/活动报名.png">
                 <div class="content">
                     <v-icon icon="mdi-fire" color="red" style="display:inline-block;position:relative;top:-10px;" size="x-large" />
-                    <div class="text-h3" style="display:inline-block;">{{ eventInfo.title }}</div>
-                    <div class="text-caption">截止时间：{{ eventInfo.deadline }}</div>
+                    <div class="text-h3" style="display:inline-block;">{{ activityData.title }}</div>
+                    <div class="text-caption">截止时间：{{ activityData.registrationEndTime }}</div>
                     <v-divider class="border-opacity-75"></v-divider>
-                    <div class="text-left text-body-1"><span class="text-red">【活动时间】</span>{{ eventInfo.date }}</div>
-                    <div class="text-left text-body-1"><span class="text-red">【活动人数】</span>{{ eventInfo.participantCount }}</div>
-                    <div class="text-left text-body-1"><span class="text-red">【报名费用】</span>{{ eventInfo.cost }}</div>
-                    <div class="text-left text-body-1"><span class="text-red">【活动校区】</span>{{ eventInfo.campuses }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动简介】</span>{{ activityData.activityInfo }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动时间】</span>{{ activityData.startTime }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动人数】</span>{{ activityData.currentParticipants }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【报名费用】</span>{{ activityData.cost }}</div>
+                    <div class="text-left text-body-1"><span class="text-red">【活动校区】</span>{{ activityData.campus }}</div>
                     <div class="text-container" style="margin-top: 10px;">
-                        <p class="text-left text-body-1">{{ eventInfo.description }}</p>
+                        <p class="text-left text-body-1">{{ activityData.description }}</p>
                     </div>
                     <a href="">更多>></a>
 
-                    <v-img :src="eventInfo.imageUrl" max-width="50%"></v-img>
+                    <v-img :src="activityData.adImages[0]" max-width="50%"></v-img>
                 </div>
             </v-img>
         </v-col>
@@ -105,6 +106,8 @@
 import DefaultBar from '@/layouts/default/AppBar.vue'
 import Footer from '@/layouts/default/Foot.vue'
 import { BaiduMap } from 'vue-baidu-map-3x'
+
+import { axiosForActivity} from '../main.js';
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
     //导出组件
@@ -120,12 +123,33 @@ export default {
         announcements: [],
         lookback: {},
         eventInfo: {},
+        activityData:{
+            id: null,
+            title:'',
+            startTime: null, 
+            endTime: null,   
+            registrationStartTime: null, 
+            registrationEndTime: null,
+            campus:'',
+            cost: 0.0,
+            location: '',
+            activityInfo: '',
+            currentParticipants: 0,
+            estimatedLimit: 0,
+            activityStatus: '', 
+            leaderIds: [],     
+            adImages: [],     
+            feedbackImages: [], 
+            feedbacks: [],      
+            organizeDetails: '',
+            participantIds: []  
+        },
         
     }),
     mounted() {
         const scripts = document.querySelectorAll('script[src="./src/snow.js"]')
         this.getLookbackData();
-        this.getEventInfo();
+        this.getActivityData();
         this.getAnnouncementsData();
 
         scripts.forEach(script => {
@@ -165,18 +189,26 @@ export default {
         };
     },
 
-    getEventInfo() {
-        this.eventInfo = 
-        {
-            title: "千岛湖",
-            deadline: "2023年11月25日（星期六） 23:59",
-            date: "2023年12月2—3日（第12周周末）",
-            participantCount: "25人左右",
-            cost: "625元/人",
-            campuses: "不限。上车地点包括四平路、嘉定校区。",
-            description: "刚考完期中想放松一下？没有social机会浑身不自在？想让身心沉浸在自然风景之中？别催啦别催啦！！！大家等待已久的千岛湖活动这不就来！了！吗！...",
-            imageUrl: "/src/assets/activity/anhui1.JPG"
-        };
+    getActivityData() {
+
+        axiosForActivity.get('/activity/activities/latest').then(response => {
+            console.log('Response from Service B:', response.data);
+
+            this.activityData = response.data;
+  
+        });
+
+        // this.eventInfo = 
+        // {
+        //     title: "千岛湖",
+        //     deadline: "2023年11月25日（星期六） 23:59",
+        //     date: "2023年12月2—3日（第12周周末）",
+        //     participantCount: "25人左右",
+        //     cost: "625元/人",
+        //     campuses: "不限。上车地点包括四平路、嘉定校区。",
+        //     description: "刚考完期中想放松一下？没有social机会浑身不自在？想让身心沉浸在自然风景之中？别催啦别催啦！！！大家等待已久的千岛湖活动这不就来！了！吗！...",
+        //     imageUrl: "/src/assets/activity/anhui1.JPG"
+        // };
 
     },
     getAnnouncementsData() {

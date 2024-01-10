@@ -28,9 +28,13 @@ app.config.globalProperties.$http = axios;
 // 本地环境
 axios.defaults.baseURL = "http://localhost:8090";
 
+const axiosForActivity = axios.create({
+    baseURL: 'http://localhost:9091/api'
+});
+
 // axios.defaults.baseURL = "/target"
 // axios.defaults.baseURL = "http://localhost:8090/api/"
 
 app.mount('#app')
 
-
+export { axiosForActivity };
