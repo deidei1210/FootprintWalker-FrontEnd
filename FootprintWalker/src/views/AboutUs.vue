@@ -27,13 +27,24 @@
             </v-col>
         </v-row>
     </v-img>
-    <!-- 文章展示 -->
-    <div style="position:relative;top:-200px;">
-        <article-preview v-for="article in paginatedArticles" :key="article.id" :article="article" />
-        <!-- 分页导航组件 -->
-        <v-pagination v-model="currentPage" :length="totalPages" @input="loadPage"></v-pagination>
-    </div>
-
+    <v-img src="../assets/我们的印记背景.png" style="position:relative;top:-350px;">
+        <!-- 文章展示 -->
+        <div style="position:relative;top:150px;" >
+            <article-preview v-for="article in paginatedArticles" :key="article.id" :article="article" />
+            <!-- 分页导航组件 -->
+            <v-pagination v-model="currentPage" :length="totalPages" @input="loadPage"></v-pagination>
+        </div>
+    </v-img>
+    <v-img src="../assets/干事招新背景.png">
+        <div class="container">
+            <v-card class="custom-card">
+                <v-card-title class="card-title">干事招新</v-card-title>
+                <v-card-subtitle class="card-subtitle">足迹行者</v-card-subtitle>
+                <v-card-text class="card-text">{{ content }}</v-card-text>
+                <v-btn class="custom-btn">我要报名</v-btn>
+            </v-card>
+        </div>
+    </v-img>
     <Footer></Footer>
 </template>
   
@@ -65,7 +76,7 @@ export default {
                 src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
             },
         ],
-        articlesPerPage: 5, // 每页显示的文章数量
+        articlesPerPage: 4, // 每页显示的文章数量
         currentPage: 1, // 当前页码
         //文章内容
         articles: [
@@ -87,6 +98,7 @@ export default {
             { id: 16, title: '文章标题16', preview: '文章预览内容16...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
             // 其他文章数据...
         ],
+        content: "加入我们，成为校园中的引领者！你是否渴望在校园里展现自己的领袖魅力，影响更多的同学？你是否希望参与策划并组织那些让人印象深刻的活动和项目？那么，这就是你大展拳脚的舞台！我们诚挚邀请你加入我们的团队，成为我们的一员。作为一名干事，你将有机会参与各种丰富多彩的活动策划、组织和执行，锻炼你的团队合作能力、沟通技巧和领导潜能。无论你是对活动策划充满热情，还是渴望提升自己的团队管理能力，我们都将为你提供一个施展才华的舞台。加入我们，让我们一起书写属于我们的精彩故事，为校园增添更多色彩，展现青春无限的活力！快来成为我们团队的一份子吧，让我们一同开启未来的精彩旅程！"
     }),
     computed: {
         paginatedArticles() {
@@ -148,4 +160,45 @@ export default {
     width: 100%;
     border-radius: 6px;
 }
-</style>
+
+.container {
+    position: relative;
+    top: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; 使容器占据整个视口高度 */
+}
+
+.custom-card {
+    background-color: #fefdfd;
+    /* 卡片的背景颜色 */
+    width: 60%;
+    /* 自定义卡片宽度 */
+    text-align: center;
+    /* 文字居中 */
+}
+
+.card-title {
+    background-color: #2c2f31;
+    /* 标题的背景颜色 */
+    color: white;
+    /* 标题文字颜色 */
+    text-align: center;
+    /* 文字居中 */
+}
+
+.card-subtitle {
+    text-align: center;
+    /* 文字居中 */
+}
+
+.custom-btn {
+    background-color: #f27162;
+    /* 按钮的背景颜色 */
+    color: white;
+    /* 按钮文字颜色 */
+    margin: auto;
+    /* 垂直水平居中 */
+    margin-bottom: 10px;
+}</style>
