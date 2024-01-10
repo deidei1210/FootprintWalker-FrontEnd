@@ -37,8 +37,13 @@
                     <v-window-item value="two">
                         <!-- 社团反馈内容 -->
                         <v-container class="feedback-container">
-
+                            <v-textarea v-model="feedback" label="我对社团的反馈......" variant="outlined" rows="20"
+                                prepend-icon="mdi-comment"></v-textarea>
                         </v-container>
+                        <div class="d-flex flex-row-reverse mb-6">
+                            <!-- 提交按钮 -->
+                            <v-btn class="ma-2 pa-2" @click="submitFeedback" color="#4A4A4A" size="x-large">提交</v-btn>
+                        </div>
                     </v-window-item>
 
                     <v-window-item value="three">
@@ -142,6 +147,8 @@ export default {
         currentPage: 1,
         cardsPerRow: 1,
         totalPages: 0,
+
+        feedback: "",
     }),
 
     //   computed: {
@@ -175,13 +182,18 @@ export default {
             // 显示我要反馈的弹窗，可以使用 Vuetify 的 Dialog 组件
             // 在弹窗中提供一个文本输入框，用户输入反馈内容
         },
+        submitFeedback() {
+            // 在这里处理提交逻辑，例如打印 feedback 中的内容
+            console.log('用户反馈内容：', this.feedback);
+            this.feedback="";
+        },
     }
 };
 </script>
 
 <style scoped>
 .feedback-container {
-    height: 400px;
+    height: 600px;
     /* 设置最大高度 */
     overflow-y: auto;
     /* 添加垂直滚动条 */
