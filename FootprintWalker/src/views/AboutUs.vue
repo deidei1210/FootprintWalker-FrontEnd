@@ -14,19 +14,25 @@
     </v-img>
     <v-img src="../assets/WhoAreWe_background.png" style="position:relative;top:-350px;">
         <v-row style="width:60%;position:relative;left:20%;top:43%;">
-                <v-col cols="5"> <!-- 修改这里的列数来调整图片所占的宽度 -->
-                    <v-img src="../assets/Poster.jpg" height="400px" max-width="280px"></v-img>
-                </v-col>
-                <v-col cols="7"> <!-- 修改这里的列数来调整文字所占的宽度 -->
-                    <div style="position:relative;width:100%;">
-                        足迹行者是同济大学的学生社团，致力于组织学生外出旅游和郊游活动。
-                        我们提供丰富多样的旅行目的地和活动选择，让同学们能够亲近自然、放松身心，增进友谊和团队合作意识。
-                        我们注重安全和组织管理，确保每次活动都能顺利进行。通过参与足迹行者，同学们可以拓宽视野、丰富知识，同时也能享受到旅行的乐趣和美好回忆。
-                        欢迎加入我们，一起探索未知的旅程！
-                    </div>
-                </v-col>
-            </v-row>
+            <v-col cols="5"> <!-- 修改这里的列数来调整图片所占的宽度 -->
+                <v-img src="../assets/Poster.jpg" height="400px" max-width="280px"></v-img>
+            </v-col>
+            <v-col cols="7"> <!-- 修改这里的列数来调整文字所占的宽度 -->
+                <div style="position:relative;width:100%;">
+                    足迹行者是同济大学的学生社团，致力于组织学生外出旅游和郊游活动。
+                    我们提供丰富多样的旅行目的地和活动选择，让同学们能够亲近自然、放松身心，增进友谊和团队合作意识。
+                    我们注重安全和组织管理，确保每次活动都能顺利进行。通过参与足迹行者，同学们可以拓宽视野、丰富知识，同时也能享受到旅行的乐趣和美好回忆。
+                    欢迎加入我们，一起探索未知的旅程！
+                </div>
+            </v-col>
+        </v-row>
     </v-img>
+    <!-- 文章展示 -->
+    <div style="position:relative;top:-200px;">
+        <article-preview v-for="article in paginatedArticles" :key="article.id" :article="article" />
+        <!-- 分页导航组件 -->
+        <v-pagination v-model="currentPage" :length="totalPages" @input="loadPage"></v-pagination>
+    </div>
 
     <Footer></Footer>
 </template>
@@ -34,12 +40,14 @@
 <script>
 import DefaultBar from '@/layouts/default/AppBar.vue'
 import Footer from '@/layouts/default/Foot.vue'
+import ArticlePreview from '@/components/ArticlePreview.vue';
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
     //导出组件
     components: {
         DefaultBar,
-        Footer
+        Footer,
+        ArticlePreview
     },
     data: () => ({
         form: false,
@@ -57,7 +65,41 @@ export default {
                 src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
             },
         ],
+        articlesPerPage: 5, // 每页显示的文章数量
+        currentPage: 1, // 当前页码
+        //文章内容
+        articles: [
+            { id: 1, title: '文章标题1', preview: '文章预览内容1...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 2, title: '文章标题2', preview: '文章预览内容2...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 3, title: '文章标题3', preview: '文章预览内容3...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 4, title: '文章标题4', preview: '文章预览内容4...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 5, title: '文章标题5', preview: '文章预览内容5...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 6, title: '文章标题6', preview: '文章预览内容6...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 7, title: '文章标题7', preview: '文章预览内容7...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 8, title: '文章标题8', preview: '文章预览内容8...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 9, title: '文章标题9', preview: '文章预览内容9...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 10, title: '文章标题10', preview: '文章预览内容10...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 11, title: '文章标题11', preview: '文章预览内容11...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 12, title: '文章标题12', preview: '文章预览内容12...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 13, title: '文章标题13', preview: '文章预览内容13...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 14, title: '文章标题14', preview: '文章预览内容14...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 15, title: '文章标题15', preview: '文章预览内容15...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            { id: 16, title: '文章标题16', preview: '文章预览内容16...', image: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg" },
+            // 其他文章数据...
+        ],
     }),
+    computed: {
+        paginatedArticles() {
+            // 根据当前页码和每页显示的数量计算出当前页需要显示的文章
+            const startIndex = (this.currentPage - 1) * this.articlesPerPage;
+            const endIndex = startIndex + this.articlesPerPage;
+            return this.articles.slice(startIndex, endIndex);
+        },
+        totalPages() {
+            // 计算总页数
+            return Math.ceil(this.articles.length / this.articlesPerPage);
+        },
+    },
     mounted() {
         const scripts = document.querySelectorAll('script[src="./src/snow.js"]')
         scripts.forEach(script => {
@@ -65,13 +107,13 @@ export default {
         })
         // GL版命名空间为BMapGL
         // 按住鼠标右键，修改倾斜角和角度
-        var map = new BMapGL.Map("allmap1");    // 创建Map实例
+        let map = new BMapGL.Map("allmap1");    // 创建Map实例
         map.centerAndZoom(new BMapGL.Point(119.404, 30.915), 9);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
         map.setMapStyleV2({
             styleId: '3edf2b18e4530ff02701506c58ab7df8'
         });
-        var points = [
+        let points = [
             new BMapGL.Point(121.434, 31.225),  //愚园路
             new BMapGL.Point(117.944, 29.931),  //皖南之行
             new BMapGL.Point(119.562, 29.945), //纪龙山
@@ -79,8 +121,8 @@ export default {
             // 这里可以继续添加更多的点坐标
         ];
 
-        for (var i = 0; i < points.length; i++) {
-            var marker = new BMapGL.Marker(points[i]);
+        for (const element of points) {
+            let marker = new BMapGL.Marker(element);
             marker.addEventListener("click", function () {
                 alert("您点击了标注");
             });
@@ -89,13 +131,14 @@ export default {
 
     },
     methods: {
-
+        loadPage() {
+            // 处理页码变化时的逻辑，比如加载对应页的数据
+            console.log('Load page:', this.currentPage);
+        },
     },
 }
-
-
-
 </script>
+
 <style>
 #allmap1 {
     display: inline-block;
