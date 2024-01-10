@@ -6,13 +6,13 @@
         <v-img src="../assets/AboutUsPeaple_decoration.png" width="150px"
             style="position:absolute;right:10px;bottom:10px;"></v-img>
     </div>
-    <v-img src="../assets/AboutUsGoing.png" style="position:relative;top:-72px;">
+    <v-img src="../assets/AboutUsGoing.png" style="position:relative;top:-10px;">
         <v-carousel cycle height="400" hide-delimiter-background show-arrows="hover" :interval="4000"
             style="position: absolute;border-radius: 5px;width:50%;left:25%;top:15%;">
             <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src" cover></v-carousel-item>
         </v-carousel>
     </v-img>
-    <v-img src="../assets/WhoAreWe_background.png" style="position:relative;top:-350px;">
+    <v-img src="../assets/WhoAreWe_background.png" style="position:relative;top:-260px;">
         <v-row style="width:60%;position:relative;left:20%;top:43%;">
             <v-col cols="5"> <!-- 修改这里的列数来调整图片所占的宽度 -->
                 <v-img src="../assets/Poster.jpg" height="400px" max-width="280px"></v-img>
@@ -27,7 +27,7 @@
             </v-col>
         </v-row>
     </v-img>
-    <v-img src="../assets/我们的印记背景.png" style="position:relative;top:-350px;">
+    <v-img src="../assets/我们的印记背景.png" style="position:relative;top:-260px;">
         <!-- 文章展示 -->
         <div style="position:relative;top:150px;">
             <article-preview v-for="article in paginatedArticles" :key="article.id" :article="article" />
@@ -35,13 +35,13 @@
             <v-pagination v-model="currentPage" :length="totalPages" @input="loadPage"></v-pagination>
         </div>
     </v-img>
-        <v-img src="../assets/干事招新背景.png" class="background-image" style="position:relative;top:-350px;" cover>
+        <v-img src="../assets/干事招新背景.png" class="background-image" style="position:relative;top:-260px;" cover>
             <v-img src="../assets/干事招新卡片.png" width="1000" style="left:20%;">
             <div style="width:700px;position:absolute;left:20%;top:15%;">{{ content }}</div>
             <v-btn style="position:absolute;left:45%;bottom:20%;" size="x-large" color="#BAB9C5">我要报名</v-btn>
             </v-img>
         </v-img>
-    <Footer style="position:relative;top:-350px;"></Footer>
+    <Footer style="position:relative;top:-260px;"></Footer>
 </template>
   
 <script>
@@ -150,8 +150,6 @@ export default {
 <style>
 #allmap1 {
     display: inline-block;
-    position: relative;
-    top: -60px;
     height: 800px;
     width: 100%;
     border-radius: 6px;
