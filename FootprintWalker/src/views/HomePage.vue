@@ -18,7 +18,7 @@
                 <a href="">更多>></a>
                 <v-carousel cycle height="330" hide-delimiter-background show-arrows="hover" :interval="4000"
                     style="margin-top:25px;border-radius: 5px;">
-                    <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.adImages" cover></v-carousel-item>
+                    <v-carousel-item v-for="(image, i) in lookback.adImages" :key="i" :src="image" cover></v-carousel-item>
                 </v-carousel>
             </div>
         </v-img>
