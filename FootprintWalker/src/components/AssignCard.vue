@@ -10,14 +10,14 @@
             <v-card-title>{{ activity.title }}</v-card-title>
 
             <v-card-subtitle>
-                <span class="me-1">报名截止日期：{{ activity.deadline }}</span>
+                <span class="me-1">报名截止日期：{{ formatDateTime(activity.deadline) }}</span>
                 <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
             </v-card-subtitle>
         </v-card-item>
 
         <v-card-text>
             <div class="text-subtitle-1">活动地点：{{ activity.location }}</div>
-            <div class="text-subtitle-1">活动时间：{{ activity.startTime }} 到 {{ activity.endTime }}</div>
+            <div class="text-subtitle-1">活动时间：{{ formatDateTime(activity.startTime) }} 到 {{ formatDateTime(activity.endTime) }}</div>
             <div class="text-subtitle-1">活动地点：{{ activity.location }}</div>
             <div class="text-subtitle-1">活动内容：{{ truncatedContent }}</div>
         </v-card-text>
@@ -32,6 +32,7 @@
     </v-card>
 </template>
 <script>
+import {formatDateTime} from "@/tools/Format.js";
 export default {
     props: {
         activity: {
@@ -49,6 +50,9 @@ export default {
             const currentDate = new Date();
             const deadlineDate = new Date(this.activity.deadline);
 
+            // console.log(currentDate);
+            // console.log(deadlineDate);
+
             // 比较当前时间和报名截止日期
             return currentDate > deadlineDate;
         },
@@ -65,6 +69,7 @@ export default {
     },
 
     methods: {
+      formatDateTime,
         reserve() {
             this.loading = true
 
