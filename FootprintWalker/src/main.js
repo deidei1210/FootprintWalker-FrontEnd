@@ -32,9 +32,14 @@ const axiosForActivity = axios.create({
     baseURL: 'http://localhost:9091'
 });
 
+const axiosForAnnouncement = axios.create({
+    baseURL: 'http://localhost:1456'
+});
+
+
 // axios.defaults.baseURL = "/target"
 // axios.defaults.baseURL = "http://localhost:8090/api/"
 
 app.mount('#app')
 
-export { axiosForActivity };
+export { axiosForActivity,axiosForAnnouncement };

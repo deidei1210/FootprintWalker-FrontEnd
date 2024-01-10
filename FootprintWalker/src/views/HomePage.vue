@@ -12,12 +12,12 @@
                 <v-icon icon="mdi-map-marker" color="red" style="display:inline-block;position:relative;top:-10px;" size="x-large" />
                 <div class="text-h3 text-white" style="display:inline-block;" color="white">{{ lookback.title }}</div>
                 <div class="text-container">
-                    <p class="text-left text-body-1 text-white">{{ lookback.description }}</p>
+                    <p class="text-left text-body-1 text-white">{{ lookback.activityInfo }}</p>
                 </div>
                 <a href="">更多>></a>
                 <v-carousel cycle height="330" hide-delimiter-background show-arrows="hover" :interval="4000"
                     style="margin-top:25px;border-radius: 5px;">
-                    <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src" cover></v-carousel-item>
+                    <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.adImages" cover></v-carousel-item>
                 </v-carousel>
             </div>
         </v-img>
@@ -107,7 +107,7 @@ import DefaultBar from '@/layouts/default/AppBar.vue'
 import Footer from '@/layouts/default/Foot.vue'
 import { BaiduMap } from 'vue-baidu-map-3x'
 import{ formatDateTime , joinCampuses} from '@/tools/Format.js'
-import { axiosForActivity} from '../main.js';
+import { axiosForActivity,axiosForAnnouncement} from '../main.js';
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
     //导出组件
@@ -182,13 +182,12 @@ export default {
     formatDateTime,
     joinCampuses,
     getLookbackData() {
-        this.lookback = {
-            title: "皖南之行",
-            description: "在浓墨重彩的中国画卷中，皖南以其独特的徽派文化和醉人的自然风光绽放着无尽的魅力，它坚韧地在时间的长河中保存着那些美丽而深邃的故事。在刚过去的国庆假期，我们——同济大学的足迹行者们，怀揣着探索的好奇与敬仰的向往，踏上了这片灿烂的土地，寻找那些尘封的古韵，体验那些如诗如画的景致。回望那段徜徉于皖南的日子，我们仿佛仍能听见村居酒吧内桌游的欢声笑语，在夜的深蔚中编织着我们的青春回忆；我们的味蕾依然徜徉在那些蕴藏在徽州大地上的美食奥秘中，徜徉于古老的食谱之间。当我们驻足观赏那些永不褪色的徽派建筑，感受那些沉淀在小铺、老街中的人文情怀时，我们似乎触摸到了徽州的静谧与庄重；而在宏伟的山川、壮阔的稻田面前，我们的心灵被自然的鬼斧神工深深震撼，见证了皖南美景的壮丽与多姿。这，便是我们的皖南——一个蕴藏着无尽故事的地方，一个值得我们怀念、珍藏的美丽角落。在接下来的篇章中，我们将回顾这一路的点点滴滴，让记忆深处的每一处感动与美好，如徽州的山水般，静静流淌，永不消逝。",
-            imageUrl: "/src/assets/lookbackImage.jpg", // 假设的图片链接
-            moreInfoUrl: "https://example.com/more-about-lookback", // 更多信息的链接
-            // 其他可能的属性...
-        };
+        axiosForActivity.get('/api/activity/activities/latest-retrospective').then(response => {
+            console.log('Response from retrospective:', response.data);
+            this.lookback = response.data;
+            
+        });
+
     },
 
     getActivityData() {
@@ -213,56 +212,61 @@ export default {
 
     },
     getAnnouncementsData() {
-        this.announcements = [
-            {
-                title: "千岛之湖 | 周末轰趴+出游一站式解决方案",
-                imageUrl: "/src/assets/activity/anhui1.JPG",
-                link: "https://chat1.aichatos.com/#/chat/1700226220387",
-                // ...其他属性
-            },
-            {
-                title: "活动回顾 | 徽韵山水，足迹行者的诗画旅程",
-                imageUrl: "/src/assets/activity/anhui2.JPG",
-                link: "https://chat1.aichatos.com/#/chat/1700226220388",
-                // ...其他属性
-            },
-            {
-                title: "足迹行者干事招新 | 去旅行，去热爱！",
-                imageUrl: "/src/assets/activity/anhui2.JPG",
-                link: "https://chat1.aichatos.com/#/chat/1700226220389",
-                // ...其他属性
-            },
-            {
-                title: "松江之旅 | 走进自然，一起打个盹！",
-                imageUrl: "/src/assets/activity/anhui2.JPG",
-                link: "https://chat1.aichatos.com/#/chat/1700226220390",
-                // ...其他属性
-            },
-            {
-                title: "2022秋招 | 期待与你一起再出发",
-                imageUrl: "/src/assets/activity/anhui2.JPG",
-                link: "https://chat1.aichatos.com/#/chat/1700226220391",
-                // ...其他属性
-            },
-            {
-                title: "同济大学 | 探索未知的旅程",
-                imageUrl: "/src/assets/activity/anhui2.JPG",
-                link: "https://chat1.aichatos.com/#/chat/1700226220392",
-                // ...其他属性
-            },
-            {
-                title: "国庆特别活动 | 美丽的中国风景",
-                imageUrl: "/src/assets/activity/anhui2.JPG",
-                link: "https://chat1.aichatos.com/#/chat/1700226220393",
-                // ...其他属性
-            },
-            {
-                title: "户外探险 | 趣味山林之旅",
-                imageUrl: "/src/assets/activity/anhui2.JPG",
-                link: "https://chat1.aichatos.com/#/chat/1700226220394",
-                // ...其他属性
-            }
-        ]
+        axiosForAnnouncement.get('/api/announcements/recent').then(response => {
+            console.log('Response from Announcement:', response.data);
+            this.announcements = response.data;
+            
+        });
+        // this.announcements = [
+        //     {
+        //         title: "千岛之湖 | 周末轰趴+出游一站式解决方案",
+        //         imageUrl: "/src/assets/activity/anhui1.JPG",
+        //         link: "https://chat1.aichatos.com/#/chat/1700226220387",
+        //         // ...其他属性
+        //     },
+        //     {
+        //         title: "活动回顾 | 徽韵山水，足迹行者的诗画旅程",
+        //         imageUrl: "/src/assets/activity/anhui2.JPG",
+        //         link: "https://chat1.aichatos.com/#/chat/1700226220388",
+        //         // ...其他属性
+        //     },
+        //     {
+        //         title: "足迹行者干事招新 | 去旅行，去热爱！",
+        //         imageUrl: "/src/assets/activity/anhui2.JPG",
+        //         link: "https://chat1.aichatos.com/#/chat/1700226220389",
+        //         // ...其他属性
+        //     },
+        //     {
+        //         title: "松江之旅 | 走进自然，一起打个盹！",
+        //         imageUrl: "/src/assets/activity/anhui2.JPG",
+        //         link: "https://chat1.aichatos.com/#/chat/1700226220390",
+        //         // ...其他属性
+        //     },
+        //     {
+        //         title: "2022秋招 | 期待与你一起再出发",
+        //         imageUrl: "/src/assets/activity/anhui2.JPG",
+        //         link: "https://chat1.aichatos.com/#/chat/1700226220391",
+        //         // ...其他属性
+        //     },
+        //     {
+        //         title: "同济大学 | 探索未知的旅程",
+        //         imageUrl: "/src/assets/activity/anhui2.JPG",
+        //         link: "https://chat1.aichatos.com/#/chat/1700226220392",
+        //         // ...其他属性
+        //     },
+        //     {
+        //         title: "国庆特别活动 | 美丽的中国风景",
+        //         imageUrl: "/src/assets/activity/anhui2.JPG",
+        //         link: "https://chat1.aichatos.com/#/chat/1700226220393",
+        //         // ...其他属性
+        //     },
+        //     {
+        //         title: "户外探险 | 趣味山林之旅",
+        //         imageUrl: "/src/assets/activity/anhui2.JPG",
+        //         link: "https://chat1.aichatos.com/#/chat/1700226220394",
+        //         // ...其他属性
+        //     }
+        // ]
     },
     // 其他获取数据的方法...
     },
@@ -309,5 +313,30 @@ export default {
 
 .content {
     margin: 123px 30px 3px 30px;
+}
+
+
+.announcement-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap; /* 确保文本在同一行显示 */
+  overflow: hidden; /* 隐藏超出部分 */
+  text-overflow: ellipsis; /* 超出部分显示省略号 */
+  /* 可能还需要限制宽度 */
+}
+
+.announcement-title > div {
+  flex: 1; /* 为子元素分配空间 */
+}
+
+.announcement-title > div:first-child {
+  flex: 0 1 auto; /* 第一个子元素（按钮）不应该伸缩 */
+}
+
+.announcement-title v-btn {
+  text-align: left;
+  overflow: hidden; /* 如果按钮内的文本也需要省略 */
+  text-overflow: ellipsis;
 }
 </style>
