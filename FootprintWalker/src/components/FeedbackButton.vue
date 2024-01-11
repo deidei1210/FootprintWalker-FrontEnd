@@ -30,7 +30,7 @@
                 <v-btn color="red-accent-2 mr-5" variant="outlined" @click="dialog = false">
                     关闭
                 </v-btn>
-                <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="dialog = false">
+                <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="createFeedback">
                     提交
                 </v-btn>
             </v-card-actions>
@@ -38,18 +38,59 @@
     </v-dialog>
 </template>
 <script>
+import { axiosForActivity } from "@/main";
+import { formatDateTime } from "@/tools/Format.js";
 export default {
     props: {
         button: {
             type: String,
             required: true,
+        },
+        activity:{
+            type:Object,
+            required:true
         }
     },
     data: () => ({
         dialog: false,
+        userId:1,
         rating: 3,
         feedback: "",
-        feedbackTitle:"",
+        feedbackTitle: "",
+        currentDate: new Date(),
     }),
+    methods: {
+        formatDateTime,
+        reserve() {
+            this.loading = true
+
+            setTimeout(() => (this.loading = false), 2000)
+        },
+        createFeedback() {
+            this.dialog = false;
+
+            const feedbackData = {
+                feedbackType: "SUGGESTION",
+                feedbackTime: this.currentDate,
+                feedbackContent: this.feedback,
+                feedbackStatus: "PENDING",
+                activityId: this.activity.id,
+                title: this.feedbackTitle,
+                rating: this.rating,
+                userId: this.userId,
+                feedbackImages: ["string"]
+            };
+
+            axiosForActivity.post('/api/activity/feedbacks', feedbackData)
+                .then(response => {
+                    console.log('Feedback created successfully:', response.data);
+                    // 在这里处理反馈创建成功的逻辑
+                })
+                .catch(error => {
+                    console.error('Error creating feedback:', error);
+                    // 在这里处理反馈创建失败的逻辑
+                });
+        }
+    }
 }
 </script>

@@ -29,7 +29,7 @@
                                             <dialog-button :button="button1"
                                                 :activity="activity"></dialog-button>
                                             <!-- 用户对指定的活动提出反馈 -->
-                                            <feedback-button :button="button2"></feedback-button>
+                                            <feedback-button :button="button2" :activity="activity"></feedback-button>
                                         </v-card-actions>
                                     </v-card>
                                 </v-col>
