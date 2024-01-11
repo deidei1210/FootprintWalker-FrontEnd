@@ -140,7 +140,7 @@
             </v-card>
         </v-dialog>
         <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout" 
-            style="position:absolute;top:50%;left:5%; height:100px;">
+            style="position:fixed;top:50%;left:5%; height:100px;">
             {{ snackbar.message }}<v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
         </v-snackbar>
     </v-row>
@@ -213,7 +213,7 @@ export default {
                     console.log(response.data);
                     // 处理成功的情况，如果有需要的话
                     this.assigned = true;
-                    this.showSnackbar('报名成功！', '#C8E6C9');
+                    this.showSnackbar('报名成功！', '#B9F6CA');
                 })
                 .catch(error => {
                     console.error('添加参与者错误:', error);
@@ -233,7 +233,7 @@ export default {
                     console.log(response.data);
                     // 处理成功的情况，如果有需要的话
                     this.assigned = false;
-                    this.showSnackbar('取消成功', '#C8E6C9');
+                    this.showSnackbar('取消成功', '#B9F6CA');
                 })
                 .catch(error => {
                     console.error('添加参与者错误:', error);
