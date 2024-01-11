@@ -139,7 +139,10 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout" 
+            style="position:absolute;top:50%;left:5%; height:100px;">
+            {{ snackbar.message }}<v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
+        </v-snackbar>
     </v-row>
 </template>
 <script>
@@ -161,6 +164,12 @@ export default {
         currentDate: new Date(),
         checkbox: false,
         assigned: false,    //判断用户是否已经报名
+        snackbar: {
+            show: false,
+            message: "",
+            color: '',
+            timeout: 3000, // Snackbar显示的时间（毫秒）
+        },
     }),
     mounted() {
         this.isAssigned()
@@ -204,10 +213,12 @@ export default {
                     console.log(response.data);
                     // 处理成功的情况，如果有需要的话
                     this.assigned = true;
+                    this.showSnackbar('报名成功！', '#C8E6C9');
                 })
                 .catch(error => {
                     console.error('添加参与者错误:', error);
                     // 处理错误的情况，如果有需要的话
+                    this.showSnackbar('报名失败，请重试', 'error');
                 });
         },
         //取消报名
@@ -222,10 +233,13 @@ export default {
                     console.log(response.data);
                     // 处理成功的情况，如果有需要的话
                     this.assigned = false;
+                    this.showSnackbar('取消成功', '#C8E6C9');
                 })
                 .catch(error => {
                     console.error('添加参与者错误:', error);
                     // 处理错误的情况，如果有需要的话
+                    // 处理错误的情况
+                    this.showSnackbar('取消失败，请重试', 'error');
                 });
         },
         //判断是否用户已经报名
@@ -249,6 +263,16 @@ export default {
                 });
 
 
+        },
+        showSnackbar(message, color) {
+            this.snackbar.message = message;
+            this.snackbar.color = color;
+            this.snackbar.show = true;
+
+            // 可以在一定时间后关闭Snackbar，这里使用setTimeout
+            setTimeout(() => {
+                this.snackbar.show = false;
+            }, this.snackbar.timeout);
         },
     },
 }
