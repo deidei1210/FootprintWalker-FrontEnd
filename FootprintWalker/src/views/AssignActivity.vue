@@ -179,7 +179,7 @@ export default {
     },
     methods: {
         fetchActivities() {
-          axiosForActivity.get('/api/activity/activities/all') // 替换为您的API端点
+          axiosForActivity.get('/api/activity/activities') // 替换为您的API端点
             .then(response => {
               console.log(response);
               this.activities = response.data.map(activity => ({

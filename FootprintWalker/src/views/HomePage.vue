@@ -108,7 +108,7 @@
 
     <Footer></Footer>
 </template>
-  
+
 <script>
 import DefaultBar from '@/layouts/default/AppBar.vue'
 import Footer from '@/layouts/default/Foot.vue'
@@ -203,24 +203,22 @@ export default {
             axiosForActivity.get('/api/activity/activities/latest-retrospective').then(response => {
                 console.log('Response from retrospective:', response.data);
                 this.lookback = response.data;
-                
+
             });
 
         },
-
-            getActivityData() {
-                axiosForActivity.get('/api/activity/activities/latest').then(response => {
-                    console.log('Response from Service B:', response.data);
-                    this.activityData = response.data;
+        getActivityData() {
+            axiosForActivity.get('/api/activity/activities/latest').then(response => {
+                console.log('Response from Service B:', response.data);
+                this.activityData = response.data;
                 });
-
                 // this.activityData.activityInfo=truncatedContent();
             },
         getAnnouncementsData() {
             axiosForAnnouncement.get('/api/announcements/recent').then(response => {
                 console.log('Response from Announcement:', response.data);
                 this.announcements = response.data;
-                
+
             });
         },
     }
