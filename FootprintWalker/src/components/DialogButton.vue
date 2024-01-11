@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <v-btn color="deep-purple-lighten-2" @click="dialog = true">
+        <v-btn color="deep-purple-lighten-2" @click="viewFeedback">
             {{ button }}
         </v-btn>
 
@@ -61,10 +61,6 @@ export default {
             return this.feedbackList.length==0;
         }
     },
-    mounted() {
-        this.getFeedbackList();
-        
-    },
     methods: {
         formatDateTime,
         reserve() {
@@ -86,6 +82,10 @@ export default {
                     console.error('Error fetching activities:', error);
                     // 可以添加错误处理逻辑
                 });
+        },
+        viewFeedback(){
+            this.dialog = true;
+            this.getFeedbackList();
         }
     }
 
