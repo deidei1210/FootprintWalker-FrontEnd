@@ -18,6 +18,8 @@
             </v-row>
             <v-card-text>
                 <v-container>
+                    <v-textarea prepend-icon="mdi-comment" v-model="feedbackTitle" label="标题" variant="outlined" rows="1"
+                        cols="10"></v-textarea>
                     <v-textarea v-model="feedback" label="我对此次活动的反馈......" variant="outlined" rows="20"
                         prepend-icon="mdi-comment"></v-textarea>
                 </v-container>
@@ -46,7 +48,8 @@ export default {
     data: () => ({
         dialog: false,
         rating: 3,
-        feedback:"",
+        feedback: "",
+        feedbackTitle:"",
     }),
 }
 </script>
