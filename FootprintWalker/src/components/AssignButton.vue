@@ -1,12 +1,19 @@
 <template>
     <v-row justify="center">
+        <v-btn v-if="assigned" color="amber-accent-4" variant="outlined" @click="dialog4 = true"
+            :disabled="isRegistrationClosed">
+            取消报名
+        </v-btn>
+        <v-btn v-else color="deep-purple-lighten-2" variant="outlined" @click="dialog1 = true"
+            :disabled="isRegistrationClosed">
+            我要报名
+        </v-btn>
+
+        <!-- 阅读免责声明 -->
         <v-dialog v-model="dialog1" persistent width="1024">
-            <template v-slot:activator="{ props }">
-                <v-btn color="deep-purple-lighten-2" v-bind="props" variant="outlined" @click="reserve"
-                    :disabled="isRegistrationClosed">
-                    {{ registrationButtonText }}
-                </v-btn>
-            </template>
+            <!-- <template v-slot:activator="{ props }">
+
+            </template> -->
             <v-card>
                 <v-card-title>
                     <span class="text-h5">{{ activity.title }}报名</span>
@@ -72,6 +79,8 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <!-- 报名确认 -->
         <v-dialog v-model="dialog2" persistent width="1024">
             <v-card>
                 <v-card-title>
@@ -92,6 +101,7 @@
             </v-card>
         </v-dialog>
 
+        <!-- 提示阅读免责声明 -->
         <v-dialog v-model="dialog3" persistent width="1024">
             <v-card>
                 <v-card-title>
@@ -109,10 +119,32 @@
             </v-card>
         </v-dialog>
 
+        <!-- 提示是否取消报名 -->
+        <v-dialog v-model="dialog4" persistent width="1024">
+            <v-card>
+                <v-card-title>
+                    提 示
+                </v-card-title>
+                <v-card-text>
+                    您确定取消报名{{ activity.title }}吗？
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="red-accent-2 mr-5" variant="outlined" @click="dialog4 = false">
+                        不 取 消
+                    </v-btn>
+                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="RegistratTheActivity">
+                        确 定 取 消
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
     </v-row>
 </template>
 <script>
 import { formatDateTime } from "@/tools/Format.js";
+import { axiosForActivity } from "@/main";
 export default {
     props: {
         activity: {
@@ -123,21 +155,24 @@ export default {
     data: () => ({
         dialog1: false,    //用来开启第一个对话框
         dialog2: false,    //用来开启第二个对话框
-        dialog3:false,     //提示阅读免责声明
+        dialog3: false,     //提示阅读免责声明
+        dialog4: false,      //提示是否取消报名
+        userId: 1,          //用户的id
         currentDate: new Date(),
         checkbox: false,
+        assigned: false,    //判断用户是否已经报名
     }),
+    mounted() {
+        this.isAssigned()
+    },
     computed: {
+        //判断报名是否截止
         isRegistrationClosed() {
             const currentDate = new Date();
             const deadlineDate = new Date(this.activity.deadline);
             // 比较当前时间和报名截止日期
             return currentDate > deadlineDate;
         },
-        registrationButtonText() {
-            return this.isRegistrationClosed ? '已截止' : '我要报名';
-        },
-
     },
     methods: {
         formatDateTime,
@@ -152,16 +187,51 @@ export default {
                 this.dialog1 = false;
                 this.dialog2 = true;
             } else {
-                this.dialog3=true;
+                this.dialog3 = true;
                 // 如果复选框未勾选，可以给予用户提示
                 // this.$toast.error('请先阅读并勾选免责声明');
             }
         },
         //报名活动，需要与数据库交互
-        RegistratTheActivity(){
-            this.dialog2=false;
-            
-        }
+        RegistratTheActivity() {
+            this.dialog2 = false;
+
+            const activityId = this.activity.id; // 替换为实际的活动ID
+            const participantId = this.userId; // 替换为实际的参与者ID
+
+            axiosForActivity.put(`/api/activity/activities/${activityId}/participants/${participantId}`)
+                .then(response => {
+                    console.log(response.data);
+                    // 处理成功的情况，如果有需要的话
+                    this.assigned=true;
+                })
+                .catch(error => {
+                    console.error('添加参与者错误:', error);
+                    // 处理错误的情况，如果有需要的话
+                });
+        },
+        //判断是否用户已经报名
+        isAssigned() {
+            var api = "/api/activity/activities/" + this.activity.id + "/participants/" + this.userId;
+            axiosForActivity.get(api) // 替换为您的API端点
+                .then(response => {
+                    console.log(response);
+                    if (response.data == "Participant is in the activity's participant list") {
+                        this.assigned = true;
+                    }
+                    else {
+                        this.assigned = false;
+                    }
+                    console.log(this.assigned);
+                    console.log(this.activity.id);
+                })
+                .catch(error => {
+                    console.error('Error fetching activities:', error);
+                    // 可以添加错误处理逻辑
+                });
+
+
+        },
     },
 }
 </script>

@@ -193,9 +193,11 @@ export default {
                 location: activity.location,
                 content: activity.activityInfo, // 假设 'organizeDetails' 字段包含活动内容
                 image: activity.adImages?.[0] || 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', // 使用第一张广告图片或默认图片
-                limited:activity.estimatedLimit,
-                cost:activity.cost,
-                adImages:activity.adImages
+                limited:activity.estimatedLimit, //活动限制的报名人数
+                cost:activity.cost,             //活动报名的费用
+                adImages:activity.adImages,
+                currentParticipants:activity.currentParticipants, //当前活动的报名人数      
+
             }));
             })
             .catch(error => {

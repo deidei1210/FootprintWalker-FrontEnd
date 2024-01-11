@@ -67,7 +67,8 @@
                                     <v-card>
                                         <v-row style="margin-top:6px;margin-left:1px;">
                                             <v-card-title>{{ feedback.title }}</v-card-title>
-                                            <v-chip color="green" size="small" style="margin-top:10px;" v-if="feedback.status">已处理</v-chip>
+                                            <v-chip color="green" size="small" style="margin-top:10px;"
+                                                v-if="feedback.status">已处理</v-chip>
                                             <v-chip color="red" size="small" style="margin-top:10px;" v-else>未处理</v-chip>
                                         </v-row>
                                         <v-card-subtitle>{{ feedback.date }}</v-card-subtitle>
@@ -666,42 +667,19 @@ export default {
         //是否打开弹窗
         activityFeedbackDialog: false,
     }),
-
-    //   computed: {
-    //       paginatedArticles() {
-    //           // 根据当前页码和每页显示的数量计算出当前页需要显示的文章
-    //           const startIndex = (this.currentPage - 1) * this.articlesPerPage;
-    //           const endIndex = startIndex + this.articlesPerPage;
-    //           return this.articles.slice(startIndex, endIndex);
-    //       },
-    //       totalPages() {
-    //           // 计算总页数
-    //           return Math.ceil(this.articles.length / this.articlesPerPage);
-    //       },
-    //   },
-
     mounted() {
-        // 页面加载时加载第一页的活动数据
-        this.loadPage(1);
+        //获取活动的数据
+        this.fetchActivities();
     },
 
     methods: {
-        loadPage(page) {
-            // 根据页码加载对应的活动数据
-            // 这里需要从服务器获取数据，然后更新 paginatedActivities、totalPages 等数据
-        },
-        showFeedbackDialog(activity) {
-            // 显示查看反馈的弹窗，根据 activity.id 获取反馈数据
-            // 你可以使用 Vuetify 的 Dialog 组件来实现弹窗
-        },
-        showFeedbackForm(activity) {
-            // 显示我要反馈的弹窗，可以使用 Vuetify 的 Dialog 组件
-            // 在弹窗中提供一个文本输入框，用户输入反馈内容
-        },
         submitFeedback() {
             // 在这里处理提交逻辑，例如打印 feedback 中的内容
             console.log('用户反馈内容：', this.feedback);
             this.feedback = "";
+        },
+        fetchActivities() {
+
         },
     }
 };
