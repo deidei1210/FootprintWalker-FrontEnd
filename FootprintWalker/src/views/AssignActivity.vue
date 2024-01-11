@@ -19,6 +19,7 @@
 import DefaultBar from '@/layouts/default/AppBar.vue'
 import AssignCard from '@/components/AssignCard.vue'
 import Footer from '@/layouts/default/Foot.vue'
+import AssignButton from '@/components/AssignButton.vue'
 import axios from "axios";
 import {axiosForActivity} from "@/main";
 // import DefaultView from '@/layouts/default/View.vue'
@@ -28,6 +29,7 @@ export default {
         DefaultBar,
         AssignCard,
         Footer,
+        AssignButton,
     },
     data: () => ({
         form: false,
@@ -190,8 +192,10 @@ export default {
                 endTime: activity.endTime,
                 location: activity.location,
                 content: activity.activityInfo, // 假设 'organizeDetails' 字段包含活动内容
-                image: activity.adImages?.[0] || 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg' // 使用第一张广告图片或默认图片
-              }));
+                image: activity.adImages?.[0] || 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', // 使用第一张广告图片或默认图片
+                limited:activity.estimatedLimit,
+                cost:activity.cost,
+            }));
             })
             .catch(error => {
               console.error('Error fetching activities:', error);

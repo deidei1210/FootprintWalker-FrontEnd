@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent width="1024">
         <template v-slot:activator="{ props }">
-            <v-btn color="primary" v-bind="props">
+            <v-btn color="deep-purple-lighten-2" v-bind="props">
                 {{ button }}
             </v-btn>
         </template>

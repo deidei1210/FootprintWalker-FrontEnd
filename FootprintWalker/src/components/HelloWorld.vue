@@ -30,7 +30,7 @@
 
         <v-col cols="auto">
           <v-btn
-            color="primary"
+            color="deep-purple-lighten-2"
             href="https://vuetifyjs.com/introduction/why-vuetify/#feature-guides"
             min-width="228"
             rel="noopener noreferrer"

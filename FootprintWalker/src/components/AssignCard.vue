@@ -16,24 +16,35 @@
         </v-card-item>
 
         <v-card-text>
-            <div class="text-subtitle-1">活动地点：{{ activity.location }}</div>
-            <div class="text-subtitle-1">活动时间：{{ formatDateTime(activity.startTime) }} 到 {{ formatDateTime(activity.endTime) }}</div>
-            <div class="text-subtitle-1">活动地点：{{ activity.location }}</div>
-            <div class="text-subtitle-1">活动内容：{{ truncatedContent }}</div>
+            <div class="text-subtitle-1">【活动地点】：{{ activity.location }}</div>
+            <div class="text-subtitle-1">【活动时间】：{{ formatDateTime(activity.startTime) }} 到 {{ formatDateTime(activity.endTime)
+            }}</div>
+            <div class="text-subtitle-1">【活动内容】：{{ truncatedContent }}</div>
         </v-card-text>
 
         <v-divider class="mx-4 mb-1"></v-divider>
 
         <v-card-actions>
-            <v-btn color="deep-purple-lighten-2" variant="outlined" @click="reserve" :disabled="isRegistrationClosed">
+            <!-- <v-btn color="deep-purple-lighten-2" variant="outlined" @click="reserve" :disabled="isRegistrationClosed">
                 {{ registrationButtonText }}
-            </v-btn>
+            </v-btn> -->
+            <v-row style="margin-bottom:10px;">
+                <activity-detail :activity="activity" style="margin-top:11px;"></activity-detail>
+                <assign-button :activity="activity"></assign-button>
+            </v-row>
         </v-card-actions>
     </v-card>
 </template>
 <script>
-import {formatDateTime} from "@/tools/Format.js";
+import { formatDateTime } from "@/tools/Format.js";
+import AssignButton from '@/components/AssignButton.vue'
+import ActivityDetail from '@/components/ActivityDetail.vue'
 export default {
+    //导出组件
+    components: {
+        AssignButton,
+        ActivityDetail
+    },
     props: {
         activity: {
             type: Object,
@@ -69,7 +80,7 @@ export default {
     },
 
     methods: {
-      formatDateTime,
+        formatDateTime,
         reserve() {
             this.loading = true
 

@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <v-btn color="primary" @click="dialog = true">
+        <v-btn color="deep-purple-lighten-2" @click="dialog = true">
             查看反馈进度
         </v-btn>
 
@@ -26,7 +26,7 @@
                     <v-card-text>{{ myFeedback.reply.content }}</v-card-text>
 
                     <v-card-actions>
-                        <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
+                        <v-btn color="deep-purple-lighten-2" block @click="dialog = false">Close Dialog</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-container>

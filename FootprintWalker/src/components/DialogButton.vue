@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <v-btn color="primary" @click="dialog = true">
+        <v-btn color="deep-purple-lighten-2" @click="dialog = true">
             {{ button }}
         </v-btn>
 
@@ -26,7 +26,7 @@
                     </v-card>
                 </v-row>
                 <v-card-actions>
-                    <v-btn color="primary" block @click="dialog = false">关闭对话框</v-btn>
+                    <v-btn color="deep-purple-lighten-2" block @click="dialog = false">关闭对话框</v-btn>
                 </v-card-actions>
             </v-container>
         </v-dialog>
