@@ -195,6 +195,7 @@ export default {
                 image: activity.adImages?.[0] || 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', // 使用第一张广告图片或默认图片
                 limited:activity.estimatedLimit,
                 cost:activity.cost,
+                adImages:activity.adImages
             }));
             })
             .catch(error => {

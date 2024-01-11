@@ -12,6 +12,13 @@
                 </v-card-title>
                 <v-card-subtitle>活动报名截止日期：{{ formatDateTime(activity.deadline) }}</v-card-subtitle>
                 <v-divider></v-divider>
+                <div style="width: 75%;">
+                    <v-carousel cycle height="330" hide-delimiter-background show-arrows="hover" :interval="4000"
+                        style="margin-top:25px;margin-bottom:25px;border-radius: 5px;margin-left:17%;">
+                        <v-carousel-item v-for="(image, i) in activity.adImages" :key="i" :src="image"
+                            cover></v-carousel-item>
+                    </v-carousel>
+                </div>
                 <v-card-text>
                     【活动地点】：{{ activity.location }}
                 </v-card-text>
