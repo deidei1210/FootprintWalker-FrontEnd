@@ -27,10 +27,10 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="outlined" @click="dialog = false">
+                <v-btn color="red-accent-2 mr-5" variant="outlined" @click="dialog = false">
                     关闭
                 </v-btn>
-                <v-btn color="blue-darken-1" variant="outlined" @click="dialog = false">
+                <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="dialog = false">
                     提交
                 </v-btn>
             </v-card-actions>

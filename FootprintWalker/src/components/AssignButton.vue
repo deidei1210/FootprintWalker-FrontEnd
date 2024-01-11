@@ -1,6 +1,6 @@
 <template>
     <v-row justify="center">
-        <v-dialog v-model="dialog" persistent width="1024">
+        <v-dialog v-model="dialog1" persistent width="1024">
             <template v-slot:activator="{ props }">
                 <v-btn color="deep-purple-lighten-2" v-bind="props" variant="outlined" @click="reserve"
                     :disabled="isRegistrationClosed">
@@ -63,15 +63,52 @@
                 </v-checkbox>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="mr-5" color="red-accent-2" variant="outlined" @click="dialog = false">
+                    <v-btn class="mr-5" color="red-accent-2" variant="outlined" @click="dialog1 = false">
                         关 闭
                     </v-btn>
-                    <v-btn class="ml-2" color="deep-purple-lighten-2" variant="outlined" @click="dialog = false">
+                    <v-btn class="ml-2" color="deep-purple-lighten-2" variant="outlined" @click="handleRegistration">
                         报 名
                     </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <v-dialog v-model="dialog2" persistent width="1024">
+            <v-card>
+                <v-card-title>
+                    报名确认
+                </v-card-title>
+                <v-card-text>
+                    您确定要报名吗？
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="red-accent-2 mr-5" variant="outlined" @click="dialog2 = false">
+                        取 消
+                    </v-btn>
+                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="RegistratTheActivity">
+                        确 定
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="dialog3" persistent width="1024">
+            <v-card>
+                <v-card-title>
+                    提 示
+                </v-card-title>
+                <v-card-text>
+                    请先阅读并勾选免责声明！
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="deep-purple-lighten-2" variant="outlined" @click="dialog3 = false">
+                        关 闭
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
     </v-row>
 </template>
 <script>
@@ -84,7 +121,9 @@ export default {
         },
     },
     data: () => ({
-        dialog: false,
+        dialog1: false,    //用来开启第一个对话框
+        dialog2: false,    //用来开启第二个对话框
+        dialog3:false,     //提示阅读免责声明
         currentDate: new Date(),
         checkbox: false,
     }),
@@ -107,6 +146,22 @@ export default {
 
             setTimeout(() => (this.loading = false), 2000)
         },
+        handleRegistration() {
+            if (this.checkbox) {
+                // 处理报名逻辑，可以在这里触发弹窗或者其他操作
+                this.dialog1 = false;
+                this.dialog2 = true;
+            } else {
+                this.dialog3=true;
+                // 如果复选框未勾选，可以给予用户提示
+                // this.$toast.error('请先阅读并勾选免责声明');
+            }
+        },
+        //报名活动，需要与数据库交互
+        RegistratTheActivity(){
+            this.dialog2=false;
+            
+        }
     },
 }
 </script>

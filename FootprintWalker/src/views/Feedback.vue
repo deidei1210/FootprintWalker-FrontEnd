@@ -50,7 +50,7 @@
                         <v-container class="feedback-container">
                             <v-textarea prepend-icon="mdi-pen" v-model="feedbackTitle" label="标题" variant="outlined"
                                 rows="1" cols="10"></v-textarea>
-                            <v-textarea v-model="feedback" label="我对社团的反馈......" variant="outlined" rows="20"
+                            <v-textarea v-model="feedback" label="我对社团的反馈......" variant="outlined" rows="18"
                                 prepend-icon="mdi-comment"></v-textarea>
                         </v-container>
                         <div class="d-flex flex-row-reverse mb-6">
