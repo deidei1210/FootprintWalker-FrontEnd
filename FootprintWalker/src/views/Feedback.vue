@@ -25,8 +25,10 @@
                                         <v-card-subtitle>{{ activity.date }}</v-card-subtitle>
                                         <!-- 其他活动信息显示 -->
                                         <v-card-actions>
+                                            <!-- 查看每个活动的反馈情况 -->
                                             <dialog-button :button="button1" :feedback-list="activity.feedbackList"></dialog-button>
-                                            <v-btn @click="showFeedbackForm(activity)">我要反馈</v-btn>
+                                            <!-- 用户对指定的活动提出反馈 -->
+                                            <feedback-button :button="button2"></feedback-button>
                                         </v-card-actions>
                                     </v-card>
                                 </v-col>
@@ -80,13 +82,15 @@
 import DefaultBar from '@/layouts/default/AppBar.vue'
 import Footer from '@/layouts/default/Foot.vue'
 import DialogButton from '@/components/DialogButton.vue'
+import FeedbackButton from '@/components/FeedbackButton.vue'
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
     //导出组件
     components: {
         DefaultBar,
         Footer,
-        DialogButton
+        DialogButton,
+        FeedbackButton
     },
 
     data: () => ({
@@ -570,6 +574,7 @@ export default {
         ], // 从服务器获取的活动数据，根据分页显示
         
         button1:"查看反馈",
+        button2:"我要评价",
         currentPage: 1,
         cardsPerRow: 1,
         totalPages: 0,
