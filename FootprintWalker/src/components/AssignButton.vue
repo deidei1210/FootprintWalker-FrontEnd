@@ -94,7 +94,7 @@
                     <v-btn color="red-accent-2 mr-5" variant="outlined" @click="dialog2 = false">
                         取 消
                     </v-btn>
-                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="RegistratTheActivity">
+                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="RegisterTheActivity">
                         确 定
                     </v-btn>
                 </v-card-actions>
@@ -133,7 +133,7 @@
                     <v-btn color="red-accent-2 mr-5" variant="outlined" @click="dialog4 = false">
                         不 取 消
                     </v-btn>
-                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="RegistratTheActivity">
+                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="CancelRegisterTheActivity">
                         确 定 取 消
                     </v-btn>
                 </v-card-actions>
@@ -193,7 +193,7 @@ export default {
             }
         },
         //报名活动，需要与数据库交互
-        RegistratTheActivity() {
+        RegisterTheActivity() {
             this.dialog2 = false;
 
             const activityId = this.activity.id; // 替换为实际的活动ID
@@ -203,7 +203,25 @@ export default {
                 .then(response => {
                     console.log(response.data);
                     // 处理成功的情况，如果有需要的话
-                    this.assigned=true;
+                    this.assigned = true;
+                })
+                .catch(error => {
+                    console.error('添加参与者错误:', error);
+                    // 处理错误的情况，如果有需要的话
+                });
+        },
+        //取消报名
+        CancelRegisterTheActivity() {
+            this.dialog4 = false;
+
+            const activityId = this.activity.id; // 替换为实际的活动ID
+            const participantId = this.userId; // 替换为实际的参与者ID
+
+            axiosForActivity.delete(`/api/activity/activities/${activityId}/participants/${participantId}`)
+                .then(response => {
+                    console.log(response.data);
+                    // 处理成功的情况，如果有需要的话
+                    this.assigned = false;
                 })
                 .catch(error => {
                     console.error('添加参与者错误:', error);
