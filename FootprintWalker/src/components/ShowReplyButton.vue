@@ -4,7 +4,7 @@
             查看反馈进度
         </v-btn>
 
-        <v-dialog v-model="dialog" width="auto">
+        <v-dialog v-model="dialog" width="1000">
             <v-container>
                 <v-card>
                     <v-card-title>{{ myFeedback.title }}</v-card-title>
