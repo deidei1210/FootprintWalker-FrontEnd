@@ -1,5 +1,5 @@
 <template>
-    <v-card :loading="loading" class="mx-auto my-12" max-width="374">
+    <v-card :loading="loading" class="mx-auto my-12" max-width="374" height="570">
         <template v-slot:loader="{ isActive }">
             <v-progress-linear :active="isActive" color="deep-purple" height="4" indeterminate></v-progress-linear>
         </template>
@@ -19,7 +19,7 @@
             <div class="text-subtitle-1">【活动地点】：{{ activity.location }}</div>
             <div class="text-subtitle-1">【活动时间】：{{ formatDateTime(activity.startTime) }} 到 {{ formatDateTime(activity.endTime)
             }}</div>
-            <div class="text-subtitle-1">【活动内容】：{{ truncatedContent }}</div>
+            <div class="text-subtitle-1" style="height:70px;">【活动内容】：{{ truncatedContent }}</div>
         </v-card-text>
 
         <v-divider class="mx-4 mb-1"></v-divider>
