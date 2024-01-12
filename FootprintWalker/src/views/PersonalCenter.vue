@@ -109,12 +109,10 @@
                         </v-col>
                         <!-- 修改年纪 -->
                         <v-col cols="12" sm="4" md="4">
-                            <v-select v-model="personalInfo.level" :items="gradeList" label="选择年级"
-                                required></v-select>
+                            <v-select v-model="personalInfo.level" :items="gradeList" label="选择年级" required></v-select>
                         </v-col>
                         <v-col cols="12" sm="6">
-                            <v-text-field v-model="personalInfo.major"
-                                label="专业"  required></v-text-field>
+                            <v-text-field v-model="personalInfo.major" label="专业" required></v-text-field>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -122,11 +120,11 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="text" @click="dialogEdit = false">
-                    Close
+                <v-btn color="red-accent-2 mr-5" variant="outlined" @click="cancelEdit">
+                    关 闭
                 </v-btn>
-                <v-btn color="blue-darken-1" variant="text" @click="dialogEdit = false">
-                    Save
+                <v-btn color="deep-purple-lighten-2" variant="outlined" @click="saveEdit">
+                    保 存
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -160,15 +158,15 @@ export default {
         loading: false,
         currentOption: 'userInfo', // 默认选项为个人信息
         personalInfo: {
-            name: "deidei",           //用户姓名
-            gender: "女",         //用户性别
-            email: "2051498@tongji.edu.cn",          //用户邮箱
-            phoneNumber: "15961672163",    //用户电话号码
-            campus: "嘉定",         //用户校区
-            institute: "软件学院",      //用户学院
-            major: "软件工程",          //用户专业
+            name: "",           //用户姓名
+            gender: "",         //用户性别
+            email: "",          //用户邮箱
+            phoneNumber: "",    //用户电话号码
+            campus: "",         //用户校区
+            institute: "",      //用户学院
+            major: "",          //用户专业
             password: "",
-            level: "U3",
+            level: "",
         },
         activities: [], // 初始化为空数组
         currentPage: 1, // 当前页码
@@ -232,30 +230,41 @@ export default {
             console.log('Load page:', this.currentPage);
         },
 
-        //获取用户的基本信息
-        fetchPersonalInfo() {
-            axios.get(`api/human_management/members/${this.userId}`)
-                .then(response => {
-                    console.log('Login successful', response);
-                    this.personalInfo.name = response.data.name;
-                    this.personalInfo.gender = response.data.gender;
-                    this.personalInfo.email = response.data.email;
-                    this.personalInfo.phoneNumber = response.data.phoneNumber;
-                    this.personalInfo.campus = response.data.campus;
-                    this.personalInfo.institute = response.data.institute;
-                    this.personalInfo.major = response.data.major;
-                    this.personalInfo.password = response.data.password;
-                    this.personalInfo.level = response.data.level;
+        //保存对个人信息的更改
+        saveEdit() {
+            //调用put更改数据库中的内容
+            const requestBody = {
+                "gender": this.personalInfo.gender,
+                "name": this.personalInfo.name,
+                "level": this.mapGradeToLevelCTE(this.personalInfo.level),
+                "campus": this.mapCampusToEnumCTE(this.personalInfo.campus),
+                "email": this.personalInfo.email,
+                "phoneNumber": this.personalInfo.phoneNumber,
+                "password": this.personalInfo.password,
+                "institute": this.mapCollegeToInstituteCTE(this.personalInfo.institute),
+                "major": this.personalInfo.major
+            }
+            axios.put(`/api/human_management/members/${this.userId}`,requestBody)
+            .then(response => {
+                    console.log('修改个人信息成功！', response);
+                    this.dialogEdit = false;
+                    window.location.reload(); // 强制刷新页面
                 })
                 .catch(error => {
                     console.error('Login failed', error);
                     // 登录失败后的操作
+                    window.location.reload(); // 强制刷新页面
                 })
-                .finally(() => {
-                    this.loading = false;
-                });
         },
-        mapGradeToLevel(grade) {
+        //取消对个人信息的更改
+        cancelEdit() {
+            this.dialogEdit = false;
+            window.location.reload(); // 强制刷新页面
+
+        },
+
+        // 将中文转换成对应的英文
+        mapGradeToLevelCTE(grade) {
             const gradeMap = {
                 '大一': 'U1',
                 '大二': 'U2',
@@ -269,16 +278,16 @@ export default {
             };
             return gradeMap[grade] || null; // 返回对应的枚举值或者null
         },
-        mapCampusToEnum(campus) {
+        mapCampusToEnumCTE(campus) {
             const campusMap = {
                 '四平路校区': 'SIPING',
                 '嘉定校区': 'JIADING',
-                '沪北校区': 'HUXI',
-                '沪西校区': 'HUBEI'
+                '沪北校区': 'HUBEI',
+                '沪西校区': 'HUXI'
             };
             return campusMap[campus] || null; // 返回对应的枚举值或者null
         },
-        mapCollegeToInstitute(college) {
+        mapCollegeToInstituteCTE(college) {
             const collegeMap = {
                 '机械与能源学院': 'MECHANICAL_AND_ENERGY_ENGINEERING',
                 '生命科学与技术学院': 'LIFE_SCIENCES_AND_TECHNOLOGY',
@@ -317,6 +326,95 @@ export default {
                 // 注意：确保这些值与您后端定义的枚举值一致
             };
             return collegeMap[college] || null; // 返回对应的枚举值或者null
+        },
+
+        //获取用户的基本信息
+        fetchPersonalInfo() {
+            axios.get(`api/human_management/members/${this.userId}`)
+                .then(response => {
+                    console.log('获取个人信息成功！', response);
+                    this.personalInfo.name = response.data.name;
+                    this.personalInfo.gender = response.data.gender;
+                    this.personalInfo.email = response.data.email;
+                    this.personalInfo.phoneNumber = response.data.phoneNumber;
+                    this.personalInfo.campus = this.mapCampusToEnumETC(response.data.campus);
+                    this.personalInfo.institute = this.mapCollegeToInstituteETC(response.data.institute);
+                    this.personalInfo.major = response.data.major;
+                    this.personalInfo.password = response.data.password;
+                    this.personalInfo.level = this.mapGradeToLevelETC(response.data.level);
+                })
+                .catch(error => {
+                    console.error('Login failed', error);
+                    // 登录失败后的操作
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+
+        //将英文转换成对应的中文
+        mapGradeToLevelETC(grade) {
+            const gradeMap = {
+                'U1': '大一',
+                'U2': '大二',
+                'U3': '大三',
+                'U4': '大四',
+                'U5': '大五',
+                'P1': '研一',
+                'P2': '研二',
+                'P3': '研三',
+                'D_plus': '博士生及以上'
+            };
+            return gradeMap[grade] || null; // 返回对应的枚举值或者null
+        },
+        mapCampusToEnumETC(campus) {
+            const campusMap = {
+                'SIPING': '四平路校区',
+                'JIADING': '嘉定校区',
+                'HUBEI': '沪北校区',
+                'HUXI': '沪西校区'
+            };
+            return campusMap[campus] || null; // 返回对应的枚举值或者null
+        },
+        mapCollegeToInstituteETC(institute) {
+            const instituteMap = {
+                'MECHANICAL_AND_ENERGY_ENGINEERING': '机械与能源学院',
+                'LIFE_SCIENCES_AND_TECHNOLOGY': '生命科学与技术学院',
+                'RAIL_TRANSIT_RESEARCH_INSTITUTE': '铁道与城市轨道交通研究院',
+                'PHYSICAL_SCIENCE_AND_ENGINEERING': '物理科学与工程学院',
+                'ARCHITECTURE_AND_URBAN_PLANNING': '建筑与城市规划学院',
+                'AUTOMOTIVE_COLLEGE': '汽车学院',
+                'MATHEMATICAL_SCIENCES': '数学科学学院',
+                'CIVIL_ENGINEERING': '土木工程学院',
+                'MARINE_AND_EARTH_SCIENCES': '海洋与地球科学学院',
+                'DESIGN_AND_CREATIVE_COLLEGE': '设计创意学院',
+                'MEDICAL_COLLEGE': '医学院',
+                'FRESHMAN_COLLEGE': '新生院',
+                'ELECTRONIC_INFORMATION_ENGINEERING': '电子信息与工程学院',
+                'LAW_SCHOOL': '法学院',
+                'COLLEGE_OF_HUMANITIES': '人文学院',
+                'SCHOOL_OF_FOREIGN_LANGUAGES': '外国语学院',
+                'ENVIRONMENTAL_SCIENCE_AND_ENGINEERING': '环境科学与工程学院',
+                'PHYSICAL_EDUCATION_DEPARTMENT': '体育教学部',
+                'ART_AND_MEDIA_COLLEGE': '艺术与传媒学院',
+                'ECONOMICS_AND_MANAGEMENT': '经济与管理学院',
+                'MARXISM_COLLEGE': '马克思主义学院',
+                'POLITICAL_SCIENCE_AND_INTERNATIONAL_RELATIONS': '政治与国际关系学院',
+                'SINO_GERMAN_COLLEGE_OF_ENGINEERING': '中德工程学院',
+                'GEOMATICS_AND_GEOINFORMATION_COLLEGE': '测绘与地理信息学院',
+                'AERONAUTICS_AND_ASTRONAUTICS': '航空航天与力学学院',
+                'SOFTWARE_COLLEGE': '软件学院',
+                'SINO_GERMAN_COLLEGE': '中德学院',
+                'MATERIALS_SCIENCE_AND_ENGINEERING': '材料科学与工程学院',
+                'CHEMICAL_SCIENCE_AND_ENGINEERING': '化学科学与工程学院',
+                'TRANSPORTATION_ENGINEERING_COLLEGE': '交通运输工程学院',
+                'COLLEGE_OF_STOMATOLOGY': '口腔医学院',
+                'SHANGHAI_INTELLECTUAL_PROPERTY_COLLEGE': '上海国际知识产权学院',
+                'TONGJI_UNIVERSITY_AFFILIATED_HOSPITAL': '同济大学附属医院',
+                'UNIVERSITY_HOSPITAL': '校医院',
+                // 注意：确保这些值与您后端定义的枚举值一致
+            };
+            return instituteMap[institute] || null; // 返回对应的中文值或者null
         },
 
     },
