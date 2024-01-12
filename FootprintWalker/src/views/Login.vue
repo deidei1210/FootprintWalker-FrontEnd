@@ -88,6 +88,8 @@ export default {
           axios.get('api/human_management/members/login', {params})
             .then(response => {
               console.log('Login successful', response);
+              localStorage.setItem('id',response.data.id);
+              console.log('id:',localStorage.getItem('id'));
               // 登录成功后的操作，例如重定向
               this.$router.push('/home-page');
             })
