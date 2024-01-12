@@ -75,9 +75,11 @@ import DefaultBar from '@/layouts/default/AppBar.vue'
 import Footer from '@/layouts/default/Foot.vue'
 import { axiosForActivity } from "@/main";
 import AssignCard from '@/components/AssignCard.vue'
+import axios from 'axios';
 
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
+   
     //导出组件
     components: {
         DefaultBar,
@@ -118,11 +120,13 @@ export default {
     },
     mounted() {
         this.fetchActivities();
+        this.fetchPersonalInfo();
     },
     methods: {
         setCurrentOption(option) {
             this.currentOption = option;
         },
+        //获取用户报名的所有活动
         fetchActivities() {
             axiosForActivity.get('/api/activity/activities') // 替换为您的API端点
                 .then(response => {
@@ -155,6 +159,29 @@ export default {
             // 处理页码变化时的逻辑，例如加载对应页的数据
             console.log('Load page:', this.currentPage);
         },
+
+        //获取用户的基本信息
+        fetchPersonalInfo(){
+            axios.get(`api/human_management/members/${this.userId}`)
+            .then(response => {
+              console.log('Login successful', response);
+              this.personalInfo.name=response.data.name;
+              this.personalInfo.gender=response.data.gender;
+              this.personalInfo.email=response.data.email;
+              this.personalInfo.phoneNumber=response.data.phoneNumber;
+              this.personalInfo.campus=response.data.campus;
+              this.personalInfo.institute=response.data.institute;
+              this.personalInfo.major=response.data.major;
+              
+            })
+            .catch(error => {
+              console.error('Login failed', error);
+              // 登录失败后的操作
+            })
+            .finally(() => {
+              this.loading = false;
+            });
+        }
 
     },
 }
