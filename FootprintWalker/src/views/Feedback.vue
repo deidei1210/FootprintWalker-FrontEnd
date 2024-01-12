@@ -35,8 +35,8 @@
                             </v-row>
                         </v-container>
                     </v-window-item>
-                   
-                   <!-- 进行反馈 -->
+
+                    <!-- 进行反馈 -->
                     <v-window-item value="two">
                         <v-row style="margin-left:40px;margin-top:20px;">
                             <div class="text-h7" style="margin-top:5px;">我的评分：</div>
@@ -55,10 +55,11 @@
                         </v-container>
                         <div class="d-flex flex-row-reverse mb-6">
                             <!-- 提交按钮 -->
-                            <v-btn class="ma-2 pa-2" @click="submitFeedback" color="#4A4A4A" size="x-large">提交</v-btn>
+                            <v-btn class="ma-2 pa-2" @click="submitFeedback" color="#4A4A4A" size="x-large"
+                                :loading="loading">提 交</v-btn>
                         </div>
                     </v-window-item>
-                    
+
                     <!-- 查看我的反馈处理进度 -->
                     <v-window-item value="three">
                         <!-- 我的反馈内容 -->
@@ -88,6 +89,11 @@
 
 
     </div>
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout"
+        style="position:fixed;top:50%;left:5%; height:100px;">
+        {{ snackbar.message }}<v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
+    </v-snackbar>
+
     <!-- Footer 元素 -->
     <Footer style="position: absolute; bottom: -400px; left: 0; width: 100%; z-index: 1;">
     </Footer>
@@ -138,6 +144,16 @@ export default {
 
         //是否打开弹窗
         activityFeedbackDialog: false,
+
+        loading: false,
+
+        snackbar: {
+            show: false,
+            message: "",
+            color: '',
+            timeout: 3000, // Snackbar显示的时间（毫秒）
+        },
+
     }),
     mounted() {
         //获取活动的数据
@@ -155,6 +171,7 @@ export default {
         },
         //提交社团反馈
         submitFeedback() {
+            this.loading = true;
             // 在这里处理提交逻辑，例如打印 feedback 中的内容
             console.log('用户反馈内容：', this.feedback);
             const feedbackData = {
@@ -174,11 +191,16 @@ export default {
                     console.log('Feedback created successfully:', response.data);
                     // 在这里处理反馈创建成功的逻辑
                     this.feedback = "";
+                    this.feedbackTitle="";
+                    this.showSnackbar('提交成功！', '#B9F6CA');
                 })
                 .catch(error => {
                     console.error('Error creating feedback:', error);
                     // 在这里处理反馈创建失败的逻辑
-                });
+                    this.showSnackbar('提交失败，请重试', 'error');
+                }).finally(() => {
+                    this.loading = false;
+                })
 
         },
         //获取当前活动
@@ -218,10 +240,10 @@ export default {
                     console.log(response);
                     this.myFeedback = response.data.map(myfeedback => ({
                         id: myfeedback.feedbackID,
-                        title: myfeedback.title, 
+                        title: myfeedback.title,
                         rating: myfeedback.rating, // 假设这已经是一个格式化好的字符串
                         content: myfeedback.feedbackContent, // 假设 'organizeDetails' 字段包含活动内容
-                        status: myfeedback.feedbackStatus=="PROCESSED",
+                        status: myfeedback.feedbackStatus == "PROCESSED",
                         date: myfeedback.feedbackTime, //当前活动的报名人数      
                     }));
                     // 按照开始时间从晚到早排序
@@ -231,8 +253,19 @@ export default {
                 .catch(error => {
                     console.error('Error fetching activities:', error);
                     // 可以添加错误处理逻辑
-                });
-        }
+                })
+        },
+        showSnackbar(message, color) {
+            this.snackbar.message = message;
+            this.snackbar.color = color;
+            this.snackbar.show = true;
+
+            // 可以在一定时间后关闭Snackbar，这里使用setTimeout
+            setTimeout(() => {
+                this.snackbar.show = false;
+            }, this.snackbar.timeout);
+        },
+
     }
 };
 </script>

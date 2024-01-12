@@ -125,12 +125,16 @@
                 <v-btn color="red-accent-2 mr-5" variant="outlined" @click="cancelEdit">
                     关 闭
                 </v-btn>
-                <v-btn color="deep-purple-lighten-2" variant="outlined" @click="saveEdit">
+                <v-btn color="deep-purple-lighten-2" variant="outlined" @click="saveEdit" :loading="saveLoading">
                     保 存
                 </v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout"
+        style="position:fixed;top:50%;left:5%; height:100px;">
+        {{ snackbar.message }}<v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
+    </v-snackbar>
 
     <!-- Footer 元素 -->
     <Footer style="position: absolute;bottom: -20%; width: 100%; z-index: 1;">
@@ -154,6 +158,8 @@ export default {
         AssignCard,
     },
     data: () => ({
+        saveLoading: false,
+
         form: false,
         userId: 1,
         password: null,
@@ -176,8 +182,15 @@ export default {
         cardsPerRow: 3, // 每行显示的卡片数量
         dialogEdit: false,
         instituteList: ['机械与能源学院', '生命科学与技术学院', '铁道与城市轨道交通研究院', '物理科学与工程学院', '建筑与城市规划学院', '汽车学院', '数学科学学院', '土木工程学院', '海洋与地球科学学院', '设计创意学院', '医学院', '新生院', '电子信息与工程学院', '法学院', '人文学院', '外国语学院', '环境科学与工程学院', '体育教学部', '艺术与传媒学院', '经济与管理学院', '马克思主义学院', '政治与国际关系学院', '中德工程学院', '测绘与地理信息学院', '航空航天与力学学院', '软件学院', '中德学院', '材料科学与工程学院', '化学科学与工程学院', '交通运输工程学院', '口腔医学院', '上海国际知识产权学院', '同济大学附属医院', '校医院'],
-        gradeList: ['大一', '大二', '大三', '大四', '大五', '研一', '研二', '研三', '博士生及以上']
+        gradeList: ['大一', '大二', '大三', '大四', '大五', '研一', '研二', '研三', '博士生及以上'],
 
+        //关于弹窗的基本信息
+        snackbar: {
+            show: false,
+            message: "",
+            color: '',
+            timeout: 3000, // Snackbar显示的时间（毫秒）
+        },
 
     }),
     computed: {
@@ -206,7 +219,7 @@ export default {
                 "sort": [
                 ]
             }
-            axiosForActivity.get(`/api/activity/activities/participant/${this.userId}`,requestBody) // 替换为您的API端点
+            axiosForActivity.get(`/api/activity/activities/participant/${this.userId}`, requestBody) // 替换为您的API端点
                 .then(response => {
                     console.log(response);
                     this.activities = response.data.content.map(activity => ({
@@ -221,7 +234,7 @@ export default {
                         limited: activity.estimatedLimit, //活动限制的报名人数
                         cost: activity.cost,             //活动报名的费用    
                     }));
-                    console.log("用户报名的活动：",this.activities)
+                    console.log("用户报名的活动：", this.activities)
                     this.activities = this.activities.filter(activity => activity.id !== 9);
                     // 按照deadline从晚到早排序
                     this.activities.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
@@ -238,6 +251,7 @@ export default {
 
         //保存对个人信息的更改
         saveEdit() {
+            this.saveLoading = true;
             //调用put更改数据库中的内容
             const requestBody = {
                 "gender": this.personalInfo.gender,
@@ -253,7 +267,7 @@ export default {
             axios.put(`/api/human_management/members/${this.userId}`, requestBody)
                 .then(response => {
                     console.log('修改个人信息成功！', response);
-                    this.dialogEdit = false;
+
                     window.location.reload(); // 强制刷新页面
                 })
                 .catch(error => {
@@ -261,6 +275,10 @@ export default {
                     // 登录失败后的操作
                     window.location.reload(); // 强制刷新页面
                 })
+                .finally(() => {
+                    this.dialogEdit = false;
+                    this.saveLoading = false;
+                });
         },
         //取消对个人信息的更改
         cancelEdit() {
@@ -422,6 +440,18 @@ export default {
             };
             return instituteMap[institute] || null; // 返回对应的中文值或者null
         },
+
+        showSnackbar(message, color) {
+            this.snackbar.message = message;
+            this.snackbar.color = color;
+            this.snackbar.show = true;
+
+            // 可以在一定时间后关闭Snackbar，这里使用setTimeout
+            setTimeout(() => {
+                this.snackbar.show = false;
+            }, this.snackbar.timeout);
+        },
+
 
     },
 }

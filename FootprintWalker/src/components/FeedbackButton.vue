@@ -30,12 +30,16 @@
                 <v-btn color="red-accent-2 mr-5" variant="outlined" @click="dialog = false">
                     关闭
                 </v-btn>
-                <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="createFeedback">
+                <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="createFeedback" :loading="loading">
                     提交
                 </v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout"
+        style="position:fixed;top:50%;left:5%; height:100px;">
+        {{ snackbar.message }}<v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
+    </v-snackbar>
 </template>
 <script>
 import { axiosForActivity } from "@/main";
@@ -46,18 +50,27 @@ export default {
             type: String,
             required: true,
         },
-        activity:{
-            type:Object,
-            required:true
+        activity: {
+            type: Object,
+            required: true
         }
     },
     data: () => ({
+        loading: false,
+
         dialog: false,
-        userId:1,
+        userId: 1,
         rating: 3,
         feedback: "",
         feedbackTitle: "",
         currentDate: new Date(),
+
+        snackbar: {
+            show: false,
+            message: "",
+            color: '',
+            timeout: 3000, // Snackbar显示的时间（毫秒）
+        },
     }),
     methods: {
         formatDateTime,
@@ -67,7 +80,7 @@ export default {
             setTimeout(() => (this.loading = false), 2000)
         },
         createFeedback() {
-            this.dialog = false;
+            this.loading = true;
 
             const feedbackData = {
                 feedbackType: "SUGGESTION",
@@ -85,12 +98,28 @@ export default {
                 .then(response => {
                     console.log('Feedback created successfully:', response.data);
                     // 在这里处理反馈创建成功的逻辑
+                    this.showSnackbar('提交成功！', '#B9F6CA');
                 })
                 .catch(error => {
                     console.error('Error creating feedback:', error);
                     // 在这里处理反馈创建失败的逻辑
+                    this.showSnackbar('提交失败，请重试', 'error');
+                })
+                .finally(() => {
+                    this.dialog = false;
+                    this.loading = false;
                 });
-        }
+        },
+        showSnackbar(message, color) {
+            this.snackbar.message = message;
+            this.snackbar.color = color;
+            this.snackbar.show = true;
+
+            // 可以在一定时间后关闭Snackbar，这里使用setTimeout
+            setTimeout(() => {
+                this.snackbar.show = false;
+            }, this.snackbar.timeout);
+        },
     }
 }
 </script>

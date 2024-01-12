@@ -94,7 +94,8 @@
                     <v-btn color="red-accent-2 mr-5" variant="outlined" @click="dialog2 = false">
                         取 消
                     </v-btn>
-                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="RegisterTheActivity">
+                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="RegisterTheActivity"
+                        :loading="loading2">
                         确 定
                     </v-btn>
                 </v-card-actions>
@@ -133,13 +134,14 @@
                     <v-btn color="red-accent-2 mr-5" variant="outlined" @click="dialog4 = false">
                         不 取 消
                     </v-btn>
-                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="CancelRegisterTheActivity">
+                    <v-btn color="deep-purple-lighten-2 ml-2" variant="outlined" @click="CancelRegisterTheActivity"
+                        :loading="loading4">
                         确 定 取 消
                     </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout" 
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout"
             style="position:fixed;top:50%;left:5%; height:100px;">
             {{ snackbar.message }}<v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
         </v-snackbar>
@@ -156,6 +158,9 @@ export default {
         },
     },
     data: () => ({
+        loading2: false,    //用来检测报名按钮的加载状况
+        loading4: false,     //用来检测取消报名的加载状况
+
         dialog1: false,    //用来开启第一个对话框
         dialog2: false,    //用来开启第二个对话框
         dialog3: false,     //提示阅读免责声明
@@ -203,27 +208,33 @@ export default {
         },
         //报名活动，需要与数据库交互
         RegisterTheActivity() {
-            this.dialog2 = false;
-
+            this.loading2 = true;
             const activityId = this.activity.id; // 替换为实际的活动ID
             const participantId = this.userId; // 替换为实际的参与者ID
 
             axiosForActivity.put(`/api/activity/activities/${activityId}/participants/${participantId}`)
                 .then(response => {
+
                     console.log(response.data);
                     // 处理成功的情况，如果有需要的话
                     this.assigned = true;
                     this.showSnackbar('报名成功！', '#B9F6CA');
                 })
                 .catch(error => {
+
                     console.error('添加参与者错误:', error);
                     // 处理错误的情况，如果有需要的话
                     this.showSnackbar('报名失败，请重试', 'error');
+                })
+                .finally(() => {
+                    // 在请求结束后重置loading2
+                    this.loading2 = false;
+                    this.dialog2 = false;
                 });
         },
         //取消报名
         CancelRegisterTheActivity() {
-            this.dialog4 = false;
+            this.loading4 = true;
 
             const activityId = this.activity.id; // 替换为实际的活动ID
             const participantId = this.userId; // 替换为实际的参与者ID
@@ -240,6 +251,10 @@ export default {
                     // 处理错误的情况，如果有需要的话
                     // 处理错误的情况
                     this.showSnackbar('取消失败，请重试', 'error');
+                }).finally(() => {
+                    // 在请求结束后重置loading2
+                    this.loading4 = false;
+                    this.dialog4 = false;
                 });
         },
         //判断是否用户已经报名
