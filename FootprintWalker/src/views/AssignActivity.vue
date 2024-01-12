@@ -73,10 +73,11 @@ export default {
                         limited: activity.estimatedLimit, //活动限制的报名人数
                         cost: activity.cost,             //活动报名的费用
                         adImages: activity.adImages,
-                        currentParticipants: activity.currentParticipants, //当前活动的报名人数      
+                        activityStatus: activity.activityStatus, //当前活动状态    
 
                     }));
-                    this.activities = this.activities.filter(activity => activity.id !== 9);
+                    console.log(this.activities);
+                    this.activities = this.activities.filter(activity => activity.id !== 9 && activity.activityStatus === 'PUBLISHED');
                     // 按照deadline从晚到早排序
                     this.activities.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
                 })
