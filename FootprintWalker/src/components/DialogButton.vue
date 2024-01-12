@@ -53,12 +53,12 @@ export default {
         return {
             dialog: false,
             feedbackList: [],//获取每一个指定活动id的反馈
-            feedbackListLength:0,
+            feedbackListLength: 0,
         }
     },
-    computed:{
-        feedbackLength(){
-            return this.feedbackList.length==0;
+    computed: {
+        feedbackLength() {
+            return this.feedbackList.length == 0;
         }
     },
     methods: {
@@ -76,14 +76,19 @@ export default {
                 .then(response => {
                     console.log(response);
 
-                    this.feedbackList=response.data;
+                    this.feedbackList = response.data;
+
+                    // 只显示已经被管理员标记已经处理的那些反馈
+                    this.feedbackList = this.feedbackList.filter(feedback => feedback.feedbackStatus == "PROCESSED");
+                    //将反馈按照时间顺序排序
+                    this.feedbackList.sort((a, b) => new Date(b.feedbackTime) - new Date(a.feedbackTime));
                 })
                 .catch(error => {
                     console.error('Error fetching activities:', error);
                     // 可以添加错误处理逻辑
                 });
         },
-        viewFeedback(){
+        viewFeedback() {
             this.dialog = true;
             this.getFeedbackList();
         }

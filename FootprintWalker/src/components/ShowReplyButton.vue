@@ -8,7 +8,7 @@
             <v-container>
                 <v-card>
                     <v-card-title>{{ myFeedback.title }}</v-card-title>
-                    <v-card-subtitle>{{ myFeedback.date }}</v-card-subtitle>
+                    <v-card-subtitle>{{ formatDateTime(myFeedback.date) }}</v-card-subtitle>
                     <v-row align="center" class="mx-0">
                         <v-rating :model-value="myFeedback.rating" color="amber" density="compact" half-increments readonly
                             size="x-small" style="margin-left:15px;"></v-rating>
@@ -22,8 +22,8 @@
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-title>回复内容</v-card-title>
-                    <v-card-subtitle>{{ myFeedback.reply.time }}</v-card-subtitle>
-                    <v-card-text>{{ myFeedback.reply.content }}</v-card-text>
+                    <v-card-subtitle>{{ formatDateTime(reply.replyTime) }}</v-card-subtitle>
+                    <v-card-text>{{ reply.content }}</v-card-text>
 
                     <v-card-actions>
                         <v-btn color="deep-purple-lighten-2" block @click="dialog = false">Close Dialog</v-btn>
@@ -35,6 +35,8 @@
     </div>
 </template>
 <script>
+import { formatDateTime } from "@/tools/Format.js";
+
 export default {
     props: {
         myFeedback: {
@@ -45,7 +47,24 @@ export default {
     data() {
         return {
             dialog: false,
+            reply:{
+                content:"",  //回复内容
+                replyTime:"",//回复时间
+            },
         }
     },
+    methods:{
+        formatDateTime,
+        reserve() {
+            this.loading = true
+
+            setTimeout(() => (this.loading = false), 2000)
+        },
+
+        //需要根据反馈id获取对应的回复
+        getReply(){
+
+        }
+    }
 }
 </script>

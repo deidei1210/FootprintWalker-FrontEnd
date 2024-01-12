@@ -26,8 +26,7 @@
                                         <!-- 其他活动信息显示 -->
                                         <v-card-actions>
                                             <!-- 查看每个活动的反馈情况 -->
-                                            <dialog-button :button="button1"
-                                                :activity="activity"></dialog-button>
+                                            <dialog-button :button="button1" :activity="activity"></dialog-button>
                                             <!-- 用户对指定的活动提出反馈 -->
                                             <feedback-button :button="button2" :activity="activity"></feedback-button>
                                         </v-card-actions>
@@ -36,7 +35,8 @@
                             </v-row>
                         </v-container>
                     </v-window-item>
-
+                   
+                   <!-- 进行反馈 -->
                     <v-window-item value="two">
                         <v-row style="margin-left:40px;margin-top:20px;">
                             <div class="text-h7" style="margin-top:5px;">我的评分：</div>
@@ -48,7 +48,7 @@
                         </v-row>
                         <!-- 社团反馈内容 -->
                         <v-container class="feedback-container">
-                            <v-textarea prepend-icon="mdi-pen" v-model="feedbackTitle" label="标题" variant="outlined"
+                            <v-textarea v-model="feedbackTitle" prepend-icon="mdi-pen" label="标题" variant="outlined"
                                 rows="1" cols="10"></v-textarea>
                             <v-textarea v-model="feedback" label="我对社团的反馈......" variant="outlined" rows="18"
                                 prepend-icon="mdi-comment"></v-textarea>
@@ -58,7 +58,8 @@
                             <v-btn class="ma-2 pa-2" @click="submitFeedback" color="#4A4A4A" size="x-large">提交</v-btn>
                         </div>
                     </v-window-item>
-
+                    
+                    <!-- 查看我的反馈处理进度 -->
                     <v-window-item value="three">
                         <!-- 我的反馈内容 -->
                         <v-container class="feedback-container">
@@ -71,7 +72,7 @@
                                                 v-if="feedback.status">已处理</v-chip>
                                             <v-chip color="red" size="small" style="margin-top:10px;" v-else>未处理</v-chip>
                                         </v-row>
-                                        <v-card-subtitle>{{ feedback.date }}</v-card-subtitle>
+                                        <v-card-subtitle>{{ formatDateTime(feedback.date) }}</v-card-subtitle>
                                         <!-- 其他活动信息显示 -->
                                         <v-card-actions>
                                             <show-reply-button :my-feedback="feedback"></show-reply-button>
@@ -115,7 +116,7 @@ export default {
     data: () => ({
         tab: null,
         form: false,
-        userAccount: null,
+        userId: 1,
         password: null,
         loading: false,
         currentDate: new Date(),
@@ -600,6 +601,7 @@ export default {
 
         //我输入的反馈内容
         feedback: "",
+        feedbackTitle: "",
 
         //我的反馈
         myFeedback: [
@@ -610,10 +612,6 @@ export default {
                 content: "学生们的日常生活充满了丰富多彩的课堂体验。每天早晨，他们会走进各式各样的教室，迎接着不同学科的知识冲击。上完一堂数学课，接着便是生物实验或者文学讨论。在这个知识的海洋中，他们用思考和互动搭建着知识的桥梁，培养着综合素养。而且，有趣的老师和生动的课程设置，让课堂变得更加生动活泼。",//反馈内容
                 status: true, //处理情况
                 date: "2024-01-01",   //反馈日期
-                reply: {
-                    content: "午餐时间是学生们社交的黄金时刻。他们聚集在食堂，品味着丰富多样的美食，同时也分享着一天中的点滴趣事。在这里，友谊得以深深培养，班级之间的默契在笑声和交谈中升华。有的在交换着午餐盒中的美食，有的在商量着下午一起进行的活动。午餐不仅仅是填饱肚子的时刻，更是心灵交流的重要场所。",
-                    time: "2024-01-03"
-                }   //管理员回复
             },
             {
                 id: "2",
@@ -621,11 +619,7 @@ export default {
                 rating: "3",
                 content: "午餐时间是学生们社交的黄金时刻。他们聚集在食堂，品味着丰富多样的美食，同时也分享着一天中的点滴趣事。在这里，友谊得以深深培养，班级之间的默契在笑声和交谈中升华。有的在交换着午餐盒中的美食，有的在商量着下午一起进行的活动。午餐不仅仅是填饱肚子的时刻，更是心灵交流的重要场所。",//反馈内容
                 status: false,
-                date: "2024-01-01",
-                reply: {
-                    content: "午餐时间是学生们社交的黄金时刻。他们聚集在食堂，品味着丰富多样的美食，同时也分享着一天中的点滴趣事。在这里，友谊得以深深培养，班级之间的默契在笑声和交谈中升华。有的在交换着午餐盒中的美食，有的在商量着下午一起进行的活动。午餐不仅仅是填饱肚子的时刻，更是心灵交流的重要场所。",
-                    time: "2024-01-03"
-                }   //管理员回复            
+                date: "2024-01-01",         
             },
             {
                 id: "3",
@@ -634,10 +628,6 @@ export default {
                 content: "学生们在紧凑的学业之余，还拥有着各式各样的课外活动。运动、艺术、社团，无不为学生提供了展示自我、发现兴趣的平台。下午的时间里，球场上传来欢声笑语，艺术教室里弥漫着创意的氛围，社团活动中形成了一个个小家庭。这些活动不仅让学生们全面发展，更增添了校园生活的丰富多彩。",//反馈内容
                 status: true,
                 date: "2024-01-01",
-                reply: {
-                    content: "午餐时间是学生们社交的黄金时刻。他们聚集在食堂，品味着丰富多样的美食，同时也分享着一天中的点滴趣事。在这里，友谊得以深深培养，班级之间的默契在笑声和交谈中升华。有的在交换着午餐盒中的美食，有的在商量着下午一起进行的活动。午餐不仅仅是填饱肚子的时刻，更是心灵交流的重要场所。",
-                    time: "2024-01-03"
-                }   //管理员回复   
             },
             {
                 id: "4",
@@ -646,10 +636,6 @@ export default {
                 content: "学生们的日常生活充满了丰富多彩的课堂体验。每天早晨，他们会走进各式各样的教室，迎接着不同学科的知识冲击。上完一堂数学课，接着便是生物实验或者文学讨论。在这个知识的海洋中，他们用思考和互动搭建着知识的桥梁，培养着综合素养。而且，有趣的老师和生动的课程设置，让课堂变得更加生动活泼。",//反馈内容
                 status: false,
                 date: "2024-01-01",
-                reply: {
-                    content: "午餐时间是学生们社交的黄金时刻。他们聚集在食堂，品味着丰富多样的美食，同时也分享着一天中的点滴趣事。在这里，友谊得以深深培养，班级之间的默契在笑声和交谈中升华。有的在交换着午餐盒中的美食，有的在商量着下午一起进行的活动。午餐不仅仅是填饱肚子的时刻，更是心灵交流的重要场所。",
-                    time: "2024-01-03"
-                }   //管理员回复   
             },
             {
                 id: "5",
@@ -657,11 +643,7 @@ export default {
                 rating: "5",
                 content: "学生们的日常生活充满了丰富多彩的课堂体验。每天早晨，他们会走进各式各样的教室，迎接着不同学科的知识冲击。上完一堂数学课，接着便是生物实验或者文学讨论。在这个知识的海洋中，他们用思考和互动搭建着知识的桥梁，培养着综合素养。而且，有趣的老师和生动的课程设置，让课堂变得更加生动活泼。",//反馈内容
                 status: false,
-                date: "2024-01-01",
-                reply: {
-                    content: "午餐时间是学生们社交的黄金时刻。他们聚集在食堂，品味着丰富多样的美食，同时也分享着一天中的点滴趣事。在这里，友谊得以深深培养，班级之间的默契在笑声和交谈中升华。有的在交换着午餐盒中的美食，有的在商量着下午一起进行的活动。午餐不仅仅是填饱肚子的时刻，更是心灵交流的重要场所。",
-                    time: "2024-01-03"
-                }   //管理员回复   
+                date: "2024-01-01", 
             }
         ],
         clubRating: 3,
@@ -672,6 +654,8 @@ export default {
     mounted() {
         //获取活动的数据
         this.fetchActivities();
+        //获取该用户本身的反馈数据
+        this.fetchFeedbackByUserId();
     },
 
     methods: {
@@ -681,11 +665,35 @@ export default {
 
             setTimeout(() => (this.loading = false), 2000)
         },
+        //提交社团反馈
         submitFeedback() {
             // 在这里处理提交逻辑，例如打印 feedback 中的内容
             console.log('用户反馈内容：', this.feedback);
-            this.feedback = "";
+            const feedbackData = {
+                feedbackType: "SUGGESTION",
+                feedbackTime: this.currentDate,
+                feedbackContent: this.feedback,
+                feedbackStatus: "PENDING",
+                activityId: 9,     //如果是社团反馈的内容，那么活动id默认是9
+                title: this.feedbackTitle,
+                rating: this.clubRating,
+                userId: this.userId,
+                feedbackImages: ["string"]
+            };
+            console.log(feedbackData)
+            axiosForActivity.post('/api/activity/feedbacks', feedbackData)
+                .then(response => {
+                    console.log('Feedback created successfully:', response.data);
+                    // 在这里处理反馈创建成功的逻辑
+                    this.feedback = "";
+                })
+                .catch(error => {
+                    console.error('Error creating feedback:', error);
+                    // 在这里处理反馈创建失败的逻辑
+                });
+
         },
+        //获取当前活动
         fetchActivities() {
             axiosForActivity.get('/api/activity/activities') // 替换为您的API端点
                 .then(response => {
@@ -705,7 +713,8 @@ export default {
                         currentParticipants: activity.currentParticipants, //当前活动的报名人数      
 
                     }));
-
+                    // 删除 id 为 9 的那一项
+                    this.allActivities = this.allActivities.filter(activity => activity.id !== 9);
                     // 按照开始时间从晚到早排序
                     this.allActivities.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
                 })
@@ -714,6 +723,28 @@ export default {
                     // 可以添加错误处理逻辑
                 });
         },
+        //获取当前用户的所有反馈内容
+        fetchFeedbackByUserId() {
+            axiosForActivity.get(`/api/activity/feedbacks/user/${this.userId}`) // 替换为您的API端点
+                .then(response => {
+                    console.log(response);
+                    this.myFeedback = response.data.map(myfeedback => ({
+                        id: myfeedback.id,
+                        title: myfeedback.title, 
+                        rating: myfeedback.rating, // 假设这已经是一个格式化好的字符串
+                        content: myfeedback.feedbackContent, // 假设 'organizeDetails' 字段包含活动内容
+                        status: myfeedback.feedbackStatus=="PROCESSED",
+                        date: myfeedback.feedbackTime, //当前活动的报名人数      
+                    }));
+                    // 按照开始时间从晚到早排序
+                    this.myFeedback.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    console.log(this.myFeedback)
+                })
+                .catch(error => {
+                    console.error('Error fetching activities:', error);
+                    // 可以添加错误处理逻辑
+                });
+        }
     }
 };
 </script>
