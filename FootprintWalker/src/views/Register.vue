@@ -30,7 +30,7 @@
                         <!-- 选择校区 -->
                         <v-row justify="start">
                             <v-select v-model="campus" style="max-width: 150px;" label="请选择校区"
-                                :items="['四平路校区', '嘉定校区', '彰武校区', '沪西校区']" variant="outlined" density="compact"
+                                :items="['四平路校区', '嘉定校区', '沪北校区', '沪西校区']" variant="outlined" density="compact"
                                 color="#F65353" :rules="[required]"></v-select>
                         </v-row>
                         <!-- 输入姓名和学号 -->
@@ -152,7 +152,7 @@
                         <!-- 选择校区 -->
                         <v-row justify="start">
                             <v-select v-model="campus" style="max-width: 150px;" label="请选择校区"
-                                :items="['四平路校区', '嘉定校区', '彰武校区', '沪西校区']" variant="outlined" density="compact"
+                                :items="['四平路校区', '嘉定校区', '沪北校区', '沪西校区']" variant="outlined" density="compact"
                                 color="#F65353" :rules="[required]"></v-select>
                         </v-row>
                         <!-- 输入姓名和学号 -->
@@ -333,8 +333,8 @@ export default {
         const campusMap = {
           '四平路校区': 'SIPING',
           '嘉定校区': 'JIADING',
-          '彰武校区': 'HUXI',
-          '沪西校区': 'HUBEI'
+          '沪北校区': 'HUBEI',
+          '沪西校区': 'HUXI'
         };
         return campusMap[campus] || null; // 返回对应的枚举值或者null
       },
