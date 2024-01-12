@@ -4,7 +4,13 @@
             <v-progress-linear :active="isActive" color="deep-purple" height="4" indeterminate></v-progress-linear>
         </template>
 
-        <v-img cover height="250" :src="activity.image"></v-img>
+        <v-img lazy-src="https://picsum.photos/id/11/100/60" cover height="250" :src="activity.image">
+            <template v-slot:placeholder>
+                <div class="d-flex align-center justify-center fill-height">
+                    <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                </div>
+            </template>
+        </v-img>
 
         <v-card-item>
             <v-card-title>{{ activity.title }}</v-card-title>
@@ -17,7 +23,8 @@
 
         <v-card-text>
             <div class="text-subtitle-1">【活动地点】：{{ activity.location }}</div>
-            <div class="text-subtitle-1">【活动时间】：{{ formatDateTime(activity.startTime) }} 到 {{ formatDateTime(activity.endTime)
+            <div class="text-subtitle-1">【活动时间】：{{ formatDateTime(activity.startTime) }} 到 {{
+                formatDateTime(activity.endTime)
             }}</div>
             <div class="text-subtitle-1" style="height:70px;">【活动内容】：{{ truncatedContent }}</div>
         </v-card-text>
