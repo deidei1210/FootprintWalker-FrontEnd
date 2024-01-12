@@ -2,7 +2,7 @@
     <div class="card-container">
         <v-card class="card">
             <!-- <div class="image-container"> -->
-            <v-img class="image" height="200" :src="article.image" cover></v-img>
+            <v-img class="image" height="200" :src="`../src/assets${article.image}`" cover></v-img>
             <!-- </div> -->
             <div class="content">
                 <!-- 卡片头部 -->
@@ -29,6 +29,9 @@ export default {
             type: Object,
             required: true,
         },
+    },
+    mounted(){
+        console.log(this.article)
     },
     methods: {
         readMore() {

@@ -21,7 +21,7 @@
         <div v-if="uniRegister" class="Register">
             <div class="title text-h3 font-weight-bold">校 内 注 册</div>
             <!-- 显示机票背景图片 -->
-            <v-img :width="2600" aspect-ratio="16/9" cover src="../assets/Ticket.png"
+            <v-img :width="2600" aspect-ratio="16/9" cover src="../assets/background/Ticket.png"
                 style="margin-top: 20px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
                 <!-- 注册表单 -->
                 <v-form v-model="form" @submit.prevent="onSubmit">
@@ -143,7 +143,7 @@
         <div v-if="outUniRegister" class="Register">
             <div class="title text-h3 font-weight-bold">校 外 注 册</div>
             <!-- 显示机票背景图片 -->
-            <v-img :width="2600" aspect-ratio="16/9" cover src="../assets/Ticket.png"
+            <v-img :width="2600" aspect-ratio="16/9" cover src="../assets/background/Ticket.png"
                 style="margin-top: 20px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
                 <!-- 注册表单 -->
                 <v-form v-model="form" @submit.prevent="onSubmit">
@@ -439,7 +439,7 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    background-image: url(../assets/loginBackgroundImage.png);
+    background-image: url(../assets/background/loginBackgroundImage.png);
     background-size: 100%;
 }
 

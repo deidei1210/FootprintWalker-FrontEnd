@@ -1,9 +1,9 @@
 <template>
     <!-- 顶部的导航栏 -->
     <DefaultBar />
-    <v-img src="../assets/HomeTitle.png" style="position:relative;top:-60px;"></v-img>
+    <v-img src="../assets/background/HomeTitle.png" style="position:relative;top:-60px;"></v-img>
     <div style="position:relative;top:-245px;">
-        <v-img src="../assets/往期回顾.png">
+        <v-img src="../assets/background/往期回顾.png">
             <!-- 左边是地图 -->
             <div id="allmap"></div>
             <!-- 右边是往期回顾的文字介绍 -->
@@ -27,11 +27,11 @@
     <v-row style="position:relative;top:-210px;">
         <!-- 活动报名 -->
         <v-col style="padding:50px;">
-            <v-img src="../assets/活动报名.png">
+            <v-img src="../assets/background/活动报名.png">
                 <div class="content">
                     <v-icon icon="mdi-fire" color="red" style="display:inline-block;position:relative;top:-10px;"
                         size="x-large" />
-                    <div class="text-h3" style="display:inline-block;">{{ activityData.title }}</div>
+                    <div class="text-h5" style="display:inline-block;">{{ activityData.title }}</div>
                     <div class="text-caption">截止时间：{{ formatDateTime(activityData.registrationEndTime) }}</div>
                     <v-divider class="border-opacity-75"></v-divider>
                     <div class="text-left text-body-1"><span class="text-red">【活动时间】</span>{{
@@ -46,7 +46,7 @@
                     <div class="text-container" style="margin-top: 10px;">
                         <p class="text-left text-body-1">{{ activityData.description }}</p>
                     </div>
-                    <a href="">更多>></a>
+                    <router-link to="/assign-activity">更多>></router-link>
 
                     <v-img :src="activityData.adImages[0]" max-width="50%"></v-img>
                 </div>
@@ -55,7 +55,7 @@
 
         <!-- 最近新闻 -->
         <v-col style="padding:50px;">
-            <v-img src="../assets/最近新闻.png">
+            <v-img src="../assets/background/最近新闻.png">
                 <div class="content">
                     <!-- 显示前三条公告的图片和标题 -->
                     <v-row>
@@ -89,7 +89,7 @@
     <!-- 社团简介 -->
 
     <div style="position:relative;top:2px;">
-        <v-img src="../assets/关于我们.png">
+        <v-img src="../assets/background/关于我们.png">
             <v-row style="width:60%;position:relative;left:400px;top:270px;">
                 <v-col cols="5"> <!-- 修改这里的列数来调整图片所占的宽度 -->
                     <v-img src="../assets/Poster.jpg" height="400px" max-width="280px"></v-img>

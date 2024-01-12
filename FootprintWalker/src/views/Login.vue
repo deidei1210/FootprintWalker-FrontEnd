@@ -123,7 +123,7 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    background-image: url(../assets/loginBackgroundImage.png);
+    background-image: url(../assets/background/loginBackgroundImage.png);
     background-size: 100%;
 }
 

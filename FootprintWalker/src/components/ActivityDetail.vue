@@ -15,8 +15,14 @@
                 <div style="width: 75%;">
                     <v-carousel cycle height="330" hide-delimiter-background show-arrows="hover" :interval="4000"
                         style="margin-top:25px;margin-bottom:25px;border-radius: 5px;margin-left:17%;">
-                        <v-carousel-item v-for="(image, i) in activity.adImages" :key="i" :src="image"
-                            cover></v-carousel-item>
+                        <v-carousel-item v-for="(image, i) in activity.adImages" :key="i" :src="image" cover
+                            lazy-src="https://picsum.photos/id/11/100/60">
+                            <template v-slot:placeholder>
+                                <div class="d-flex align-center justify-center fill-height">
+                                    <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                                </div>
+                            </template>
+                        </v-carousel-item>
                     </v-carousel>
                 </div>
                 <v-card-text>

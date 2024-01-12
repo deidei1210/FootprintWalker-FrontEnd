@@ -4,7 +4,7 @@
         <!-- 顶部的导航栏 -->
         <DefaultBar style="position: fixed; top: 0; left: 0; z-index: 5;" />
         <!-- 图片元素 -->
-        <img src="../assets/反馈中心背景.png" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 1;" alt="">
+        <img src="../assets/background/反馈中心背景.png" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 1;" alt="">
         <v-card style="position:absolute;left:15%;top:200px;z-index: 4;width:70%;">
             <v-tabs v-model="tab" bg-color="#4A4A4A">
                 <v-tab value="one">活动反馈</v-tab>

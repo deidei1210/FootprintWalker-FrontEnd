@@ -1,7 +1,7 @@
 <template>
     <!-- 顶部的导航栏 -->
     <div style="position: relative;">
-        <img src="../assets/个人中心背景.png" style="position:absolute; top:0px; width: 100%; z-index: 1;" alt="">
+        <img src="../assets/background/个人中心背景.png" style="position:absolute; top:0px; width: 100%; z-index: 1;" alt="">
         <!-- 顶部的导航栏 -->
         <DefaultBar style="position: fixed; top: 0; left: 0; z-index: 5;" />
         <div style="position:relative;height: 100vh; overflow-y: auto;">

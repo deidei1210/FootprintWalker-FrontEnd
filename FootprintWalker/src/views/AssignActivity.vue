@@ -2,7 +2,7 @@
     <div style="position:relative;">
         <!-- 顶部的导航栏 -->
         <DefaultBar />
-        <v-img src="../assets/活动报名天空背景.png" style="width: 100%; height: 100%;">
+        <v-img src="../assets/background/活动报名天空背景.png" style="width: 100%; height: 100%;">
             <v-container style="position:absolute;top:230px;left:13%;">
                 <v-progress-circular v-if="loadingActivity" :size="100" :width="7" color="white" style="margin-left: 47%;"
                     indeterminate></v-progress-circular>
@@ -49,7 +49,7 @@ export default {
         //报名卡片内容
 
         activities: [], // 初始化为空数组
-        
+
         snackbar: {
             show: false,
             message: "",
