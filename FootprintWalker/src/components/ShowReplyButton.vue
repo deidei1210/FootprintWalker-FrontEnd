@@ -21,10 +21,11 @@
                         {{ myFeedback.content }}
                     </v-card-text>
                     <v-divider></v-divider>
+                    
                     <v-card-title>回复内容</v-card-title>
-                    <v-card-subtitle>{{ formatDateTime(reply.replyTime) }}</v-card-subtitle>
-                    <v-card-text>{{ reply.content }}</v-card-text>
-
+                    <v-card-subtitle v-if="myFeedback.status">{{ formatDateTime(reply.replyTime) }}</v-card-subtitle>
+                    <v-card-text v-if="myFeedback.status">{{ reply.content }}</v-card-text>
+                    <v-card-text v-else>管理员还未处理您的反馈，请耐心等待！～</v-card-text>
                     <v-card-actions>
                         <v-btn color="deep-purple-lighten-2" block @click="dialog = false">Close Dialog</v-btn>
                     </v-card-actions>
@@ -65,13 +66,12 @@ export default {
         //需要根据反馈id获取对应的回复
         getReply() {
             this.dialog = true;
+            console.log(this.myFeedback);
             axiosForActivity.get(`/api/activity/replies/feedback/${this.myFeedback.id}`)
                 .then(response => {
                     console.log(response);
-                    this.reply = response.data.map(myfeedback => ({
-                        content: myfeedback.replyContent,
-                        replyTime:myfeedback.replyTime
-                    }));
+                    this.reply.content=response.data.replyContent;
+                    this.reply.replyTime=response.data.replyTime;
                     console.log(this.reply)
                 })
                 .catch(error => {

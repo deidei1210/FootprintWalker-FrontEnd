@@ -217,7 +217,7 @@ export default {
                 .then(response => {
                     console.log(response);
                     this.myFeedback = response.data.map(myfeedback => ({
-                        id: myfeedback.id,
+                        id: myfeedback.feedbackID,
                         title: myfeedback.title, 
                         rating: myfeedback.rating, // 假设这已经是一个格式化好的字符串
                         content: myfeedback.feedbackContent, // 假设 'organizeDetails' 字段包含活动内容
