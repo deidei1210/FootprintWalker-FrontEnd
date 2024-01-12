@@ -6,7 +6,7 @@
             <v-container style="position:absolute;top:230px;left:13%;">
                 <v-row>
                     <v-col v-for="(activity, index) in paginatedActivities" :key="activity.id" :cols="12 / cardsPerRow">
-                        <assign-card :activity="activity" />
+                        <assign-card :activity="activity"/>
                     </v-col>
                 </v-row>
                 <v-pagination v-model="currentPage" :length="totalPages" @input="loadPage" />
