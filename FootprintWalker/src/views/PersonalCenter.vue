@@ -52,13 +52,14 @@
 
             </v-card>
 
+            <!-- 活动报名信息 -->
             <v-container color="white"
                 style="position:absolute;margin-left:6%;width:100%;margin-top:300px;margin-bottom:5%;z-index: 4;">
                 <v-card class="pa-7" style="position:absolute;top:230px;left:13%;width:97%;">
                     <v-card-title>已报名的活动</v-card-title>
                     <v-divider></v-divider>
                     <v-row>
-                        <v-col v-for="(activity, index) in paginatedActivities" :key="activity.id" :cols="12 / cardsPerRow">
+                        <v-col v-for="(activity, index) in activities" :key="activity.id" :cols="12 / cardsPerRow">
                             <assign-card :activity="activity" />
                         </v-col>
                     </v-row>
@@ -69,6 +70,7 @@
         </div>
     </div>
 
+    <!-- 修改个人信息 -->
     <v-dialog v-model="dialogEdit" persistent width="1024">
         <v-card>
             <v-card-title>
@@ -198,10 +200,16 @@ export default {
         },
         //获取用户报名的所有活动
         fetchActivities() {
-            axiosForActivity.get('/api/activity/activities') // 替换为您的API端点
+            const requestBody = {
+                "page": 0,
+                "size": 2000,
+                "sort": [
+                ]
+            }
+            axiosForActivity.get(`/api/activity/activities/participant/${this.userId}`,requestBody) // 替换为您的API端点
                 .then(response => {
                     console.log(response);
-                    this.activities = response.data.map(activity => ({
+                    this.activities = response.data.content.map(activity => ({
                         id: activity.id,
                         title: activity.title, // 假设 'activityInfo' 字段包含活动标题
                         deadline: activity.registrationEndTime, // 假设这已经是一个格式化好的字符串
@@ -211,11 +219,9 @@ export default {
                         content: activity.activityInfo, // 假设 'organizeDetails' 字段包含活动内容
                         image: activity.adImages?.[0] || 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', // 使用第一张广告图片或默认图片
                         limited: activity.estimatedLimit, //活动限制的报名人数
-                        cost: activity.cost,             //活动报名的费用
-                        adImages: activity.adImages,
-                        currentParticipants: activity.currentParticipants, //当前活动的报名人数      
-
+                        cost: activity.cost,             //活动报名的费用    
                     }));
+                    console.log("用户报名的活动：",this.activities)
                     this.activities = this.activities.filter(activity => activity.id !== 9);
                     // 按照deadline从晚到早排序
                     this.activities.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
@@ -244,8 +250,8 @@ export default {
                 "institute": this.mapCollegeToInstituteCTE(this.personalInfo.institute),
                 "major": this.personalInfo.major
             }
-            axios.put(`/api/human_management/members/${this.userId}`,requestBody)
-            .then(response => {
+            axios.put(`/api/human_management/members/${this.userId}`, requestBody)
+                .then(response => {
                     console.log('修改个人信息成功！', response);
                     this.dialogEdit = false;
                     window.location.reload(); // 强制刷新页面
