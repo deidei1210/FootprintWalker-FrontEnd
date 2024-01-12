@@ -1,5 +1,5 @@
 <template>
-  <!-- <v-container> -->
+
     <v-app-bar app color="rgba(61, 61, 61)" scroll-behavior="fade-image" dark
     shrink-on-scroll height="60" style="position:fixed;color:aliceblue;">
       <template v-slot:img="{ props }">
@@ -44,8 +44,7 @@
         <v-tooltip activator="parent" location="bottom">退出登录</v-tooltip>
       </v-btn>
     </v-app-bar>
-    <!-- <router-view /> -->
-  <!-- </v-container> -->
+
 </template>
 <script>
 export default {
