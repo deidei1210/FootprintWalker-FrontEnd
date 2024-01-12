@@ -4,14 +4,20 @@
         <DefaultBar />
         <v-img src="../assets/活动报名天空背景.png" style="width: 100%; height: 100%;">
             <v-container style="position:absolute;top:230px;left:13%;">
+                <v-progress-circular v-if="loadingActivity" :size="100" :width="7" color="white" style="margin-left: 47%;"
+                    indeterminate></v-progress-circular>
                 <v-row>
                     <v-col v-for="(activity, index) in paginatedActivities" :key="activity.id" :cols="12 / cardsPerRow">
-                        <assign-card :activity="activity"/>
+                        <assign-card :activity="activity" />
                     </v-col>
                 </v-row>
                 <v-pagination v-model="currentPage" :length="totalPages" @input="loadPage" />
             </v-container>
         </v-img>
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout"
+            style="position:fixed;top:50%;left:5%; height:100px;">
+            {{ snackbar.message }}<v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
+        </v-snackbar>
         <Footer></Footer>
     </div>
 </template>
@@ -32,6 +38,7 @@ export default {
         AssignButton,
     },
     data: () => ({
+        loadingActivity: true,
         form: false,
         userAccount: null,
         password: null,
@@ -42,6 +49,14 @@ export default {
         //报名卡片内容
 
         activities: [], // 初始化为空数组
+        
+        snackbar: {
+            show: false,
+            message: "",
+            color: '',
+            timeout: 3000, // Snackbar显示的时间（毫秒）
+        },
+
     }),
     computed: {
         paginatedActivities() {
@@ -58,6 +73,7 @@ export default {
     },
     methods: {
         fetchActivities() {
+            this.loadingActivity = true;
             axiosForActivity.get('/api/activity/activities') // 替换为您的API端点
                 .then(response => {
                     console.log(response);
@@ -80,16 +96,31 @@ export default {
                     this.activities = this.activities.filter(activity => activity.id !== 9 && activity.activityStatus === 'PUBLISHED');
                     // 按照deadline从晚到早排序
                     this.activities.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
+                    this.showSnackbar('加载成功！', '#B9F6CA');
                 })
                 .catch(error => {
                     console.error('Error fetching activities:', error);
                     // 可以添加错误处理逻辑
-                });
+                    this.showSnackbar('加载失败，请重试', 'error');
+                }).finally(() => {
+                    this.loadingActivity = false;
+                })
         },
         loadPage() {
             // 处理页码变化时的逻辑，例如加载对应页的数据
             console.log('Load page:', this.currentPage);
         },
+        showSnackbar(message, color) {
+            this.snackbar.message = message;
+            this.snackbar.color = color;
+            this.snackbar.show = true;
+
+            // 可以在一定时间后关闭Snackbar，这里使用setTimeout
+            setTimeout(() => {
+                this.snackbar.show = false;
+            }, this.snackbar.timeout);
+        },
+
     },
 }
 </script>

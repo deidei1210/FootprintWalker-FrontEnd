@@ -18,6 +18,9 @@
                     <v-window-item value="one">
                         <!-- 活动反馈内容 -->
                         <v-container class="feedback-container">
+                            <v-progress-circular v-if="loadingActivityFeedback" :size="100" :width="7" color="grey"
+                                style="margin-left: 47%;" indeterminate></v-progress-circular>
+
                             <v-row>
                                 <v-col v-for="activity in allActivities" :key="activity.id" :cols="12 / cardsPerRow">
                                     <v-card>
@@ -64,6 +67,10 @@
                     <v-window-item value="three">
                         <!-- 我的反馈内容 -->
                         <v-container class="feedback-container">
+                            <v-progress-circular v-if="loadingMyFeedback" :size="100" :width="7" color="grey"
+                                style="margin-left: 47%;" indeterminate></v-progress-circular>
+
+
                             <v-row>
                                 <v-col v-for="feedback in myFeedback" :key="feedback.id" :cols="12 / cardsPerRow">
                                     <v-card>
@@ -146,6 +153,8 @@ export default {
         activityFeedbackDialog: false,
 
         loading: false,
+        loadingActivityFeedback: true,
+        loadingMyFeedback:true,
 
         snackbar: {
             show: false,
@@ -191,7 +200,7 @@ export default {
                     console.log('Feedback created successfully:', response.data);
                     // 在这里处理反馈创建成功的逻辑
                     this.feedback = "";
-                    this.feedbackTitle="";
+                    this.feedbackTitle = "";
                     this.showSnackbar('提交成功！', '#B9F6CA');
                 })
                 .catch(error => {
@@ -205,6 +214,7 @@ export default {
         },
         //获取当前活动
         fetchActivities() {
+            this.loadingActivityFeedback = true;
             axiosForActivity.get('/api/activity/activities') // 替换为您的API端点
                 .then(response => {
                     console.log(response);
@@ -227,14 +237,19 @@ export default {
                     this.allActivities = this.allActivities.filter(activity => activity.id !== 9);
                     // 按照开始时间从晚到早排序
                     this.allActivities.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+                    this.showSnackbar('加载成功！', '#B9F6CA');
                 })
                 .catch(error => {
                     console.error('Error fetching activities:', error);
                     // 可以添加错误处理逻辑
-                });
+                    this.showSnackbar('加载失败，请重试', 'error');
+                }).finally(() => {
+                    this.loadingActivityFeedback = false;
+                })
         },
         //获取当前用户的所有反馈内容
         fetchFeedbackByUserId() {
+            this.loadingMyFeedback=true;
             axiosForActivity.get(`/api/activity/feedbacks/user/${this.userId}`) // 替换为您的API端点
                 .then(response => {
                     console.log(response);
@@ -249,10 +264,14 @@ export default {
                     // 按照开始时间从晚到早排序
                     this.myFeedback.sort((a, b) => new Date(b.date) - new Date(a.date));
                     console.log(this.myFeedback)
+                    this.showSnackbar('加载成功！', '#B9F6CA');
                 })
                 .catch(error => {
                     console.error('Error fetching activities:', error);
                     // 可以添加错误处理逻辑
+                    this.showSnackbar('加载失败，请重试', 'error');
+                }).finally(()=>{
+                    this.loadingMyFeedback=false;
                 })
         },
         showSnackbar(message, color) {
