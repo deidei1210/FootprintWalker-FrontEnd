@@ -230,11 +230,10 @@ export default {
                         limited: activity.estimatedLimit, //活动限制的报名人数
                         cost: activity.cost,             //活动报名的费用
                         adImages: activity.adImages,
-                        currentParticipants: activity.currentParticipants, //当前活动的报名人数      
-
+                        activityStatus: activity.activityStatus, //当前活动状态    
                     }));
                     // 删除 id 为 9 的那一项
-                    this.allActivities = this.allActivities.filter(activity => activity.id !== 9);
+                    this.allActivities = this.allActivities.filter(activity => activity.id !== 9 && activity.activityStatus === 'PUBLISHED');
                     // 按照开始时间从晚到早排序
                     this.allActivities.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
                     this.showSnackbar('加载成功！', '#B9F6CA');

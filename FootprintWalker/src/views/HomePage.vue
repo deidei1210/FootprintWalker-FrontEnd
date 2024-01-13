@@ -11,14 +11,22 @@
             <div id="Lookback">
                 <v-icon icon="mdi-map-marker" color="red" style="display:inline-block;position:relative;top:-10px;"
                     size="x-large" />
-                <div class="text-h3 text-white" style="display:inline-block;" color="white">{{ lookback.title }}</div>
+                <div class="text-h5 text-white" style="display:inline-block;" color="white">{{ lookback.title }}</div>
                 <div class="text-container">
                     <p class="text-left text-body-1 text-white">{{ lookback.activityInfo }}</p>
                 </div>
-                <a href="">更多>></a>
+                <a href="https://mp.weixin.qq.com/s/lOkojvk7TmD2XJC0_9cdkg">更多>></a>
                 <v-carousel cycle height="330" hide-delimiter-background show-arrows="hover" :interval="4000"
                     style="margin-top:25px;border-radius: 5px;">
-                    <v-carousel-item v-for="(image, i) in lookback.adImages" :key="i" :src="image" cover></v-carousel-item>
+                    <v-carousel-item lazy-src="https://picsum.photos/id/11/100/60" v-for="(image, i) in lookback.adImages"
+                        :key="i" :src="image" cover>
+                        <template v-slot:placeholder>
+                            <div class="d-flex align-center justify-center fill-height">
+                                <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                            </div>
+                        </template>
+
+                    </v-carousel-item>
                 </v-carousel>
             </div>
         </v-img>
@@ -48,7 +56,14 @@
                     </div>
                     <router-link to="/assign-activity">更多>></router-link>
 
-                    <v-img :src="activityData.adImages[0]" max-width="50%"></v-img>
+                    <v-img :src="activityData.adImages[0]" lazy-src="https://picsum.photos/id/11/100/60" max-width="50%">
+                        <template v-slot:placeholder>
+                            <div class="d-flex align-center justify-center fill-height">
+                                <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                            </div>
+                        </template>
+
+                    </v-img>
                 </div>
             </v-img>
         </v-col>
@@ -61,8 +76,15 @@
                     <v-row>
                         <v-col v-for="(announcement, index) in announcements.slice(0, 3)" :key="index">
                             <router-link :to="announcement.link">
-                                <v-img :src="announcement.imageUrl" height="160px" cover></v-img>
-                                <div>{{ announcement.title.slice(0, 50)  }}</div>
+                                <v-img :src="announcement.imageUrl" lazy-src="https://picsum.photos/id/11/100/60"
+                                    height="160px" cover>
+                                    <template v-slot:placeholder>
+                                        <div class="d-flex align-center justify-center fill-height">
+                                            <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                                        </div>
+                                    </template>
+                                </v-img>
+                                <div>{{ announcement.title.slice(0, 50) }}</div>
                             </router-link>
                         </v-col>
                     </v-row>
@@ -72,7 +94,7 @@
                             style="display: flex; justify-content: space-between;">
                             <div>
                                 <v-btn :to="announcement.link" variant="text" prepend-icon="mdi-circle">
-                                    {{ announcement.title.slice(0, 40)  }}
+                                    {{ announcement.title.slice(0, 40) }}
                                 </v-btn>
                             </div>
                             <!-- 可以添加其他信息，如发布时间等 -->
@@ -113,8 +135,8 @@
 import DefaultBar from '@/layouts/default/AppBar.vue'
 import Footer from '@/layouts/default/Foot.vue'
 import { BaiduMap } from 'vue-baidu-map-3x'
-import{ formatDateTime , joinCampuses} from '@/tools/Format.js'
-import { axiosForActivity,axiosForAnnouncement} from '../main.js';
+import { formatDateTime, joinCampuses } from '@/tools/Format.js'
+import { axiosForActivity, axiosForAnnouncement } from '../main.js';
 // import DefaultView from '@/layouts/default/View.vue'
 export default {
     //导出组件
@@ -211,9 +233,9 @@ export default {
             axiosForActivity.get('/api/activity/activities/latest').then(response => {
                 console.log('Response from Service B:', response.data);
                 this.activityData = response.data;
-                });
-                // this.activityData.activityInfo=truncatedContent();
-            },
+            });
+            // this.activityData.activityInfo=truncatedContent();
+        },
         getAnnouncementsData() {
             axiosForAnnouncement.get('/api/announcements/recent').then(response => {
                 console.log('Response from Announcement:', response.data);
@@ -266,6 +288,4 @@ export default {
 .content {
     margin: 123px 30px 3px 30px;
 }
-
-
 </style>
