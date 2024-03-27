@@ -125,8 +125,8 @@ export default {
 <style>
 .admin-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
 }
 
 .Screen {
