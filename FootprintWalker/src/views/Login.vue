@@ -1,8 +1,9 @@
-
 <template>
     <!-- <script src="./src/snow.js"></script> -->
     <!-- 登陆界面 -->
     <div class="Screen">
+        <!-- 按钮 -->
+        <v-btn variant="text" size="small" @click="goToAdminPage" class="admin-btn" color="white">管理端登录</v-btn>
         <div class="login">
             <div class="title text-h3 font-weight-bold">去旅行，去热爱!</div>
             <v-card class="mx-auto px-6 py-8 login-card" max-width="400">
@@ -22,8 +23,8 @@
                                 type="submit" variant="elevated" width="130" @click="loginHandler">
                                 登 录
                             </v-btn>
-                            <v-btn :loading="loading" style="margin-left: 20px;" color="#E7F49A" size="large" type="submit"
-                                variant="elevated" width="130" @click="registerHandler">
+                            <v-btn :loading="loading" style="margin-left: 20px;" color="#E7F49A" size="large"
+                                type="submit" variant="elevated" width="130" @click="registerHandler">
                                 注 册
                             </v-btn>
                         </v-row>
@@ -61,6 +62,10 @@ export default {
         document.body.appendChild(script)
     },
     methods: {
+        //切换到管理端，需要后期加上部署的管理端网页链接
+        goToAdminPage(){
+            
+        },
         onSubmit() {
             //表单不合法，不提交
             if (!this.form) return
@@ -75,31 +80,31 @@ export default {
         },
         //处理登录逻辑
         loginHandler() {
-          if (!this.form) return;
+            if (!this.form) return;
 
-          this.loading = true;
+            this.loading = true;
 
-          const params = {
-            phoneNumber: this.userAccount,
-            password: this.password,
-          };
+            const params = {
+                phoneNumber: this.userAccount,
+                password: this.password,
+            };
 
-          console.log("params",params);
-          axios.get('api/human_management/members/login', {params})
-            .then(response => {
-              console.log('Login successful', response);
-              localStorage.setItem('id',response.data.id);
-              console.log('id:',localStorage.getItem('id'));
-              // 登录成功后的操作，例如重定向
-              this.$router.push('/home-page');
-            })
-            .catch(error => {
-              console.error('Login failed', error);
-              // 登录失败后的操作
-            })
-            .finally(() => {
-              this.loading = false;
-            });
+            console.log("params", params);
+            axios.get('api/human_management/members/login', { params })
+                .then(response => {
+                    console.log('Login successful', response);
+                    localStorage.setItem('id', response.data.id);
+                    console.log('id:', localStorage.getItem('id'));
+                    // 登录成功后的操作，例如重定向
+                    this.$router.push('/home-page');
+                })
+                .catch(error => {
+                    console.error('Login failed', error);
+                    // 登录失败后的操作
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
 
         },
         //处理注册逻辑
@@ -115,10 +120,15 @@ export default {
         },
     },
 }
-
 </script>
 
 <style>
+.admin-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
 .Screen {
     position: relative;
     width: 100%;
