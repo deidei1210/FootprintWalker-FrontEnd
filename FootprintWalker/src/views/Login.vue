@@ -14,7 +14,7 @@
                         label="Account" prepend-icon="mdi-account"></v-text-field>
                     <!-- 输入密码 -->
                     <v-text-field v-model="password" :readonly="loading" :rules="[required]" clearable label="Password"
-                        placeholder="Enter your password" prepend-icon="mdi-lock" type="password"></v-text-field>
+                        placeholder="Enter your password" prepend-icon="mdi-lock" type="password" @keyup.enter="loginHandler"></v-text-field>
 
                     <br>
                     <v-container>
