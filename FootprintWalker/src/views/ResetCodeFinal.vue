@@ -1,6 +1,10 @@
 <template>
     <!-- 重置密码界面 -->
     <div class="Screen">
+        <!-- 左上角加返回按钮 -->
+        <!-- 按钮 -->
+        <v-btn variant="elevated" @click="goToLoginPage" class="goback-btn" color="#E7F49A">返回</v-btn>
+
         <div class="findCode">
             <div class="title text-h3 font-weight-bold">找 回 密 码</div>
             <!-- 使用了 @submit.prevent 监听表单的提交事件，并调用 onSubmit 方法进行处理。.prevent 修饰符阻止了表单的默认提交行为，从而可以使用自定义的提交方法进行处理。 -->
@@ -8,13 +12,15 @@
                 <v-row>
                     <!-- 输入用户名 -->
                     <v-col cols="12" md="12">
-                        <v-text-field v-model="newPassword" :readonly="loading" :rules="[required]" class="mb-2" clearable
-                            label="请输入新密码" prepend-inner-icon="mdi-lock" variant="solo" type="password"></v-text-field>
+                        <v-text-field v-model="newPassword" :readonly="loading" :rules="[required]" class="mb-2"
+                            clearable label="请输入新密码" prepend-inner-icon="mdi-lock" variant="solo"
+                            type="password"></v-text-field>
                     </v-col>
                     <!-- 输入手机号 -->
                     <v-col cols="12" md="12">
                         <v-text-field v-model="verifyNewPassword" :readonly="loading" :rules="[required]" label="请确认新密码"
-                            placeholder="请确认新密码" prepend-inner-icon="mdi-lock" variant="solo" type="password" clearable></v-text-field>
+                            placeholder="请确认新密码" prepend-inner-icon="mdi-lock" variant="solo" type="password"
+                            clearable></v-text-field>
                     </v-col>
                 </v-row>
 
@@ -33,17 +39,22 @@
 
     </div>
 </template>
-  
+
 <script>
 // import HelloWorld from '@/components/HelloWorld.vue'
 export default {
     data: () => ({
         form: false,
-        newPassword:"",
-        verifyNewPassword:"",
+        newPassword: "",
+        verifyNewPassword: "",
         loading: false,
     }),
     methods: {
+        //返回登录界面
+        goToLoginPage() {
+            // 使用$router.push()方法跳转到Login界面
+            this.$router.push({ name: 'Login' });
+        },
         onSubmit() {
             //表单不合法，不提交
             if (!this.form) return
@@ -94,6 +105,12 @@ export default {
     height: 100%;
     background-image: url(../assets/background/loginBackgroundImage.png);
     background-size: 100%;
+}
+
+.goback-btn {
+    position: absolute;
+    left: 50px;
+    top: 50px;
 }
 
 .title {

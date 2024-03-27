@@ -1,6 +1,10 @@
 <template>
     <!-- 重置密码界面 -->
     <div class="Screen">
+        <!-- 左上角加返回按钮 -->
+        <!-- 按钮 -->
+        <v-btn variant="elevated" @click="goToLoginPage" class="goback-btn" color="#E7F49A">返回</v-btn>
+
         <div class="findCode">
             <div class="title text-h3 font-weight-bold">找 回 密 码</div>
             <!-- 使用了 @submit.prevent 监听表单的提交事件，并调用 onSubmit 方法进行处理。.prevent 修饰符阻止了表单的默认提交行为，从而可以使用自定义的提交方法进行处理。 -->
@@ -18,7 +22,8 @@
                     </v-col>
                     <!-- 获取验证码按钮 -->
                     <v-col cols="12" md="4" class="d-flex">
-                        <v-btn outlined dark color="#E7F49A" size="large" type="submit" width="130" @click="getVerifyCode">
+                        <v-btn outlined dark color="#E7F49A" size="large" type="submit" width="130"
+                            @click="getVerifyCode">
                             获取验证码
                         </v-btn>
                     </v-col>
@@ -41,10 +46,9 @@
                 </v-container>
             </v-form>
         </div>
-
     </div>
 </template>
-  
+
 <script>
 // import HelloWorld from '@/components/HelloWorld.vue'
 export default {
@@ -56,6 +60,11 @@ export default {
         loading: false,
     }),
     methods: {
+        //返回登录界面
+        goToLoginPage() {
+            // 使用$router.push()方法跳转到Login界面
+            this.$router.push({ name: 'Login' });
+        },
         onSubmit() {
             //表单不合法，不提交
             if (!this.form) return
@@ -107,7 +116,11 @@ export default {
     background-image: url(../assets/background/loginBackgroundImage.png);
     background-size: 100%;
 }
-
+.goback-btn {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
 .title {
     width: 100%;
     line-height: 50px;
