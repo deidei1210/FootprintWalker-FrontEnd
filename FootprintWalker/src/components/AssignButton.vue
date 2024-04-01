@@ -165,7 +165,7 @@ export default {
         dialog2: false,    //用来开启第二个对话框
         dialog3: false,     //提示阅读免责声明
         dialog4: false,      //提示是否取消报名
-        userId: 1,          //用户的id
+        userId: localStorage.getItem('id'),          //用户的id
         currentDate: new Date(),
         checkbox: false,
         assigned: false,    //判断用户是否已经报名
