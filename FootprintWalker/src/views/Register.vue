@@ -153,22 +153,17 @@
                 <v-form v-model="form" @submit.prevent="onSubmit">
                     <!-- 左边那一块表单，包括校区，姓名，学号等 -->
                     <v-container style="position:relative;left:157px;top:41px;max-width: 400px;margin-left: 48px;">
-                        <!-- 选择校区 -->
+                        <!-- 输入大学的名称 -->
                         <v-row justify="start">
-                            <v-select v-model="campus" style="max-width: 150px;" label="请选择校区"
-                                :items="['四平路校区', '嘉定校区', '沪北校区', '沪西校区']" variant="outlined" density="compact"
-                                color="#F65353" :rules="[required]"></v-select>
+                            <v-text-field v-model="university" style="max-width: 150px;" label="请输入学校名称"
+                                    prepend-inner-icon="mdi-school" variant="outlined" density="compact"
+                                    color="#F65353" :rules="[required]"></v-text-field>
                         </v-row>
                         <!-- 输入姓名和学号 -->
                         <v-row justify="start">
                             <v-col style="padding:0px;">
                                 <v-text-field v-model="username" style="max-width: 150px;" label="请输入姓名"
                                     prepend-inner-icon="mdi-account" variant="outlined" density="compact"
-                                    color="#F65353" :rules="[required]"></v-text-field>
-                            </v-col>
-                            <v-col style="padding:0px;">
-                                <v-text-field v-model="studentNumber" style="max-width: 150px;" label="请输入学号"
-                                    prepend-inner-icon="mdi-numeric" variant="outlined" density="compact"
                                     color="#F65353" :rules="[required]"></v-text-field>
                             </v-col>
                         </v-row>
@@ -214,27 +209,7 @@
                         </v-row>
                     </v-container>
 
-                    <!-- 右边那一坨 -->
-                    <v-container style="position:absolute;left:526px;top:168px;max-width: 180px;margin-left: 48px;">
-                        <!-- 输入学院 -->
-                        <v-row justify="start">
-                            <v-text-field v-model="college" style="max-width: 200px;" label="请输入学院"
-                                prepend-inner-icon="mdi-school" variant="outlined" density="compact" color="#F65353"
-                                clearable :rules="[required]"></v-text-field>
-                        </v-row>
-                        <!-- 输入年级 -->
-                        <v-row justify="start">
-                            <v-text-field v-model="grade" style="max-width: 200px;" label="请输入年级"
-                                prepend-inner-icon="mdi-timer" variant="outlined" density="compact" color="#F65353"
-                                clearable :rules="[required]"></v-text-field>
-                        </v-row>
-                        <!-- 输入专业 -->
-                        <v-row justify="start">
-                            <v-text-field v-model="major" style="max-width: 200px;" label="请输入专业"
-                                prepend-inner-icon="mdi-pen" variant="outlined" density="compact" color="#F65353"
-                                clearable :rules="[required]"></v-text-field>
-                        </v-row>
-                    </v-container>
+                   
                     <!-- 确认按钮 -->
                     <v-btn :loading="registerLoading" style="position:absolute;right:72px;bottom:100px;" color="#F65353"
                         size="large" type="submit" variant="elevated" width="130" @click="submitRegisterForm">
@@ -243,7 +218,7 @@
                 </v-form>
                 <!-- 显示输入内容，在机票的最右边 -->
                 <v-container style="position:absolute;right:37px;top:98px;max-width: 280px;margin-left: 48px;">
-                    <div class="text-h7 font-weight-bold" style="color:#F65353;">{{ campus }}</div>
+                    <div class="text-h7 font-weight-bold" style="color:#F65353;">{{ university }}</div>
                     <div class="text-h7 font-weight-bold" style="color:#F65353;margin-top: 48px;margin-left:27px;">
                         <span>{{ date }}</span>
                         <span style="margin-left:101px;">{{ Time }}</span>
@@ -281,6 +256,7 @@ export default {
         college: "",               //学院
         major: "",                 //专业
         grade: "",                //年级
+        university:"",
         //获取当前时间和日期
         Time: "",                  //当前时间
         date: "",                  //当前日期
