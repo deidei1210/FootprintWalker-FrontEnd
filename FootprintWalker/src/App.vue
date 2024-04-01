@@ -9,9 +9,16 @@
   </v-app>
 </template>
 
-<script setup>
-//
+<script>
+export default {
+  data() {
+    return {
+      snowScriptLoaded: false
+    };
+  }
+}
 </script>
+
 <style scoped>
 #our_container{
   background: #E6E6FA

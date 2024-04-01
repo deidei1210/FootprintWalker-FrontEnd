@@ -14,7 +14,8 @@
                         label="Account" prepend-icon="mdi-account"></v-text-field>
                     <!-- 输入密码 -->
                     <v-text-field v-model="password" :readonly="loading" :rules="[required]" clearable label="Password"
-                        placeholder="Enter your password" prepend-icon="mdi-lock" type="password" @keyup.enter="loginHandler"></v-text-field>
+                        placeholder="Enter your password" prepend-icon="mdi-lock" type="password"
+                        @keyup.enter="loginHandler"></v-text-field>
 
                     <br>
                     <v-container>
@@ -59,11 +60,13 @@ export default {
     mounted() {
         const script = document.createElement('script')
         script.src = './src/snow.js'
+        // script.id = 'snow-script'; // 添加一个唯一的 id
         document.body.appendChild(script)
     },
     methods: {
         //切换到管理端，需要后期加上部署的管理端网页链接
-        goToAdminPage(){
+        goToAdminPage() {
+           
             
         },
         onSubmit() {
