@@ -11,11 +11,11 @@
                 <v-form v-model="form" @submit.prevent="onSubmit">
                     <!-- 输入账号 -->
                     <v-text-field v-model="userAccount" :readonly="loading" :rules="[required]" class="mb-2" clearable
-                        label="Account" prepend-icon="mdi-account"></v-text-field>
+                        label="Account" prepend-icon="mdi-account" id="Account"></v-text-field>
                     <!-- 输入密码 -->
                     <v-text-field v-model="password" :readonly="loading" :rules="[required]" clearable label="Password"
                         placeholder="Enter your password" prepend-icon="mdi-lock" type="password"
-                        @keyup.enter="loginHandler"></v-text-field>
+                        @keyup.enter="loginHandler" id="Password"></v-text-field>
 
                     <br>
                     <v-container>

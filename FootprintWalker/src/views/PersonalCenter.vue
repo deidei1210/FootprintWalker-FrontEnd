@@ -161,7 +161,7 @@ export default {
         saveLoading: false,
 
         form: false,
-        userId: 1,
+        userId: localStorage.getItem('id'),
         password: null,
         loading: false,
         currentOption: 'userInfo', // 默认选项为个人信息
