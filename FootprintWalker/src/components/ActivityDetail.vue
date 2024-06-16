@@ -44,7 +44,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="deep-purple-lighten-2" variant="outlined" @click="dialog = false">
+                    <v-btn color="deep-purple-lighten-2" variant="outlined" @click="dialog = false" id="close">
                         关 闭
                     </v-btn>
                 </v-card-actions>
@@ -77,3 +77,4 @@ export default {
     }
 }
 </script>
+

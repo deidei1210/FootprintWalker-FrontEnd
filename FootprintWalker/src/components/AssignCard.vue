@@ -33,8 +33,8 @@
 
         <v-card-actions>
             <v-row style="margin-bottom:10px;">
-                <activity-detail :activity="activity" style="margin-top:11px;"></activity-detail>
-                <assign-button :activity="activity"></assign-button>
+                <activity-detail :activity="activity" style="margin-top:11px;" id="detail"></activity-detail>
+                <assign-button :activity="activity" id="assign"></assign-button>
             </v-row>
         </v-card-actions>
     </v-card>
@@ -93,3 +93,4 @@ export default {
     },
 }
 </script>
+

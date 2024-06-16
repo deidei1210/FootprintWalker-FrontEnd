@@ -103,7 +103,7 @@ export default {
                 })
                 .catch(error => {
                     console.error('Login failed', error);
-                    // 登录失败后的操作
+                    alert('登录失败，请重新登录');
                 })
                 .finally(() => {
                     this.loading = false;
