@@ -93,7 +93,7 @@ export default {
             };
 
             console.log("params", params);
-            axios.get('api/human_management/members/login', { params })
+            axios.post('api/human_management/members/login', params)
                 .then(response => {
                     console.log('Login successful', response);
                     localStorage.setItem('id', response.data.id);
