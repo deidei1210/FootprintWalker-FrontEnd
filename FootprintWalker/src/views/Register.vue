@@ -391,6 +391,7 @@ export default {
                     console.log("status", response.status);
                     // 检查响应状态码
                     if (response.status === 201) {
+                        console.log(memberData)
                         // 注册成功
                         alert('注册成功');
                         this.$router.push('/'); // 假设登录页面的路由是 '/login'

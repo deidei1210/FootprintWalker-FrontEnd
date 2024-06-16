@@ -22,7 +22,7 @@
           <v-icon left dense> mdi-facebook-messenger </v-icon>
           关于我们
         </v-tab>
-        <v-tab class="mx-2 white--text" to="/assign-activity">
+        <v-tab class="mx-2 white--text" to="/assign-activity" id="Activity_Menu">
           <v-icon left dense> mdi-party-popper </v-icon>
           活动报名
         </v-tab>

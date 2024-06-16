@@ -21,7 +21,7 @@
                     <v-container>
                         <v-row justify="center">
                             <v-btn :loading="loading" style=" margin-right: 20px;" color="#F4A9E0" size="large"
-                                type="submit" variant="elevated" width="130" @click="loginHandler">
+                                type="submit" variant="elevated" width="130" @click="loginHandler" id="Login">
                                 登 录
                             </v-btn>
                             <v-btn :loading="loading" style="margin-left: 20px;" color="#E7F49A" size="large"
