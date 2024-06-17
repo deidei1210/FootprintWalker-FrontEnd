@@ -76,7 +76,9 @@ export default {
             this.loadingActivity = true;
             axiosForActivity.get('/api/activity/activities') // 替换为您的API端点
                 .then(response => {
+                    console.log(1)
                     console.log(response);
+                    // 计算participantIds数组的长度
                     this.activities = response.data.map(activity => ({
                         id: activity.id,
                         title: activity.title, // 假设 'activityInfo' 字段包含活动标题
@@ -89,9 +91,12 @@ export default {
                         limited: activity.estimatedLimit, //活动限制的报名人数
                         cost: activity.cost,             //活动报名的费用
                         adImages: activity.adImages,
-                        activityStatus: activity.activityStatus, //当前活动状态    
-
+                        activityStatus: activity.activityStatus, //当前活动状态 
+                        currentParticipants:activity.participantIds, //当前报名的人数 
+                        // currentParticipants: activity.participantIds, // 当前报名的参与者ID数组
+                        participantCount: activity.participantIds ? activity.participantIds.length : 0 // 参与者数量  
                     }));
+
                     console.log(this.activities);
                     this.activities = this.activities.filter(activity => activity.id !== 9 && activity.activityStatus === 'PUBLISHED');
                     // 按照deadline从晚到早排序
