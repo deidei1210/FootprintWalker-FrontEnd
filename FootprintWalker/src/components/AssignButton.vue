@@ -63,7 +63,7 @@
                 </v-card-text>
                 <v-checkbox class="ml-4" v-model="checkbox" color="deep-purple-lighten-2" aria-required="true">
                     <template v-slot:label>
-                        <div  id="confirm">
+                        <div id="confirm">
                             我已阅读以上内容，并接受安全须知和免责声明书
                         </div>
                     </template>
@@ -73,7 +73,8 @@
                     <v-btn class="mr-5" color="red-accent-2" variant="outlined" @click="dialog1 = false">
                         关 闭
                     </v-btn>
-                    <v-btn class="ml-2" color="deep-purple-lighten-2" variant="outlined" @click="handleRegistration" id="assign2">
+                    <v-btn class="ml-2" color="deep-purple-lighten-2" variant="outlined" @click="handleRegistration"
+                        id="assign2">
                         报 名
                     </v-btn>
                 </v-card-actions>
@@ -151,149 +152,149 @@
 import { formatDateTime } from "@/tools/Format.js";
 import { axiosForActivity } from "@/main";
 export default {
-  props: {
-      activity: {
-          type: Object,
-          required: true,
-      },
-  },
+    props: {
+        activity: {
+            type: Object,
+            required: true,
+        },
+    },
 
-  data: () => ({
-      loading2: false,    //用来检测报名按钮的加载状况
-      loading4: false,     //用来检测取消报名的加载状况
+    data: () => ({
+        loading2: false,    //用来检测报名按钮的加载状况
+        loading4: false,     //用来检测取消报名的加载状况
 
-      dialog1: false,    //用来开启第一个对话框
-      dialog2: false,    //用来开启第二个对话框
-      dialog3: false,     //提示阅读免责声明
-      dialog4: false,      //提示是否取消报名
-      userId: localStorage.getItem('id'),          //用户的id
-      currentDate: new Date(),
-      checkbox: false,
-      assigned: false,    //判断用户是否已经报名
-      snackbar: {
-          show: false,
-          message: "",
-          color: '',
-          timeout: 3000, // Snackbar显示的时间（毫秒）
-      },
-  }),
+        dialog1: false,    //用来开启第一个对话框
+        dialog2: false,    //用来开启第二个对话框
+        dialog3: false,     //提示阅读免责声明
+        dialog4: false,      //提示是否取消报名
+        userId: localStorage.getItem('id'),          //用户的id
+        currentDate: new Date(),
+        checkbox: false,
+        assigned: false,    //判断用户是否已经报名
+        snackbar: {
+            show: false,
+            message: "",
+            color: '',
+            timeout: 3000, // Snackbar显示的时间（毫秒）
+        },
+    }),
 
-  computed: {
-      //判断报名是否截止
-      isRegistrationClosed() {
-          const currentDate = new Date();
-          const deadlineDate = new Date(this.activity.deadline);
-          // 比较当前时间和报名截止日期
-          return currentDate > deadlineDate;
-      },
-  },
+    computed: {
+        //判断报名是否截止
+        isRegistrationClosed() {
+            const currentDate = new Date();
+            const deadlineDate = new Date(this.activity.deadline);
+            // 比较当前时间和报名截止日期
+            return currentDate > deadlineDate;
+        },
+    },
 
-  mounted() {
-      this.isAssigned()
-  },
+    mounted() {
+        this.isAssigned()
+    },
 
-  methods: {
-      formatDateTime,
-      reserve() {
-          this.loading = true
+    methods: {
+        formatDateTime,
+        reserve() {
+            this.loading = true
 
-          setTimeout(() => (this.loading = false), 2000)
-      },
-      handleRegistration() {
-          if (this.checkbox) {
-              // 处理报名逻辑，可以在这里触发弹窗或者其他操作
-              this.dialog1 = false;
-              this.dialog2 = true;
-          } else {
-              this.dialog3 = true;
-              // 如果复选框未勾选，可以给予用户提示
-              // this.$toast.error('请先阅读并勾选免责声明');
-          }
-      },
-      //报名活动，需要与数据库交互
-      RegisterTheActivity() {
-          this.loading2 = true;
-          const activityId = this.activity.id; // 替换为实际的活动ID
-          const participantId = this.userId; // 替换为实际的参与者ID
+            setTimeout(() => (this.loading = false), 2000)
+        },
+        handleRegistration() {
+            if (this.checkbox) {
+                // 处理报名逻辑，可以在这里触发弹窗或者其他操作
+                this.dialog1 = false;
+                this.dialog2 = true;
+            } else {
+                this.dialog3 = true;
+                // 如果复选框未勾选，可以给予用户提示
+                // this.$toast.error('请先阅读并勾选免责声明');
+            }
+        },
+        //报名活动，需要与数据库交互
+        RegisterTheActivity() {
+            this.loading2 = true;
+            const activityId = this.activity.id; // 替换为实际的活动ID
+            const participantId = this.userId; // 替换为实际的参与者ID
 
-          axiosForActivity.put(`/api/activity/activities/${activityId}/participants/${participantId}`)
-              .then(response => {
+            axiosForActivity.put(`/api/activity/activities/${activityId}/participants/${participantId}`)
+                .then(response => {
+                    console.log(this.activity)
+                    console.log(response.data);
+                    // 处理成功的情况，如果有需要的话
+                    this.assigned = true;
+                    this.showSnackbar('报名成功！', '#B9F6CA');
+                })
+                .catch(error => {
 
-                  console.log(response.data);
-                  // 处理成功的情况，如果有需要的话
-                  this.assigned = true;
-                  this.showSnackbar('报名成功！', '#B9F6CA');
-              })
-              .catch(error => {
+                    console.error('添加参与者错误:', error);
+                    // 处理错误的情况，如果有需要的话
+                    this.showSnackbar('报名失败，请重试', 'error');
+                })
+                .finally(() => {
+                    // 在请求结束后重置loading2
+                    this.loading2 = false;
+                    this.dialog2 = false;
+                });
+        },
+        //取消报名
+        CancelRegisterTheActivity() {
+            this.loading4 = true;
 
-                  console.error('添加参与者错误:', error);
-                  // 处理错误的情况，如果有需要的话
-                  this.showSnackbar('报名失败，请重试', 'error');
-              })
-              .finally(() => {
-                  // 在请求结束后重置loading2
-                  this.loading2 = false;
-                  this.dialog2 = false;
-              });
-      },
-      //取消报名
-      CancelRegisterTheActivity() {
-          this.loading4 = true;
+            const activityId = this.activity.id; // 替换为实际的活动ID
+            const participantId = this.userId; // 替换为实际的参与者ID
 
-          const activityId = this.activity.id; // 替换为实际的活动ID
-          const participantId = this.userId; // 替换为实际的参与者ID
-
-          axiosForActivity.delete(`/api/activity/activities/${activityId}/participants/${participantId}`)
-              .then(response => {
-                  console.log(response.data);
-                  // 处理成功的情况，如果有需要的话
-                  this.assigned = false;
-                  this.showSnackbar('取消成功', '#B9F6CA');
-              })
-              .catch(error => {
-                  console.error('添加参与者错误:', error);
-                  // 处理错误的情况，如果有需要的话
-                  // 处理错误的情况
-                  this.showSnackbar('取消失败，请重试', 'error');
-              }).finally(() => {
-                  // 在请求结束后重置loading2
-                  this.loading4 = false;
-                  this.dialog4 = false;
-              });
-      },
-      //判断是否用户已经报名
-      isAssigned() {
-          var api = "/api/activity/activities/" + this.activity.id + "/participants/" + this.userId;
-          axiosForActivity.get(api) // 替换为您的API端点
-              .then(response => {
-                  console.log(response);
-                  if (response.data == "Participant is in the activity's participant list") {
-                      this.assigned = true;
-                  }
-                  else {
-                      this.assigned = false;
-                  }
-                  console.log(this.assigned);
-                  console.log(this.activity.id);
-              })
-              .catch(error => {
-                  console.error('Error fetching activities:', error);
-                  // 可以添加错误处理逻辑
-              });
+            axiosForActivity.delete(`/api/activity/activities/${activityId}/participants/${participantId}`)
+                .then(response => {
+                    console.log(response.data);
+                    // 处理成功的情况，如果有需要的话
+                    this.assigned = false;
+                    this.showSnackbar('取消成功', '#B9F6CA');
+                })
+                .catch(error => {
+                    console.error('添加参与者错误:', error);
+                    // 处理错误的情况，如果有需要的话
+                    // 处理错误的情况
+                    this.showSnackbar('取消失败，请重试', 'error');
+                }).finally(() => {
+                    // 在请求结束后重置loading2
+                    this.loading4 = false;
+                    this.dialog4 = false;
+                });
+        },
+        //判断是否用户已经报名
+        isAssigned() {
+            var api = "/api/activity/activities/" + this.activity.id + "/participants/" + this.userId;
+            axiosForActivity.get(api) // 替换为您的API端点
+                .then(response => {
+                    console.log(response);
+                    if (response.data == "Participant is in the activity's participant list") {
+                        this.assigned = true;
+                    }
+                    else {
+                        this.assigned = false;
+                    }
+                    console.log(this.assigned);
+                    console.log(this.activity.id);
+                })
+                .catch(error => {
+                    console.error('Error fetching activities:', error);
+                    // 可以添加错误处理逻辑
+                });
 
 
-      },
-      showSnackbar(message, color) {
-          this.snackbar.message = message;
-          this.snackbar.color = color;
-          this.snackbar.show = true;
+        },
+        showSnackbar(message, color) {
+            this.snackbar.message = message;
+            this.snackbar.color = color;
+            this.snackbar.show = true;
 
-          // 可以在一定时间后关闭Snackbar，这里使用setTimeout
-          setTimeout(() => {
-              this.snackbar.show = false;
-          }, this.snackbar.timeout);
-      },
-  }
+            // 可以在一定时间后关闭Snackbar，这里使用setTimeout
+            setTimeout(() => {
+                this.snackbar.show = false;
+            }, this.snackbar.timeout);
+        },
+    }
 };
 </script>
 
