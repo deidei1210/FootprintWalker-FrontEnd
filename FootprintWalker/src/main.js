@@ -25,15 +25,26 @@ app.config.globalProperties.$ = $;
 
 // 设置全局配置
 app.config.globalProperties.$http = axios;
-// 本地环境
-axios.defaults.baseURL = "http://localhost:8090";
+// // 本地环境
+// axios.defaults.baseURL = "http://localhost:8090";
+//
+// const axiosForActivity = axios.create({
+//     baseURL: 'http://localhost:9091'
+// });
+//
+// const axiosForAnnouncement = axios.create({
+//     baseURL: 'http://localhost:1456'
+// });
+
+// 服务器环境
+axios.defaults.baseURL = "http://43.142.28.191:8090";
 
 const axiosForActivity = axios.create({
-    baseURL: 'http://localhost:9091'
+  baseURL: 'http://43.142.28.191:9091'
 });
 
 const axiosForAnnouncement = axios.create({
-    baseURL: 'http://localhost:1456'
+  baseURL: 'http://43.142.28.191:1456'
 });
 
 
